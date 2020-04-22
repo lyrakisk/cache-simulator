@@ -12,4 +12,12 @@ public class DemoClass {
     public void setNumber(int n) {
         this.number = n;
     }
+
+    public boolean isPositive() {
+        if (number > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
