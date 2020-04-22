@@ -1,2 +1,2 @@
 # Cache Simulator for OpenDC
-![BRANCH](http://branch.coverage.link)
+![BRANCH](https://img.shields.io/badge/branch--coverage-100%25-brightgreen.svg)

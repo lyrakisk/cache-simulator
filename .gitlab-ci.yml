@@ -56,6 +56,6 @@ PMD:
 test:
   stage: test
   script:
-    gradle check jacocoTestCoverageVerification jacocoTestReport generateJacocoBadge
+    gradle check jacocoTestCoverageVerification
 #    gradle jacocoTestReport generateJacocoBadge
 
