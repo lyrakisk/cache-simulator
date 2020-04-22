@@ -25,10 +25,10 @@ public class DemoClassTest {
         assertTrue(demo.isPositive());
     }
 
-    //    @Test
-    //    public void testIsNotPositive() {
-    //        demo.setNumber(-45);
-    //        assertFalse(demo.isPositive());
-    //    }
+    @Test
+    public void testIsNotPositive() {
+        demo.setNumber(-45);
+        assertFalse(demo.isPositive());
+    }
 
 }
