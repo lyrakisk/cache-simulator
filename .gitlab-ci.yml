@@ -57,5 +57,6 @@ test:
   stage: test
   script:
     gradle check
+    gradle jacocoTestCoverageVerification
 #    gradle jacocoTestReport generateJacocoBadge
 
