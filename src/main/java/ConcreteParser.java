@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * 4 3 1822
  */
 
-public class ConcreteParser extends  AbstractParserClass {
+public class ConcreteParser extends AbstractParserClass {
     /**
      * Parse file contents.
      * @param filename name of the file.
@@ -23,9 +23,14 @@ public class ConcreteParser extends  AbstractParserClass {
      * @throws FileNotFoundException when file is not found
      */
     @Override
-    public Stream<Record> parse(String filename) throws FileNotFoundException {
+    public Stream<Record> parse(String filename) {
 
-        InputStream inputStream = new FileInputStream(filename);
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(filename);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         Reader reader = new InputStreamReader(inputStream);
         BufferedReader input = new BufferedReader(reader);
         Stream<Record> ret = input.lines().map(this::processLine);
