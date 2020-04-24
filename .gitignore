@@ -9,3 +9,5 @@ out/**
 # Editor settings
 .idea/**
 codemr/**
+
+src/main/resources/reports/
