@@ -1,6 +1,7 @@
 public class Record {
-   transient private int id;
-   transient private int size;
+    private transient int size;
+    private transient int id;
+
 
     /**
     * Construct a record.
