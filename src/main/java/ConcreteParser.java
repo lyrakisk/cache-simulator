@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 /**
  * e.g.
- *
  * Contents of type:
  * 1 0 68
  * 2 1 7454
@@ -23,7 +22,12 @@ import java.util.stream.Stream;
  */
 
 public class ConcreteParser extends  AbstractParserClass {
-
+    /**
+     * Parse file contents.
+     * @param filename name of the file.
+     * @return Stream of records.
+     * @throws FileNotFoundException when file is not found
+     */
     @Override
     public Stream<Record> parse(String filename) throws FileNotFoundException {
 
@@ -31,22 +35,12 @@ public class ConcreteParser extends  AbstractParserClass {
         Reader reader = new InputStreamReader(inputStream);
         BufferedReader input = new BufferedReader(reader);
         Stream<Record> ret = input.lines().map(this::processLine);
-        /**
-         * To print it.
-         */
-//        Object[] arrayList = ret.toArray();
-//        for(Object rec: arrayList){
-//            if(rec instanceof Record){
-//                Record re =  (Record)rec;
-//                System.out.println(rec.toString());
-//            }
-//        }
         return ret;
     }
 
     /**
      * Construct a Record object from a given string line.
-     * @param line
+     * @param line String line.
      * @return Record
      */
     public Record processLine(String line) {

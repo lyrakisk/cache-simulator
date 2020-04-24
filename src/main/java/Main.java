@@ -4,16 +4,16 @@ public class Main {
 
     /**
      * Run parser.
-     * @param args
+     * @param args args.
      */
     public static void main(String[] args) {
 
         AbstractParserClass parserClass = new ConcreteParser();
 
         try {
-            parserClass.parse("C:\\Users\\nana1\\Documents\\opendc\\src\\main\\java\\parser\\resources\\request.txt");
+            parserClass.parse("/parser/resources/request.txt");
         } catch (FileNotFoundException e) {
-            System.out.println("file not found " );
+            System.out.println("file not found ");
             e.printStackTrace();
         }
     }
