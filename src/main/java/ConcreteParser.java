@@ -44,6 +44,11 @@ public class ConcreteParser extends  AbstractParserClass {
         return ret;
     }
 
+    /**
+     * Construct a Record object from a given string line.
+     * @param line
+     * @return Record
+     */
     public Record processLine(String line) {
         String[] split = line.split(" ");
         Record ret = new Record(Integer.valueOf(split[1]), Integer.valueOf(split[2]));

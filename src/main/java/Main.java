@@ -2,6 +2,10 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
+    /**
+     * Run parser.
+     * @param args
+     */
     public static void main(String[] args) {
 
         AbstractParserClass parserClass = new ConcreteParser();
