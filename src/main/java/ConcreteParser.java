@@ -23,6 +23,7 @@ public class ConcreteParser extends AbstractParserClass {
      * @throws FileNotFoundException when file is not found
      */
     @Override
+    @SuppressWarnings("PMD")
     public Stream<Record> parse(String filename) {
 
         InputStream inputStream = null;
