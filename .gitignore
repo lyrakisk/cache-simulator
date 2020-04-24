@@ -10,4 +10,4 @@ out/**
 .idea/**
 codemr/**
 
-src/main/resources/reports/
+/src/main/resources/reports/
