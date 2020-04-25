@@ -1,3 +1,5 @@
+package parser;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,9 +41,9 @@ public class ConcreteParser extends AbstractParserClass {
     }
 
     /**
-     * Construct a Record object from a given string line.
+     * Construct a parser.Record object from a given string line.
      * @param line String line.
-     * @return Record
+     * @return parser.Record
      */
     public Record processLine(String line) {
         String[] split = line.split(" ");

@@ -1,3 +1,5 @@
+package parser;
+
 public class Record {
     private transient int size;
     private transient int id;
@@ -8,7 +10,7 @@ public class Record {
     * @param id identifier.
     * @param size size.
     */
-    Record(int id, int size) {
+    public Record(int id, int size) {
         this.id = id;
         this.size = size;
     }
@@ -20,5 +22,21 @@ public class Record {
     public String toString() {
         String ret = this.id + " " + this.size;
         return ret;
+    }
+
+    /**
+     * Getter for the size of the record.
+     * @return the size of the record
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * Getter for the id of the record.
+     * @return the id of the record
+     */
+    public int getId() {
+        return id;
     }
 }
