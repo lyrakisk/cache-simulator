@@ -20,22 +20,22 @@ public class ConcreteParser extends AbstractParserClass {
      * Parse file contents.
      * @param filename name of the file.
      * @return Stream of records.
-     * @throws FileNotFoundException when file is not found
      */
     @Override
-    @SuppressWarnings("PMD")
     public Stream<Record> parse(String filename) {
 
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = new FileInputStream(filename);
+            Reader reader = new InputStreamReader(inputStream);
+            BufferedReader input = new BufferedReader(reader);
+            Stream<Record> ret = input.lines().map(this::processLine);
+            return ret;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Reader reader = new InputStreamReader(inputStream);
-        BufferedReader input = new BufferedReader(reader);
-        Stream<Record> ret = input.lines().map(this::processLine);
-        return ret;
+
+        return null;
     }
 
     /**

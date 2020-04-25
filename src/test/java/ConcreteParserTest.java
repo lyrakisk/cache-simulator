@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 public class ConcreteParserTest {
 
     @Test
-    public void parseTest() throws FileNotFoundException {
+    public void parseTest(){
         AbstractParserClass abstractParserClass = new ConcreteParser();
 
         Object[] stream = abstractParserClass.parse("src/test/resources/test.txt").toArray();
