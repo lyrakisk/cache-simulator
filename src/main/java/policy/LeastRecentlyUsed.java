@@ -7,17 +7,15 @@ import parser.Record;
 /**
  * Class representing the LRU cache policy.
  */
-public class LeastRecentlyUsed implements Policy {
+public class LeastRecentlyUsed extends Policy {
     private transient LinkedList<Record> cache;
-    private transient int sizeOfCache;
-    private static int MAX_SIZE = 1048576;
 
     /**
      * Constructing a new cache using the LRU policy.
      */
-    public LeastRecentlyUsed() {
+    public LeastRecentlyUsed(int size) {
+        super(size);
         cache = new LinkedList<>();
-        sizeOfCache = 0;
     }
 
     /**
@@ -26,30 +24,33 @@ public class LeastRecentlyUsed implements Policy {
      * @return true if the record is present in the cache, false otherwise
      */
     @Override
+    // DD and DU anomalies for the boolean existing which I don't seem
+    // to know how to fix (or if I fix the code looks really ugly and not
+    // well structured).
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public boolean isPresentInCache(Record record) {
-        int occurrence = 0;
+        boolean existing = false;
         for (int i = 0; i < cache.size(); ++ i) {
             Record inCache = cache.get(i);
             if (inCache.getId() == record.getId()) {
                 cache.remove(inCache);
-                sizeOfCache -= inCache.getSize();
-                ++ occurrence;
+                this.removeFromCache(inCache);
+                existing = true;
                 break;
             }
         }
 
-        if (record.getSize() > LeastRecentlyUsed.MAX_SIZE) {
-            -- occurrence;
-            return occurrence > 0;
+        if (record.getSize() > this.getCacheSize()) {
+            return false;
         }
 
         cache.addFirst(record);
-        sizeOfCache += record.getSize();
-        if (sizeOfCache > LeastRecentlyUsed.MAX_SIZE) {
+        this.addToCache(record);
+        while (this.getRemainingCache() < 0) {
             Record last = cache.removeLast();
-            sizeOfCache -= last.getSize();
+            this.removeFromCache(last);
         }
 
-        return occurrence > 0;
+        return existing;
     }
 }

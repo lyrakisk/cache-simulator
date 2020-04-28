@@ -10,7 +10,7 @@ public class LeastRecentlyUsedTest {
 
     @BeforeEach
     void init() {
-        lru = new LeastRecentlyUsed();
+        lru = new LeastRecentlyUsed(1048576);
     }
 
     @Test
