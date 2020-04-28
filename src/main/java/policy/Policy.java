@@ -3,7 +3,7 @@ package policy;
 import parser.Record;
 
 /**
- * Interface which all different cache policies will implement.
+ * Abstract class which all different cache policies will extend from.
  */
 public abstract class Policy {
 
