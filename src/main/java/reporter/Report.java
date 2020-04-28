@@ -21,17 +21,19 @@ public class Report {
     /**
      * Creating the report in a csv format.
      */
-    public void report() {
+    public String report() {
         DecimalFormat df = new DecimalFormat("#.##");
         String hitRatio = String.valueOf(df.format(this.hitRatio * 100)) + '%';
         String missRatio = String.valueOf(df.format((1 - this.hitRatio) * 100)) + '%';
+        String toPrint = this.policyType + "," + hitRatio + "," + missRatio;
         try {
             FileWriter fw = new FileWriter("src/main/resources/reports/report.txt");
-            fw.write(this.policyType + "," + hitRatio + "," + missRatio);
+            fw.write(toPrint);
             fw.close();
         } catch (Exception e) {
             System.out.println();
         }
+        return toPrint;
     }
 
 }
