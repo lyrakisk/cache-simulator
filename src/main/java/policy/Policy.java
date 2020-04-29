@@ -52,5 +52,5 @@ public abstract class Policy {
      * @param record the record to be checked
      * @return true if the record is present, false otherwise
      */
-    abstract boolean isPresentInCache(Record record);
+    public abstract boolean isPresentInCache(Record record);
 }
