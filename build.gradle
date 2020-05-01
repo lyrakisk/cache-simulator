@@ -29,16 +29,11 @@ repositories {
     jcenter()
 }
 
-test {
-
-    jacoco {
-        enabled = true
-    }
-
-    // tests are always considered outdated, so gradle will run them every time
-    // instead of returning "Test events were not received"
-    outputs.upToDateWhen { false }
-}
+//test {
+////    // tests are always considered outdated, so gradle will run them every time
+////    // instead of returning "Test events were not received"
+////    outputs.upToDateWhen { false }
+////}
 
 sourceSets {
     integrationTest {
@@ -63,23 +58,32 @@ dependencies {
 task integrationTest(type: Test) {
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
-    outputs.upToDateWhen { false }
 }
 
 tasks.withType(Test) {
     useJUnitPlatform()
+    jacoco {
+        enabled = true
+    }
+    // tests are always considered outdated, so gradle will run them every time
+    // instead of returning "Test events were not received"
+    outputs.upToDateWhen { false }
 }
 
 check.dependsOn integrationTest
 integrationTest.mustRunAfter test
 
 jacocoTestReport {
+    executionData test, integrationTest
+
+//    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
     reports {
         xml.enabled true
     }
 }
 
 jacocoTestCoverageVerification {
+    executionData test, integrationTest
     violationRules {
         rule {
             enabled = true
