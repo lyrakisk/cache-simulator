@@ -1,15 +1,13 @@
-package integration;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
 import parser.ConcreteParser;
 import parser.Record;
 import policy.LeastRecentlyUsed;
 import policy.Policy;
 import simulator.Simulator;
+
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class SimulateLru {

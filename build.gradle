@@ -30,23 +30,48 @@ repositories {
 }
 
 test {
-    useJUnitPlatform()
 
     jacoco {
         enabled = true
     }
+
+    // tests are always considered outdated, so gradle will run them every time
+    // instead of returning "Test events were not received"
+    outputs.upToDateWhen { false }
 }
-repositories { jcenter() }
-dependencies { testCompile "org.mockito:mockito-core:1.+" }
+
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
 
 dependencies {
+    testCompile('org.junit.jupiter:junit-jupiter:5.5.2')
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 //    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
-//    testCompile "org.mockito:mockito-core:1.+"
+    testCompile "org.mockito:mockito-core:1.+"
+    integrationTestCompile('org.junit.jupiter:junit-jupiter:5.5.2')
 }
 
+task integrationTest(type: Test) {
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
 
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
 
 jacocoTestReport {
     reports {
