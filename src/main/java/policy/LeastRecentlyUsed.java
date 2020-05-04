@@ -13,8 +13,8 @@ public class LeastRecentlyUsed extends Policy {
     /**
      * Constructing a new cache using the LRU policy.
      */
-    public LeastRecentlyUsed(int size) {
-        super(size);
+    public LeastRecentlyUsed(int size, boolean isBytes) {
+        super(size, isBytes);
         cache = new LinkedList<>();
     }
 
@@ -29,6 +29,7 @@ public class LeastRecentlyUsed extends Policy {
     // well structured).
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public boolean isPresentInCache(Record record) {
+        this.checkIsBytes(record);
         boolean existing = false;
         for (int i = 0; i < cache.size(); ++ i) {
             Record inCache = cache.get(i);

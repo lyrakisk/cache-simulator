@@ -33,6 +33,14 @@ public class Record {
     }
 
     /**
+     * Setter for the size of the record.
+     * @param size the new size of the record
+     */
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    /**
      * Getter for the id of the record.
      * @return the id of the record
      */

@@ -9,14 +9,17 @@ public abstract class Policy {
 
     private transient int cacheSize;
     private transient int usedCacheSpace;
+    private transient boolean isBytes;
 
     /**
      * Constructor for the policy.
      * @param cacheSize the size of the cache in bytes
+     * @param isBytes the cache size parameter
      */
-    public Policy(int cacheSize) {
+    public Policy(int cacheSize, boolean isBytes) {
         this.cacheSize = cacheSize;
         this.usedCacheSpace = 0;
+        this.isBytes = isBytes;
     }
 
     /**
@@ -45,6 +48,16 @@ public abstract class Policy {
      */
     public int getRemainingCache() {
         return cacheSize - usedCacheSpace;
+    }
+
+    /**
+     * If the cache should take only number of records into account, set the size to 1.
+     * @param record the record to be checked
+     */
+    public void checkIsBytes(Record record) {
+        if (!isBytes) {
+            record.setSize(1);
+        }
     }
 
     /**
