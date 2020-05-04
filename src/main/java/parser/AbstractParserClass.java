@@ -10,4 +10,5 @@ public abstract class AbstractParserClass {
      */
     public abstract Stream<Record> parse(String filename);
 
+    public abstract Record parseRecord(String line);
 }

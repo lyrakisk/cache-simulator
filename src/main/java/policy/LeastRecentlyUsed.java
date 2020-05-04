@@ -33,7 +33,7 @@ public class LeastRecentlyUsed extends Policy {
         boolean existing = false;
         for (int i = 0; i < cache.size(); ++ i) {
             Record inCache = cache.get(i);
-            if (inCache.getId() == record.getId()) {
+            if (inCache.getId().equals(record.getId())) {
                 cache.remove(inCache);
                 this.removeFromCache(inCache);
                 existing = true;

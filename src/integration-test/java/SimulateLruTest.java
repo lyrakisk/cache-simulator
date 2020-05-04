@@ -1,19 +1,19 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
-import parser.ConcreteParser;
 import parser.Record;
+import parser.snia.CambridgeTraceParser;
 import policy.LeastRecentlyUsed;
 import policy.Policy;
 import simulator.Simulator;
 
-import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
-public class SimulateLru {
+public class SimulateLruTest {
     private transient Policy policy;
-    private transient ConcreteParser parser = new ConcreteParser();
-    private transient Stream<Record> records = parser.parse("src/test/resources/simulationTest1.txt");
+    private transient CambridgeTraceParser parser = new CambridgeTraceParser();
+    private transient Stream<Record> records = parser
+            .parse("src/test/resources/msr-cambridge1-sample.csv");
 
 
     @Test
@@ -27,11 +27,11 @@ public class SimulateLru {
 
     @Test
     public void testOneCacheHit() {
-        policy = new LeastRecentlyUsed(1000000);
+        policy = new LeastRecentlyUsed(10000);
         Simulator simulator = new Simulator(policy, records);
         simulator.simulate();
         assertEquals(1, simulator.getNumberOfCacheHits());
-        assertEquals(1.25f, simulator.getCacheHitsPercentage());
+        assertEquals(10f, simulator.getCacheHitsPercentage());
     }
 
 }
