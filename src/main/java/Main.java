@@ -1,4 +1,4 @@
-import parser.ConcreteParser;
+import parser.snia.CambridgeTraceParser;
 import policy.LeastRecentlyUsed;
 import simulator.Simulator;
 
@@ -9,10 +9,10 @@ public class Main {
      * @param args args.
      */
     public static void main(String[] args) {
-        ConcreteParser parser = new ConcreteParser();
+        CambridgeTraceParser parser = new CambridgeTraceParser();
         Simulator simulator = new Simulator(
                 new LeastRecentlyUsed(20000),
-                parser.parse("src/main/resources/request.txt"));
+                parser.parse("src/main/resources/msr-cambridge1-sample.csv"));
         simulator.simulate();
 
         System.out.println("cache hits: " + simulator.getNumberOfCacheHits()
