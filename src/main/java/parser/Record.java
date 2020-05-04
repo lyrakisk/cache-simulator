@@ -15,14 +15,6 @@ public class Record {
         this.size = size;
     }
 
-    /**
-    * String representation of a record.
-    * @return String string.
-    */
-    public String toString() {
-        String ret = this.identifier + " " + this.size;
-        return ret;
-    }
 
     /**
      * Getter for the size of the record.
