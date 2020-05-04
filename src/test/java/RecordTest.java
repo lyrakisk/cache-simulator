@@ -1,13 +1,18 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import parser.Record;
 
 public class RecordTest {
+    private transient Record record = new Record("abc", 2048);
 
     @Test
-    public void toStringTest() {
-        Record record  = new Record("0", 1);
-        String temp = "0 1";
-        assert (temp.equals(record.toString()));
+    public void testGetId() {
+        assertEquals("abc", record.getId());
     }
 
+    @Test
+    public void testGetSize() {
+        assertEquals(2048, record.getSize());
+    }
 }
