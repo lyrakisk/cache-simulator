@@ -12,6 +12,8 @@ public class LeastRecentlyUsed extends Policy {
 
     /**
      * Constructing a new cache using the LRU policy.
+     * @param size the size of the cache
+     * @param isBytes the cache size parameter
      */
     public LeastRecentlyUsed(int size, boolean isBytes) {
         super(size, isBytes);

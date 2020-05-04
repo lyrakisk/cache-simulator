@@ -24,7 +24,7 @@ public class SimulatorTest {
 
     @Test
     public void testSetPolicy() {
-        simulator.setPolicy(new LeastRecentlyUsed(20000));
+        simulator.setPolicy(new LeastRecentlyUsed(20000, true));
         assertEquals("LeastRecentlyUsed", simulator.getPolicyName());
     }
 

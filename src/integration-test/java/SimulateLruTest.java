@@ -18,7 +18,7 @@ public class SimulateLruTest {
 
     @Test
     public void testZeroCacheHits() {
-        policy = new LeastRecentlyUsed(0);
+        policy = new LeastRecentlyUsed(0, true);
         Simulator simulator = new Simulator(policy, records);
         simulator.simulate();
         assertEquals(0, simulator.getNumberOfCacheHits());
@@ -27,7 +27,7 @@ public class SimulateLruTest {
 
     @Test
     public void testOneCacheHit() {
-        policy = new LeastRecentlyUsed(10000);
+        policy = new LeastRecentlyUsed(10000, true);
         Simulator simulator = new Simulator(policy, records);
         simulator.simulate();
         assertEquals(1, simulator.getNumberOfCacheHits());

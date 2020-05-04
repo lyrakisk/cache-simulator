@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         CambridgeTraceParser parser = new CambridgeTraceParser();
         Simulator simulator = new Simulator(
-                new LeastRecentlyUsed(20000),
+                new LeastRecentlyUsed(20000, true),
                 parser.parse("src/main/resources/msr-cambridge1-sample.csv"));
         simulator.simulate();
 

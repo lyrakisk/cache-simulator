@@ -41,4 +41,19 @@ public class LeastRecentlyUsedTest {
         Assertions.assertFalse(lru.isPresentInCache(second));
         Assertions.assertFalse(lru.isPresentInCache(first));
     }
+
+    @Test
+    void testNumberOfRecords() {
+        LeastRecentlyUsed lruRecords = new LeastRecentlyUsed(2, false);
+        Record first = new Record("1", 2048);
+        Record second = new Record("2", 1024);
+        Record third = new Record("3", 512);
+
+        Assertions.assertFalse(lruRecords.isPresentInCache(first));
+        Assertions.assertFalse(lruRecords.isPresentInCache(second));
+        Assertions.assertEquals(0, lruRecords.getRemainingCache());
+
+        Assertions.assertFalse(lruRecords.isPresentInCache(third));
+        Assertions.assertFalse(lruRecords.isPresentInCache(first));
+    }
 }

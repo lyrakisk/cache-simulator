@@ -1,18 +1,23 @@
 package policy;
 
-import parser.Record;
-
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import parser.Record;
+
 public class LeastFrequentlyUsed extends Policy {
-    private transient Map<Integer, Record> items;
-    private transient Map<Integer, Integer> counts;
-    private transient Map<Integer, Set<Integer>> frequencies;
+    private transient Map<String, Record> items;
+    private transient Map<String, Integer> counts;
+    private transient Map<Integer, Set<String>> frequencies;
     private transient int minCount;
 
+    /**
+     * Constructing a new cache following the LFU policy.
+     * @param size the size of the cache
+     * @param isBytes the cache size parameter
+     */
     public LeastFrequentlyUsed(int size, boolean isBytes) {
         super(size, isBytes);
         items = new HashMap<>();
@@ -25,22 +30,22 @@ public class LeastFrequentlyUsed extends Policy {
      * Removes items from the cache until the current item cannot be added.
      */
     private void updateCache() {
-        if (minCount == -1) {
-            return;
-        }
-
         while (this.getRemainingCache() < 0) {
-            Set<Integer> currentMin = frequencies.get(minCount);
+            Set<String> currentMin = frequencies.get(minCount);
             while (!currentMin.isEmpty() && this.getRemainingCache() < 0) {
-                int toRemove = currentMin.iterator().next();
+                String toRemove = currentMin.iterator().next();
                 currentMin.remove(toRemove);
                 this.removeFromCache(items.remove(toRemove));
                 counts.remove(toRemove);
             }
 
             if (currentMin.isEmpty()) {
-                while (frequencies.get(minCount) == null || frequencies.get(minCount).size() == 0) {
-                    ++ minCount;
+                if (items.isEmpty()) {
+                    minCount = -1;
+                } else {
+                    while (frequencies.get(minCount).size() == 0) {
+                        ++ minCount;
+                    }
                 }
             }
         }
@@ -48,7 +53,8 @@ public class LeastFrequentlyUsed extends Policy {
 
     @Override
     public boolean isPresentInCache(Record record) {
-        int id = record.getId();
+        String id = record.getId();
+        this.checkIsBytes(record);
         if (record.getSize() > this.getCacheSize()) {
             if (items.containsKey(id)) {
                 Record toRemove = items.remove(id);
@@ -59,9 +65,7 @@ public class LeastFrequentlyUsed extends Policy {
             return false;
         }
 
-        this.checkIsBytes(record);
         boolean found = items.containsKey(id);
-
         if (found) {
             this.removeFromCache(items.get(id));
             this.addToCache(record);
@@ -88,6 +92,7 @@ public class LeastFrequentlyUsed extends Policy {
 
         this.updateCache();
         int pos = counts.get(id);
+        items.put(id, record);
         frequencies.get(pos).add(id);
         return found;
     }
