@@ -33,7 +33,7 @@ public class LeastFrequentlyUsedTest {
     }
 
     @Test
-    void testTwo() {
+    void testTwoRecordsAccessedTwoTimes() {
         Record first = new Record("1", 2);
         Record second = new Record("2", 2);
         Record againFirst = new Record("1", 1);
@@ -48,7 +48,7 @@ public class LeastFrequentlyUsedTest {
     }
 
     @Test
-    void testOneRecordThreeTimes() {
+    void testOneRecordAccessedThreeTimes() {
         Record first = new Record("1", 2);
         Record second = new Record("2", 2);
         Assertions.assertFalse(lfuBytes.isPresentInCache(first));
@@ -77,7 +77,7 @@ public class LeastFrequentlyUsedTest {
     }
 
     @Test
-    void testRemove2ElementsDifferentLevels() {
+    void testRemove2RecordsAccessedDifferentAmountOfTimes() {
         Record first = new Record("1", 500);
         Record second = new Record("2", 5);
         Record secondAgain = new Record("2", 490);
@@ -92,7 +92,7 @@ public class LeastFrequentlyUsedTest {
     }
 
     @Test
-    void testWithNumberOfRecords() {
+    void testCacheSizeIsNumberOfFiles() {
         Record first = new Record("1", 2);
         Record second = new Record("2", 1000);
         Record againSecond = new Record("2", 2000);
