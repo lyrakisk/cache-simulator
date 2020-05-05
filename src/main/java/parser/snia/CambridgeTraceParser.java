@@ -12,10 +12,13 @@ import parser.AbstractParserClass;
 import parser.Record;
 
 
+/**
+ * Parser for Cambridge traces, as specified in
+ * https://www.usenix.org/legacy/event/fast08/tech/narayanan.html
+ */
 public class CambridgeTraceParser extends AbstractParserClass {
     /**
-     * Parser for Cambridge traces, as specified in
-     * https://www.usenix.org/legacy/event/fast08/tech/narayanan.html
+     * Parses the trace file and returns a stream of records.
      * @param filename name of the file.
      * @return Stream of records.
      */
