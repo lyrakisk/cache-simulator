@@ -1,0 +1,13 @@
+# Build artifacts
+build/**
+.gradle/**
+out/**
+
+# Not strictly necessary, however, *.jar files are often ignored and this one is required by the Gradle wrapper.
+!gradle/wrapper/gradle-wrapper.jar
+
+# Editor settings
+.idea/**
+codemr/**
+
+/src/main/resources/reports/
