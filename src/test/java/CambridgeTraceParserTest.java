@@ -1,8 +1,8 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import parser.Record;
 import parser.snia.CambridgeTraceParser;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CambridgeTraceParserTest {
 

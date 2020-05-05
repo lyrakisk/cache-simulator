@@ -33,7 +33,7 @@ public class CambridgeTraceParser extends AbstractParserClass {
             Stream<Record> ret = input.lines().map(this::parseRecord);
             return ret;
         } catch (FileNotFoundException e) {
-            System.err.print("ERROR: The file named \" + filename + \" was not found!\n");
+            System.err.print("ERROR: The file named " + filename + " was not found!\n");
             e.printStackTrace();
         }
 
