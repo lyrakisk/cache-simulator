@@ -43,7 +43,7 @@ public class LeastRecentlyUsedTest {
     }
 
     @Test
-    void testNumberOfRecords() {
+    void testCacheSizeIsNumberOfFiles() {
         LeastRecentlyUsed lruRecords = new LeastRecentlyUsed(2, false);
         Record first = new Record("1", 2048);
         Record second = new Record("2", 1024);
