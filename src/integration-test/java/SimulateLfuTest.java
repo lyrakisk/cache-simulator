@@ -13,7 +13,7 @@ public class SimulateLfuTest {
     private transient Policy policy;
     private transient CambridgeTraceParser parser = new CambridgeTraceParser();
     private transient Stream<Record> records = parser
-            .parse("src/main/resources/msr-cambridge1-sample.csv");
+            .parse("src/test/resources/msr-cambridge1-sample.csv");
 
 
     @Test
