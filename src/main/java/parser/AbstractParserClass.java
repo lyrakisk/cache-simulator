@@ -15,7 +15,7 @@ public abstract class AbstractParserClass {
      * @param filename name of the file.
      * @return Stream of records.
      */
-    public  Stream<Record> parse(String filename){
+    public  Stream<Record> parse(String filename) {
         InputStream inputStream;
         try {
             inputStream = new FileInputStream(filename);
