@@ -13,7 +13,8 @@
 - Consider: Protocol Buffers, Column-oriented storage.
 
 ### Kostas
-New feature: users must be able to modify a configuration file to choose which policy they want to simulate
+- New feature: users must be able to modify a configuration file to choose which policy they want to simulate
+- Add code coverage metric to Jacoco.
 
 ### Ivaylo
 Fix bug in LFU policy.
