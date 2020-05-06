@@ -2,9 +2,9 @@
 
 ## Problems encountered during last sprint.
 ### 1
-**Problem: **During the previous week, the workload was not divided properly. Two members of the team did not have enough work to do.
-**Cause: ** Last week was part of the research phase of the project. As a result, the way the parser and policies would be implemented and communicate with each other, had to change multiple times. This made it hard to parallelize the tasks that had to be completed.  
-**Solution: ** The application now has a stable structure, that enables all 4 members of the team to work in parallel.
+**Problem:** During the previous week, the workload was not divided properly. Two members of the team did not have enough work to do.  
+**Cause:**  Last week was part of the research phase of the project. As a result, the way the parser and policies would be implemented and communicate with each other, had to change multiple times. This made it hard to parallelize the tasks that had to be completed.  
+**Solution:** The application now has a stable structure, that enables all 4 members of the team to work in parallel.
 
 ## What each team member will work on during the week
 
