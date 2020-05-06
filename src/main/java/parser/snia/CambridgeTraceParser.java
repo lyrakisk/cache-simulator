@@ -17,28 +17,6 @@ import parser.Record;
  * https://www.usenix.org/legacy/event/fast08/tech/narayanan.html
  */
 public class CambridgeTraceParser extends AbstractParserClass {
-    /**
-     * Parses the trace file and returns a stream of records.
-     * @param filename name of the file.
-     * @return Stream of records.
-     */
-    @Override
-    public Stream<Record> parse(String filename) {
-
-        InputStream inputStream;
-        try {
-            inputStream = new FileInputStream(filename);
-            Reader reader = new InputStreamReader(inputStream);
-            BufferedReader input = new BufferedReader(reader);
-            Stream<Record> ret = input.lines().map(this::parseRecord);
-            return ret;
-        } catch (FileNotFoundException e) {
-            System.err.print("ERROR: The file named " + filename + " was not found!\n");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     /**
      * Construct a parser.Record object from a given string line.
