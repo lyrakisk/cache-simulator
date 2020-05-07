@@ -8,6 +8,8 @@ import parser.snia.ArcTraceParser;
 
 public class ArcTraceParserTest {
 
+    transient String path = "src/test/resources/OLTP-sample-2.lis";
+
     @Test
     public void parseFirstTest() {
         ArcTraceParser parser = new ArcTraceParser();
@@ -35,7 +37,7 @@ public class ArcTraceParserTest {
     public void parseBiggerFileSize() {
         ArcTraceParser parser = new ArcTraceParser();
         int size = parser
-            .parse("src/test/resources/OLTP-sample-2.lis")
+            .parse(path)
             .toArray().length;
 
         int actualSize = 6;
@@ -46,7 +48,7 @@ public class ArcTraceParserTest {
     public void parseBiggerFileSecondTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
-            .parse("src/test/resources/OLTP-sample-2.lis")
+            .parse(path)
             .toArray();
         Record record = (Record) records[1];
 
@@ -58,7 +60,7 @@ public class ArcTraceParserTest {
     public void parseBiggerFileThirdTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
-            .parse("src/test/resources/OLTP-sample-2.lis")
+            .parse(path)
             .toArray();
         Record record = (Record) records[2];
 
@@ -71,7 +73,7 @@ public class ArcTraceParserTest {
     public void parseBiggerFileFourthTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
-            .parse("src/test/resources/OLTP-sample-2.lis")
+            .parse(path)
             .toArray();
         Record record = (Record) records[3];
 
@@ -83,7 +85,7 @@ public class ArcTraceParserTest {
     public void parseBiggerFileFifthTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
-            .parse("src/test/resources/OLTP-sample-2.lis")
+            .parse(path)
             .toArray();
         Record record = (Record) records[4];
 
@@ -95,7 +97,7 @@ public class ArcTraceParserTest {
     public void parseBiggerFileLastTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
-            .parse("src/test/resources/OLTP-sample-2.lis")
+            .parse(path)
             .toArray();
         Record record = (Record) records[5];
 

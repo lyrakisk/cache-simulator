@@ -27,6 +27,7 @@ import parser.Record;
  * " USENIX Conference on File and Storage Technologies (FAST 03),
  * San Francisco, CA, pp. 115-130, March 31-April 2, 2003.
  */
+@SuppressWarnings("PMD")
 public class ArcTraceParser extends AbstractParserClass {
 
     transient long blockSize = 512;
@@ -58,13 +59,13 @@ public class ArcTraceParser extends AbstractParserClass {
         return null;
     }
 
-    /**
+     /**
      * For efficiency reasons it is not used => returns null.
      * @param line line of a trace file.
      * @return  null
      */
-    @Override
-    public Record parseRecord(String line) {
+     @Override
+     public Record parseRecord(String line) {
        return null;
     }
 
@@ -82,7 +83,7 @@ public class ArcTraceParser extends AbstractParserClass {
         int blocksNum = Integer.parseInt(fields[1]);
 
         for (int i = 0; i < blocksNum; i++) {
-            Record record = new Record((startingBlock+ i) + "", blockSize);
+            Record record = new Record((startingBlock + i) + "", blockSize);
             stream = Stream.concat(stream, Stream.of(record));
 
         }
