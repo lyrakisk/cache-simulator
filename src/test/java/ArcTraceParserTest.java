@@ -27,9 +27,80 @@ public class ArcTraceParserTest {
             .toArray().length;
 
         int actualSize = 3;
-        assertEquals(actualSize, size);
-
+        assertEquals(size, actualSize);
     }
+
+    @Test
+    public void parseBiggerFileSize() {
+        ArcParser parser = new ArcParser();
+        int size = parser
+            .parse("src/test/resources/OLTP-sample-2.lis")
+            .toArray().length;
+
+        int actualSize = 6;
+        assertEquals(actualSize, size);
+    }
+    @Test
+    public void parseBiggerFileSecondTest() {
+        ArcParser parser = new ArcParser();
+        Object[] records = parser
+            .parse("src/test/resources/OLTP-sample-2.lis")
+            .toArray();
+        Record record = (Record) records[1];
+
+        String actualId = "2";
+        assertEquals(actualId, record.getId());
+    }
+
+    @Test
+    public void parseBiggerFileThirdTest() {
+        ArcParser parser = new ArcParser();
+        Object[] records = parser
+            .parse("src/test/resources/OLTP-sample-2.lis")
+            .toArray();
+        Record record = (Record) records[2];
+
+        String actualId = "3";
+        assertEquals(actualId, record.getId());
+    }
+
+
+    @Test
+    public void parseBiggerFileFourthTest() {
+        ArcParser parser = new ArcParser();
+        Object[] records = parser
+            .parse("src/test/resources/OLTP-sample-2.lis")
+            .toArray();
+        Record record = (Record) records[3];
+
+        String actualId = "2";
+        assertEquals(actualId, record.getId());
+    }
+
+    @Test
+    public void parseBiggerFileFifthTest() {
+        ArcParser parser = new ArcParser();
+        Object[] records = parser
+            .parse("src/test/resources/OLTP-sample-2.lis")
+            .toArray();
+        Record record = (Record) records[4];
+
+        String actualId = "3";
+        assertEquals(actualId, record.getId());
+    }
+
+    @Test
+    public void parseBiggerFileLastTest() {
+        ArcParser parser = new ArcParser();
+        Object[] records = parser
+            .parse("src/test/resources/OLTP-sample-2.lis")
+            .toArray();
+        Record record = (Record) records[5];
+
+        String actualId = "1";
+        assertEquals(actualId, record.getId());
+    }
+
 }
 
 

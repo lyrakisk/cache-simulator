@@ -76,9 +76,10 @@ public class ArcParser extends AbstractParserClass {
         Stream<Record> stream = Stream.of();
 
         for(int i=0; i<blocksNum; i++) {
-            startingBlock = String.valueOf(Long.parseLong(startingBlock) + i*512);
-            String newLine =  startingBlock + " " + blocksNum ;
+            String newLine =  startingBlock + " " + (blocksNum-i);
             stream = Stream.concat(stream, Stream.of(parseRecord(newLine)));
+            startingBlock = String.valueOf(Long.parseLong(startingBlock) + 1);
+
         }
 
         return stream;
