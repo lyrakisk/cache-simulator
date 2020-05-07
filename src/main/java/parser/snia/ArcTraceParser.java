@@ -58,12 +58,14 @@ public class ArcTraceParser extends AbstractParserClass {
         return null;
     }
 
+    /**
+     * For efficiency reasons it is not used => returns null.
+     * @param line line of a trace file.
+     * @return  null
+     */
     @Override
     public Record parseRecord(String line) {
-        String[] fields = line.split(" ");
-        String startingBlock = fields[0];
-        Record record = new Record(startingBlock, blockSize);
-        return record;
+       return null;
     }
 
     /**
@@ -76,13 +78,12 @@ public class ArcTraceParser extends AbstractParserClass {
 
         Stream<Record> stream = Stream.of();
         String[] fields = line.split(" ");
-        String startingBlock = fields[0];
+        Long startingBlock = Long.valueOf(fields[0]);
         int blocksNum = Integer.parseInt(fields[1]);
 
         for (int i = 0; i < blocksNum; i++) {
-            String newLine =  startingBlock + " " + (blocksNum - i);
-            stream = Stream.concat(stream, Stream.of(parseRecord(newLine)));
-            startingBlock = String.valueOf(Long.parseLong(startingBlock) + 1);
+            Record record = new Record((startingBlock+ i) + "", blockSize);
+            stream = Stream.concat(stream, Stream.of(record));
 
         }
 
