@@ -2,14 +2,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import parser.Record;
-import parser.snia.ARCParser;
+import parser.snia.ArcParser;
 
 
 public class ArcTraceParserTest {
 
     @Test
-    public void parseTest() {
-        ARCParser parser = new ARCParser();
+    public void parseFirstTest() {
+        ArcParser parser = new ArcParser();
         Record actual = parser
             .parse("src/test/resources/OLTP-sample.lis")
             .findFirst()
@@ -18,4 +18,18 @@ public class ArcTraceParserTest {
         assertEquals(expected.getSize(), actual.getSize());
         assertEquals(expected.getId(), actual.getId());
     }
+
+    @Test
+    public void parseContentSizeTest() {
+        ArcParser parser = new ArcParser();
+        int size = parser
+            .parse("src/test/resources/OLTP-sample.lis")
+            .toArray().length;
+
+        int actualSize = 3;
+        assertEquals(actualSize, size);
+
+    }
 }
+
+
