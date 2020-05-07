@@ -34,10 +34,8 @@ public class CambridgeTraceParser extends AbstractParserClass {
             return ret;
         } catch (FileNotFoundException e) {
             System.err.print("ERROR: The file named " + filename + " was not found!\n");
-            e.printStackTrace();
+            return Stream.empty();
         }
-
-        return null;
     }
 
     /**
