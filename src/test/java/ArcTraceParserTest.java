@@ -2,14 +2,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import parser.Record;
-import parser.snia.ArcParser;
+import parser.snia.ArcTraceParser;
+
 
 
 public class ArcTraceParserTest {
 
     @Test
     public void parseFirstTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         Record actual = parser
             .parse("src/test/resources/OLTP-sample.lis")
             .findFirst()
@@ -21,7 +22,7 @@ public class ArcTraceParserTest {
 
     @Test
     public void parseContentSizeTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         int size = parser
             .parse("src/test/resources/OLTP-sample.lis")
             .toArray().length;
@@ -32,7 +33,7 @@ public class ArcTraceParserTest {
 
     @Test
     public void parseBiggerFileSize() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         int size = parser
             .parse("src/test/resources/OLTP-sample-2.lis")
             .toArray().length;
@@ -40,9 +41,10 @@ public class ArcTraceParserTest {
         int actualSize = 6;
         assertEquals(actualSize, size);
     }
+
     @Test
     public void parseBiggerFileSecondTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse("src/test/resources/OLTP-sample-2.lis")
             .toArray();
@@ -54,7 +56,7 @@ public class ArcTraceParserTest {
 
     @Test
     public void parseBiggerFileThirdTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse("src/test/resources/OLTP-sample-2.lis")
             .toArray();
@@ -67,7 +69,7 @@ public class ArcTraceParserTest {
 
     @Test
     public void parseBiggerFileFourthTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse("src/test/resources/OLTP-sample-2.lis")
             .toArray();
@@ -79,7 +81,7 @@ public class ArcTraceParserTest {
 
     @Test
     public void parseBiggerFileFifthTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse("src/test/resources/OLTP-sample-2.lis")
             .toArray();
@@ -91,7 +93,7 @@ public class ArcTraceParserTest {
 
     @Test
     public void parseBiggerFileLastTest() {
-        ArcParser parser = new ArcParser();
+        ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse("src/test/resources/OLTP-sample-2.lis")
             .toArray();
