@@ -1,4 +1,4 @@
-package parser.snia;
+package parser.arc;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
