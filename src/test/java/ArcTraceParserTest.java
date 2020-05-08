@@ -1,9 +1,17 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import parser.Record;
 import parser.arc.ArcTraceParser;
+import parser.snia.CambridgeTraceParser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class ArcTraceParserTest {
@@ -103,6 +111,30 @@ public class ArcTraceParserTest {
 
         String actualId = "1";
         assertEquals(actualId, record.getId());
+    }
+
+    @Test
+    public void testParseRecord() {
+        ArcTraceParser parser = new ArcTraceParser();
+        assertNull(parser.parseRecord("test"));
+    }
+
+    @Test
+    public void testExceptionCatch() {
+        final PrintStream originalErr = System.err;
+        final ByteArrayOutputStream err = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(err));
+
+        Stream<Record> records =
+            (new ArcTraceParser()).parse("chocolateBanana.waffle");
+        String expectedMessage = "ERROR: The file named chocolateBanana.waffle was not found!\n";
+        List<Record> collectedRecords =
+            records.sequential().collect(Collectors.toList());
+
+        assertTrue(err.toString().contains(expectedMessage));
+        assertTrue(collectedRecords.isEmpty());
+
+        System.setErr(originalErr);
     }
 
 }
