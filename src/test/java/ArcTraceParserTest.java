@@ -11,7 +11,7 @@ public class ArcTraceParserTest {
     transient String path = "src/test/resources/OLTP-sample-2.lis";
 
     @Test
-    public void parseFirstTest() {
+    public void simpleFileCheckFirstLineTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Record actual = parser
             .parse("src/test/resources/OLTP-sample.lis")
@@ -23,7 +23,7 @@ public class ArcTraceParserTest {
     }
 
     @Test
-    public void parseContentSizeTest() {
+    public void checkSizeOfSimpleFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         int size = parser
             .parse("src/test/resources/OLTP-sample.lis")
@@ -34,7 +34,7 @@ public class ArcTraceParserTest {
     }
 
     @Test
-    public void parseBiggerFileSize() {
+    public void checkSizeOfBiggerFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         int size = parser
             .parse(path)
@@ -45,7 +45,7 @@ public class ArcTraceParserTest {
     }
 
     @Test
-    public void parseBiggerFileSecondTest() {
+    public void checkSecondLineOfBiggerFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse(path)
@@ -57,7 +57,7 @@ public class ArcTraceParserTest {
     }
 
     @Test
-    public void parseBiggerFileThirdTest() {
+    public void checkThirdLineOfBiggerFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse(path)
@@ -70,7 +70,7 @@ public class ArcTraceParserTest {
 
 
     @Test
-    public void parseBiggerFileFourthTest() {
+    public void checkFourthLineOfBiggerFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse(path)
@@ -82,7 +82,7 @@ public class ArcTraceParserTest {
     }
 
     @Test
-    public void parseBiggerFileFifthTest() {
+    public void checkFifthLineOfBiggerFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse(path)
@@ -94,7 +94,7 @@ public class ArcTraceParserTest {
     }
 
     @Test
-    public void parseBiggerFileLastTest() {
+    public void checkLastLineOfBiggerFileTest() {
         ArcTraceParser parser = new ArcTraceParser();
         Object[] records = parser
             .parse(path)
