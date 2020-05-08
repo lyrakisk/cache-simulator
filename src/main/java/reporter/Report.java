@@ -1,6 +1,5 @@
 package reporter;
 
-import java.io.FileWriter;
 import java.text.DecimalFormat;
 
 public class Report {
@@ -19,21 +18,15 @@ public class Report {
     }
 
     /**
-     * Creating the report in a csv format.
+     * Create the report..
      */
     public String report() {
         DecimalFormat df = new DecimalFormat("#.##");
         String hitRatio = String.valueOf(df.format(this.hitRatio * 100)) + '%';
         String missRatio = String.valueOf(df.format((1 - this.hitRatio) * 100)) + '%';
         String toPrint = this.policyType + "," + hitRatio + "," + missRatio;
-        try {
-            FileWriter fw = new FileWriter("src/main/resources/reports/report.txt");
-            fw.write(toPrint);
-            fw.close();
-        } catch (Exception e) {
-            System.out.println();
-        }
+        // todo
+        // Decide how we will present results to the users.
         return toPrint;
     }
-
 }

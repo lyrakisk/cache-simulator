@@ -80,10 +80,21 @@ jacocoTestReport {
     reports {
         xml.enabled true
     }
+
 }
 
 jacocoTestCoverageVerification {
     executionData test, integrationTest
+
+    // exclude classes from the coverage rules
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['Main.class']
+            )
+        }))
+    }
+
     violationRules {
         rule {
             enabled = true
@@ -93,6 +104,17 @@ jacocoTestCoverageVerification {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
                 minimum = 0.75
+            }
+        }
+
+        rule {
+            enabled = true
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.85
             }
         }
     }
