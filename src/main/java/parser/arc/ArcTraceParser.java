@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -27,14 +29,14 @@ import parser.Record;
  * " USENIX Conference on File and Storage Technologies (FAST 03),
  * San Francisco, CA, pp. 115-130, March 31-April 2, 2003.
  */
-@SuppressWarnings("PMD")
 public class ArcTraceParser extends AbstractParserClass {
 
     transient long blockSize = 512;
 
     /**
-     * Parser for the traces described int he description of the class.
-     * It was necessary to overwrite it as from a single line, we can produce >1 records.
+     * Parser for the traces described in he description of the class.
+     * It was necessary to overwrite it as from a single line,
+     * we can produce multiple records.
      * @param filename name of the file.
      * @return stream Stream of records.
      */
@@ -48,47 +50,47 @@ public class ArcTraceParser extends AbstractParserClass {
             inputStream = new FileInputStream(filename);
             Reader reader = new InputStreamReader(inputStream);
             BufferedReader input = new BufferedReader(reader);
-            Stream<Stream<Record>> nestedStream = input.lines().map(this::parseMultipleRecord);
+            Stream<Stream<Record>> nestedStream = input.lines().map(this::parseMultipleRecords);
             Stream<Record> stream = nestedStream.flatMap(Function.identity());
             return stream;
         } catch (FileNotFoundException e) {
             System.err.print("ERROR: The file named " + filename + " was not found!\n");
             e.printStackTrace();
+            return Stream.empty();
         }
-
-        return null;
-    }
-
-     /**
-     * For efficiency reasons it is not used => returns null.
-     * @param line line of a trace file.
-     * @return  null
-     */
-     @Override
-     public Record parseRecord(String line) {
-       return null;
     }
 
     /**
-     * Parse multiple records in case that a line in a trace file,
-     * corresponds to more than one records.
-     * @param line String line that corresponds to a line in the trace file.
-     * @return Stream of Records.
-     */
-    public Stream<Record> parseMultipleRecord(String line) {
+    * For efficiency reasons it is not used => returns null.
+    * @param line line of a trace file.
+    * @return  null
+    */
+    @Override
+    public Record parseRecord(String line) {
+        return null;
+    }
 
-        Stream<Record> stream = Stream.of();
+    /**
+    * Parse multiple records in case that a line in a trace file,
+    * corresponds to more than one records.
+    * @param line String line that corresponds to a line in the trace file.
+    * @return Stream of Records.
+    */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+    public Stream<Record> parseMultipleRecords(String line) {
+
         String[] fields = line.split(" ");
-        Long startingBlock = Long.valueOf(fields[0]);
-        int blocksNum = Integer.parseInt(fields[1]);
+        long startingBlock = Long.parseLong(fields[0]);
+        int numberOfBlocks = Integer.parseInt(fields[1]);
 
-        for (int i = 0; i < blocksNum; i++) {
-            Record record = new Record((startingBlock + i) + "", blockSize);
-            stream = Stream.concat(stream, Stream.of(record));
+        List<Record> recordList = new ArrayList<Record>();
 
+        for (int i = 0; i < numberOfBlocks; i++) {
+            Record record = new Record(Long.toString(startingBlock + i), blockSize);
+            recordList.add(record);
         }
 
-        return stream;
+        return recordList.stream();
     }
 
 
