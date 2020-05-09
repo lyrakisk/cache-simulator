@@ -27,7 +27,7 @@ public class CambridgeTraceParserTest {
     }
 
     @Test
-    public void whenExceptionThrown_thenAssertionSucceeds() {
+    public void testExceptionCatch() {
         final PrintStream originalErr = System.err;
         final ByteArrayOutputStream err = new ByteArrayOutputStream();
         System.setErr(new PrintStream(err));
