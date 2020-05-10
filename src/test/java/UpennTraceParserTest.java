@@ -1,7 +1,5 @@
-import org.junit.jupiter.api.Test;
-import parser.Record;
-import parser.arc.ArcTraceParser;
-import parser.upenn.UpennTraceParser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -9,14 +7,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import parser.Record;
+import parser.upenn.UpennTraceParser;
+
+
+
 
 public class UpennTraceParserTest {
 
     @Test
     public void sampleFileCheckFirstLineTest() {
-       UpennTraceParser parser = new UpennTraceParser();
+        UpennTraceParser parser = new UpennTraceParser();
         Record actual = parser
             .parse("src/test/resources/aligned-sample")
             .findFirst()
