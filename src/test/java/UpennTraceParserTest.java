@@ -12,8 +12,6 @@ import parser.Record;
 import parser.upenn.UpennTraceParser;
 
 
-
-
 public class UpennTraceParserTest {
 
     @Test
