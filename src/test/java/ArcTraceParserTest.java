@@ -2,16 +2,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
-import parser.Record;
-import parser.arc.ArcTraceParser;
-import parser.snia.CambridgeTraceParser;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+import parser.Record;
+import parser.arc.ArcTraceParser;
+
 
 
 public class ArcTraceParserTest {
