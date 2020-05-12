@@ -21,7 +21,7 @@ public class UpennTraceParserTest {
             .parse("src/test/resources/aligned-sample")
             .findFirst()
             .get();
-        Record expected = new Record("bfede22c", 65526);
+        Record expected = new Record("bfede22c", 65536);
         assertEquals(expected.getSize(), actual.getSize());
         assertEquals(expected.getId(), actual.getId());
     }
