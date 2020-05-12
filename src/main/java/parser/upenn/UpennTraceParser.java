@@ -10,7 +10,7 @@ import parser.Record;
 public class UpennTraceParser extends AbstractParserClass {
 
     //block size is given  to be 64B => 64* 1024 bytes = 65536 bytes.
-    transient long size = 65526;
+    transient long size = 65536;
 
     @Override
     public Record parseRecord(String line) {
