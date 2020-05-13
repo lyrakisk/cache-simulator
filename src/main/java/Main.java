@@ -12,7 +12,7 @@ import policy.Policy;
 import simulator.Simulator;
 
 public class Main {
-    private static final String configurationFilePath = "src/main/resources/config.yml";
+    private static final String configurationFilePath = "src/main/resources/default.yml";
 
     /**
      * Run parser.
