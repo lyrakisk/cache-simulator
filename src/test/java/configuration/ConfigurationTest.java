@@ -1,19 +1,20 @@
 package configuration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import java.io.File;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConfigurationTest {
 
     static Configuration configuration;
     static String configurationFilePath = "src/main/resources/default.yml";
+
     @BeforeAll
     static void setUp() {
         // Read configuration file
@@ -24,7 +25,7 @@ public class ConfigurationTest {
                     mapper.readValue(
                             new File(configurationFilePath),
                             Configuration.class);
-        }catch (Exception e) {
+        } catch (Exception e) {
             // TODO: should we handle the rest of the exceptions separately?
             e.printStackTrace();
         }
