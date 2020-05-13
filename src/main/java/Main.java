@@ -7,12 +7,11 @@ import java.lang.reflect.Constructor;
 
 import configuration.Trace;
 import parser.AbstractParserClass;
-import parser.snia.CambridgeTraceParser;
 import policy.Policy;
 import simulator.Simulator;
 
 public class Main {
-    private static final String configurationFilePath = "src/main/resources/default.yml";
+    private static final String configurationFilePath = "src/main/resources/custom.yml";
 
     /**
      * Run parser.
