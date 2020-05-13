@@ -4,9 +4,9 @@ import policy.Policy;
 
 public class Configuration {
 
-    private String[] policies;
-    private int cacheSize;
-    private boolean sizeInBytes;
+    private transient String[] policies;
+    private transient int cacheSize;
+    private transient boolean sizeInBytes;
 
     public String[] getPolicies() {
         return policies;
