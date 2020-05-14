@@ -14,8 +14,8 @@ public class UpennTraceParser extends AbstractParserClass {
 
     @Override
     public Record parseRecord(String line) {
-       String[] strings = line.split(" ");
-       Record record = new Record(strings[0], size);
-       return record;
+        String[] strings = line.split(" ");
+        Record record = new Record(strings[0], size);
+        return record;
     }
 }

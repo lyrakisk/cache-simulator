@@ -1,3 +1,5 @@
+package parser.snia;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,7 +11,6 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import parser.Record;
-import parser.snia.CambridgeTraceParser;
 
 
 public class CambridgeTraceParserTest {

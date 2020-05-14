@@ -29,12 +29,6 @@ repositories {
     jcenter()
 }
 
-//test {
-////    // tests are always considered outdated, so gradle will run them every time
-////    // instead of returning "Test events were not received"
-////    outputs.upToDateWhen { false }
-////}
-
 sourceSets {
     integrationTest {
         java {
@@ -53,6 +47,13 @@ dependencies {
 //    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
     testCompile "org.mockito:mockito-core:1.+"
     integrationTestCompile('org.junit.jupiter:junit-jupiter:5.5.2')
+
+    compile (
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.0'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.0'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'],
+            [group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.11.0']
+    )
 }
 
 task integrationTest(type: Test) {
