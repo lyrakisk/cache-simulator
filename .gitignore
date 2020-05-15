@@ -11,3 +11,6 @@ out/**
 codemr/**
 
 /src/main/resources/reports/
+
+# results file
+results.json

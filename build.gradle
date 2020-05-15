@@ -77,11 +77,18 @@ integrationTest.mustRunAfter test
 jacocoTestReport {
     executionData test, integrationTest
 
-//    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+    //    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
     reports {
         xml.enabled true
     }
-
+    // exclude classes from the coverage rules
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['Main.class']
+            )
+        }))
+    }
 }
 
 jacocoTestCoverageVerification {

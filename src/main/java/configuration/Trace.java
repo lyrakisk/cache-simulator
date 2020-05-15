@@ -19,7 +19,7 @@ public enum Trace {
     private String filePath;
     private AbstractParserClass parser;
 
-    Trace (String filePath, AbstractParserClass parser) {
+    Trace(String filePath, AbstractParserClass parser) {
         this.filePath = filePath;
         this.parser = parser;
     }

@@ -1,13 +1,13 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import configuration.Configuration;
+import configuration.Trace;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-
-import configuration.Trace;
 import parser.AbstractParserClass;
 import policy.Policy;
+import report.Result;
 import simulator.Simulator;
 
 public class Main {
@@ -40,10 +40,10 @@ public class Main {
             Simulator simulator = new Simulator(
                     policy,
                     parser.parse(filePath));
-            simulator.simulate();
+            Result result = simulator.simulate();
 
-            System.out.println("cache hits: " + simulator.getNumberOfCacheHits()
-                    + " (" + simulator.getCacheHitsPercentage() + "%)");
+            ObjectMapper resultsMapper = new ObjectMapper();
+            resultsMapper.writeValue(new File("results.json"), result);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
