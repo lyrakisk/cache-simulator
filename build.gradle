@@ -71,7 +71,17 @@ tasks.withType(Test) {
     outputs.upToDateWhen { false }
 }
 
-check.dependsOn integrationTest
+check.dependsOn integrationTest,
+        checkstyleMain,
+        checkstyleTest,
+        checkstyleIntegrationTest,
+        pmdMain,
+        pmdTest,
+        pmdIntegrationTest,
+        spotbugsMain,
+        spotbugsTest,
+        spotbugsIntegrationTest,
+        jacocoTestCoverageVerification
 integrationTest.mustRunAfter test
 
 jacocoTestReport {
