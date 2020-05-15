@@ -13,8 +13,9 @@ public abstract class Policy {
 
     /**
      * Constructor for the policy.
-     * @param cacheSize the size of the cache in bytes
-     * @param isBytes the cache size parameter
+     * @param cacheSize the size of the cache.
+     * @param isBytes if this is true, the cache size is in Bytes, otherwise
+     *                it represents the maximum number of items the cache can store.
      */
     public Policy(int cacheSize, boolean isBytes) {
         this.cacheSize = cacheSize;

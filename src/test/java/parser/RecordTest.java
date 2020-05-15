@@ -1,7 +1,8 @@
+package parser;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import parser.Record;
 
 public class RecordTest {
     private transient Record record = new Record("abc", 2048);

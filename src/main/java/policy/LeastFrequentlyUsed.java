@@ -51,6 +51,11 @@ public class LeastFrequentlyUsed extends Policy {
         }
     }
 
+    /**
+     * Checks whether a record is in the cache.
+     * @param record the record to be checked
+     * @return true if the record was present in the cache, false otherwise
+     */
     @Override
     public boolean isPresentInCache(Record record) {
         String id = record.getId();
@@ -60,6 +65,7 @@ public class LeastFrequentlyUsed extends Policy {
                 Record toRemove = items.remove(id);
                 int occurrences = counts.remove(toRemove.getId());
                 frequencies.get(occurrences).remove(toRemove.getId());
+                this.removeFromCache(toRemove);
             }
 
             return false;
@@ -94,6 +100,7 @@ public class LeastFrequentlyUsed extends Policy {
         int pos = counts.get(id);
         items.put(id, record);
         frequencies.get(pos).add(id);
+        minCount = pos;
         return found;
     }
 }
