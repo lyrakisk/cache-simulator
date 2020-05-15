@@ -1,12 +1,10 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import configuration.Configuration;
+import configuration.Trace;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-
-import configuration.Trace;
 import parser.AbstractParserClass;
 import policy.Policy;
 import report.Result;

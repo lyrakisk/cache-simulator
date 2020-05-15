@@ -12,6 +12,12 @@ public class Result {
     private transient int numberOfHits;
 
 
+    /**
+     * Constructor.
+     * @param policy the policy that was simulated.
+     * @param hitRatio (number of hits) / (total number of requests)
+     * @param numberOfHits total number of items found in cache
+     */
     public Result(String policy, double hitRatio, int numberOfHits) {
         this.policy = policy;
         this.hitRatio = hitRatio;
