@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import parser.Record;
 import policy.Policy;
+import report.Result;
 
 
 /**
@@ -45,7 +46,7 @@ public class Simulator {
      * Performs the simulation and updates the fields
      * that store the performance metrics.
      */
-    public void simulate() {
+    public Result simulate() {
         numberOfCacheHits = 0;
 
         List<Record> collectedRecords =  records.sequential().collect(Collectors.toList());
@@ -58,6 +59,8 @@ public class Simulator {
         }
 
         cacheHitsPercentage = ((int) (numberOfCacheHits / total * 10000)) / 100.0;
+
+        return new Result(this.getPolicyName(), cacheHitsPercentage, numberOfCacheHits);
     }
 
 }
