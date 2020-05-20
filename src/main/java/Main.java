@@ -5,11 +5,19 @@ import configuration.Trace;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+
 import parser.AbstractParserClass;
 import policy.Policy;
 import report.Result;
 import simulator.Simulator;
 
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+/**
+ * The DataflowAnomalyAnalysis is suppressed here, because it's raised
+ * for the wrong reason. PMD thinks that the className variable inside the
+ * for loop is not initialized.
+ */
 public class Main {
     private static final String configurationFilePath = "src/main/resources/custom.yml";
 
@@ -27,23 +35,32 @@ public class Main {
                     mapper.readValue(
                             new File(configurationFilePath),
                             Configuration.class);
-            Class<?> policyClass = Class.forName("policy." + configuration.getPolicies()[0]);
-            Constructor<?> policyConstructor = policyClass.getConstructor(int.class, boolean.class);
-            Policy policy = (Policy) policyConstructor.newInstance(
-                    configuration.getCacheSize(),
-                    configuration.isSizeInBytes());
+
+            ArrayList<Policy> policies = new ArrayList<Policy>();
+
+            for (String className: configuration.getPolicies()) {
+                Class<?> policyClass = Class.forName("policy." + className);
+                Constructor<?> policyConstructor =
+                        policyClass.getConstructor(int.class, boolean.class);
+                policies.add((Policy) policyConstructor.newInstance(
+                        configuration.getCacheSize(), configuration.isSizeInBytes()));
+            }
+
 
             Trace trace = Trace.valueOf(configuration.getTrace());
             AbstractParserClass parser = trace.getParser();
             String filePath = trace.getFilePath();
 
             Simulator simulator = new Simulator(
-                    policy,
+                    policies,
                     parser.parse(filePath));
-            Result result = simulator.simulate();
+            Result[] results = simulator.simulate();
 
             ObjectMapper resultsMapper = new ObjectMapper();
-            resultsMapper.writeValue(new File("results.json"), result);
+
+            resultsMapper
+                    .writerWithDefaultPrettyPrinter()
+                    .writeValue(new File("results.json"), results);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

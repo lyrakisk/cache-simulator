@@ -11,7 +11,7 @@ public class ResultTest {
 
     @BeforeAll
     static void setUp() {
-        result = new Result("LeastRecentlyUsed", 50, 2134);
+        result = new Result("LeastRecentlyUsed", 50, 2134, 20000);
     }
 
     @Test
