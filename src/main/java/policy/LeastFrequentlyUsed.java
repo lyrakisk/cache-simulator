@@ -35,7 +35,7 @@ public class LeastFrequentlyUsed extends Policy {
             while (!currentMin.isEmpty() && this.getRemainingCache() < 0) {
                 String toRemove = currentMin.iterator().next();
                 currentMin.remove(toRemove);
-                this.removeFromCache(items.remove(toRemove));
+                this.removeFromCache(items.remove(toRemove).getSize());
                 counts.remove(toRemove);
             }
 
@@ -65,7 +65,7 @@ public class LeastFrequentlyUsed extends Policy {
                 Record toRemove = items.remove(id);
                 int occurrences = counts.remove(toRemove.getId());
                 frequencies.get(occurrences).remove(toRemove.getId());
-                this.removeFromCache(toRemove);
+                this.removeFromCache(toRemove.getSize());
             }
 
             return false;
@@ -73,8 +73,8 @@ public class LeastFrequentlyUsed extends Policy {
 
         boolean found = items.containsKey(id);
         if (found) {
-            this.removeFromCache(items.get(id));
-            this.addToCache(record);
+            this.removeFromCache(items.get(id).getSize());
+            this.addToCache(record.getSize());
             int currCount = counts.get(id);
             counts.put(id, currCount + 1);
             frequencies.get(currCount).remove(id);
@@ -87,7 +87,7 @@ public class LeastFrequentlyUsed extends Policy {
                 frequencies.put(currCount + 1, new LinkedHashSet<>());
             }
         } else {
-            this.addToCache(record);
+            this.addToCache(record.getSize());
             counts.put(id, 1);
             minCount = 1;
 

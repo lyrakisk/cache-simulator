@@ -1,6 +1,6 @@
 package policy;
 
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 
 import parser.Record;
 
@@ -8,7 +8,8 @@ import parser.Record;
  * Class representing the LRU cache policy.
  */
 public class LeastRecentlyUsed extends Policy {
-    private transient LinkedList<Record> cache;
+
+    private transient LinkedHashMap<Record, Boolean> cache;
 
     /**
      * Constructing a new cache using the LRU policy.
@@ -17,7 +18,7 @@ public class LeastRecentlyUsed extends Policy {
      */
     public LeastRecentlyUsed(int size, boolean isBytes) {
         super(size, isBytes);
-        cache = new LinkedList<>();
+        cache = new LinkedHashMap<>(16, .75f, true);
     }
 
     /**
@@ -32,26 +33,22 @@ public class LeastRecentlyUsed extends Policy {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public boolean isPresentInCache(Record record) {
         this.checkIsBytes(record);
-        boolean existing = false;
-        for (int i = 0; i < cache.size(); ++ i) {
-            Record inCache = cache.get(i);
-            if (inCache.getId().equals(record.getId())) {
-                cache.remove(inCache);
-                this.removeFromCache(inCache);
-                existing = true;
-                break;
-            }
-        }
+        boolean existing = true;
 
         if (record.getSize() > this.getCacheSize()) {
             return false;
         }
 
-        cache.addFirst(record);
-        this.addToCache(record);
+        if (cache.get(record) == null) {
+            cache.put(record, true);
+            this.addToCache(record.getSize());
+            existing = false;
+        }
+
         while (this.getRemainingCache() < 0) {
-            Record last = cache.removeLast();
-            this.removeFromCache(last);
+            Record toRemove = cache.keySet().iterator().next();
+            cache.remove(toRemove);
+            this.removeFromCache(toRemove.getSize());
         }
 
         return existing;
