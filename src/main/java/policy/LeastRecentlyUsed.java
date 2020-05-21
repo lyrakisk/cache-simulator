@@ -56,4 +56,9 @@ public class LeastRecentlyUsed extends Policy {
 
         return existing;
     }
+
+    @Override
+    public int numberOfItemsInCache() {
+        return cache.size();
+    }
 }

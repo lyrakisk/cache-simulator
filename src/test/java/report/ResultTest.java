@@ -21,11 +21,17 @@ public class ResultTest {
 
     @Test
     public void testGetHitRatio() {
-        assertEquals(50, result.getHitRatio());
+        assertEquals(50, result.getHitRate());
     }
 
     @Test
     public void testGetNumberOfHits() {
         assertEquals(2134, result.getNumberOfHits());
+    }
+
+    @Test
+    public void testSetGetEvictions() {
+        result.setEvictions(10);
+        assertEquals(10, result.getEvictions());
     }
 }

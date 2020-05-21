@@ -68,14 +68,15 @@ public class Main {
 
             // print results to console
             AsciiTable table = new AsciiTable();
-            table.addRow("Policy", "Requests", "Hit Ratio", "Hits");
+            table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions");
             table.addRule();
             for (Result result: results) {
                 table.addRow(
                         result.getPolicy(),
                         result.getNumberOfRequests(),
-                        result.getHitRatio(),
-                        result.getNumberOfHits());
+                        result.getHitRate(),
+                        result.getNumberOfHits(),
+                        result.getEvictions());
                 table.addRule();
             }
             table.getContext().setGrid(U8_Grids.borderDouble());

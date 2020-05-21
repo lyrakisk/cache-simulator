@@ -8,19 +8,20 @@ package report;
  */
 public class Result {
     private transient String policy;
-    private transient double hitRatio;
+    private transient double hitRate;
     private transient int numberOfHits;
     private transient int numberOfRequests;
+    private transient long evictions;
 
     /**
      * Constructor.
      * @param policy the policy that was simulated.
-     * @param hitRatio (number of hits) / (total number of requests)
+     * @param hitRate (number of hits) / (total number of requests)
      * @param numberOfHits total number of items found in cache
      */
-    public Result(String policy, double hitRatio, int numberOfHits, int numberOfRequests) {
+    public Result(String policy, double hitRate, int numberOfHits, int numberOfRequests) {
         this.policy = policy;
-        this.hitRatio = hitRatio;
+        this.hitRate = hitRate;
         this.numberOfHits = numberOfHits;
         this.numberOfRequests = numberOfRequests;
     }
@@ -29,8 +30,8 @@ public class Result {
         return policy;
     }
 
-    public double getHitRatio() {
-        return hitRatio;
+    public double getHitRate() {
+        return hitRate;
     }
 
     public int getNumberOfHits() {
@@ -45,8 +46,8 @@ public class Result {
         this.numberOfRequests = numberOfRequests;
     }
 
-    public void setHitRatio(double hitRatio) {
-        this.hitRatio = hitRatio;
+    public void setHitRate(double hitRate) {
+        this.hitRate = hitRate;
     }
 
     public void setNumberOfHits(int numberOfHits) {
@@ -54,4 +55,11 @@ public class Result {
     }
 
 
+    public long getEvictions() {
+        return evictions;
+    }
+
+    public void setEvictions(long evictions) {
+        this.evictions = evictions;
+    }
 }
