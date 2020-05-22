@@ -39,10 +39,12 @@ public class LeastFrequentlyUsed extends Policy {
                 counts.remove(toRemove);
             }
 
+//            System.out.println("minCount=" + minCount);
             if (currentMin.isEmpty()) {
                 if (items.isEmpty()) {
                     minCount = -1;
                 } else {
+//                    System.out.println(items);
                     while (frequencies.get(minCount).size() == 0) {
                         ++ minCount;
                     }
@@ -100,7 +102,9 @@ public class LeastFrequentlyUsed extends Policy {
         int pos = counts.get(id);
         items.put(id, record);
         frequencies.get(pos).add(id);
-        minCount = pos;
+        if (pos < minCount || minCount == -1) {
+            minCount = pos;
+        }
         return found;
     }
 }
