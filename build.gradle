@@ -96,7 +96,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['Main.class']
+                    exclude: ['Main.class', '/policy/helpers/Type.class']
             )
         }))
     }
