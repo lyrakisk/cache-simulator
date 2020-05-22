@@ -32,7 +32,7 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void testGetPolicies() {
+    void testGetPolicies() {
         String[] policies = configuration.getPolicies();
 
         assertEquals(2, policies.length);
@@ -41,17 +41,17 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void testGetCacheSize() {
+    void testGetCacheSize() {
         assertEquals(20000, configuration.getCacheSize());
     }
 
     @Test
-    public void testIsSizeInBytes() {
+    void testIsSizeInBytes() {
         assertTrue(configuration.isSizeInBytes());
     }
 
     @Test
-    public void testGetTrace() {
+    void testGetTrace() {
         assertEquals(Trace.Cambridge, Trace.valueOf(configuration.getTrace()));
     }
 }

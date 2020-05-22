@@ -21,7 +21,7 @@ public class SimulateLruTest {
     private transient ArrayList<Policy> policies = new ArrayList<Policy>();
 
     @Test
-    public void testZeroCacheHits() {
+    void testZeroCacheHits() {
         policies.add(new LeastRecentlyUsed(0, true));
 
         Simulator simulator = new Simulator(policies, records);
@@ -31,7 +31,7 @@ public class SimulateLruTest {
     }
 
     @Test
-    public void testOneCacheHit() {
+    void testOneCacheHit() {
         policies.add(new LeastRecentlyUsed(10000, true));
         Simulator simulator = new Simulator(policies, records);
         Result[] results = simulator.simulate();
@@ -40,7 +40,7 @@ public class SimulateLruTest {
     }
 
     @Test
-    public void testZeroEvictions() {
+    void testZeroEvictions() {
         policies.add(new LeastRecentlyUsed(10, false));
         Simulator simulator = new Simulator(policies, records);
         Result[] results = simulator.simulate();
@@ -48,7 +48,7 @@ public class SimulateLruTest {
     }
 
     @Test
-    public void testOneEviction() {
+    void testOneEviction() {
         policies.add(new LeastRecentlyUsed(8, false));
         Simulator simulator = new Simulator(policies, records);
         Result[] results = simulator.simulate();
@@ -56,7 +56,7 @@ public class SimulateLruTest {
     }
 
     @Test
-    public void testMultipleEvictions() {
+    void testMultipleEvictions() {
         policies.add(new LeastRecentlyUsed(1, false));
         Simulator simulator = new Simulator(policies, records);
         Result[] results = simulator.simulate();
@@ -65,7 +65,7 @@ public class SimulateLruTest {
 
 
     @AfterEach
-    public void clear() {
+    void clear() {
         policies.clear();
     }
 

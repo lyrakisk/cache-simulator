@@ -15,22 +15,22 @@ public class ResultTest {
     }
 
     @Test
-    public void testGetPolicy() {
+    void testGetPolicy() {
         assertEquals("LeastRecentlyUsed", result.getPolicy());
     }
 
     @Test
-    public void testGetHitRatio() {
+    void testGetHitRatio() {
         assertEquals(50, result.getHitRate());
     }
 
     @Test
-    public void testGetNumberOfHits() {
+    void testGetNumberOfHits() {
         assertEquals(2134, result.getNumberOfHits());
     }
 
     @Test
-    public void testSetGetEvictions() {
+    void testSetGetEvictions() {
         result.setEvictions(10);
         assertEquals(10, result.getEvictions());
     }
