@@ -7,8 +7,8 @@ import parser.Record;
  */
 public abstract class Policy {
 
-    private transient int cacheSize;
-    private transient int usedCacheSpace;
+    private transient long cacheSize;
+    private transient long usedCacheSpace;
     private transient boolean isBytes;
 
     /**
@@ -17,7 +17,7 @@ public abstract class Policy {
      * @param isBytes if this is true, the cache size is in Bytes, otherwise
      *                it represents the maximum number of items the cache can store.
      */
-    public Policy(int cacheSize, boolean isBytes) {
+    public Policy(long cacheSize, boolean isBytes) {
         this.cacheSize = cacheSize;
         this.usedCacheSpace = 0;
         this.isBytes = isBytes;
@@ -27,27 +27,28 @@ public abstract class Policy {
      * Getter for the cache size.
      * @return
      */
-    public int getCacheSize() {
+    public long getCacheSize() {
         return cacheSize;
     }
 
     /**
-     * Adds the record's size to the current size of the cache.
-     * @param record the record whose size should be added
+     * Updates the cache size.
+     * @param size the size with which the cache should be updated
+     * @param isAdding if true it adds the size to the cache, otherwise it subtracts it
      */
-    public void addToCache(Record record) {
-        usedCacheSpace += record.getSize();
-    }
-
-    public void removeFromCache(Record record) {
-        usedCacheSpace -= record.getSize();
+    public void updateCacheSize(long size, boolean isAdding) {
+        if (isAdding) {
+            usedCacheSpace += size;
+        } else {
+            usedCacheSpace -= size;
+        }
     }
 
     /**
      * Returns the remaining cache space.
      * @return the remaining cache space
      */
-    public int getRemainingCache() {
+    public long getRemainingCache() {
         return cacheSize - usedCacheSpace;
     }
 
