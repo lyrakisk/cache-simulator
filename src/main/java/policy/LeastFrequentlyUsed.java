@@ -72,6 +72,10 @@ public class LeastFrequentlyUsed extends Policy {
 
         boolean found = items.containsKey(id);
         if (found) {
+            if (items.get(id).getSize() != record.getSize()) {
+                found = false;
+            }
+
             this.updateCacheSize(items.get(id).getSize(), false);
             this.updateCacheSize(record.getSize(), true);
             int currCount = counts.get(id);
