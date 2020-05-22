@@ -38,7 +38,6 @@ public class LeastFrequentlyUsed extends Policy {
                 this.updateCacheSize(items.remove(toRemove).getSize(), false);
                 counts.remove(toRemove);
             }
-
             if (currentMin.isEmpty()) {
                 if (items.isEmpty()) {
                     minCount = -1;
@@ -100,7 +99,9 @@ public class LeastFrequentlyUsed extends Policy {
         int pos = counts.get(id);
         items.put(id, record);
         frequencies.get(pos).add(id);
-        minCount = pos;
+        if (pos < minCount || minCount == -1) {
+            minCount = pos;
+        }
         return found;
     }
 }
