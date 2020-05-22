@@ -1,10 +1,10 @@
 package parser.umass;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import parser.Record;
-import parser.arc.ArcTraceParser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UmassTraceParserTest {
 
