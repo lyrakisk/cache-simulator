@@ -41,14 +41,14 @@ public class LeastRecentlyUsed extends Policy {
 
         if (cache.get(record) == null) {
             cache.put(record, true);
-            this.addToCache(record.getSize());
+            this.updateCacheSize(record.getSize(), true);
             existing = false;
         }
 
         while (this.getRemainingCache() < 0) {
             Record toRemove = cache.keySet().iterator().next();
             cache.remove(toRemove);
-            this.removeFromCache(toRemove.getSize());
+            this.updateCacheSize(toRemove.getSize(), false);
         }
 
         return existing;
