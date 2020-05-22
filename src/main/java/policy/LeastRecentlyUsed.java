@@ -11,22 +11,37 @@ import parser.Record;
  */
 public class LeastRecentlyUsed extends Policy {
 
+    /**
+     * Class to represent a doubly-linked list.
+     */
     private class Node {
         private transient String id;
         private transient long sz;
         private transient Node prev;
         private transient Node next;
 
+        /**
+         * Constructor for a node of the doubly-linked list.
+         * @param id the identifier of the record this node represents
+         * @param sz the size of the record this node represents
+         */
         private Node(String id, long sz) {
             this.id = id;
             this.sz = sz;
         }
 
+        /**
+         * Removes this node from the doubly-linked list.
+         */
         private void removeFromList() {
             next.prev = prev;
             prev.next = next;
         }
 
+        /**
+         * Adds this node after another node in the doubly-linked list.
+         * @param after the node to be added after
+         */
         private void addAfter(Node after) {
             next = after.next;
             prev = after;
