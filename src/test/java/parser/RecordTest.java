@@ -8,12 +8,12 @@ public class RecordTest {
     private transient Record record = new Record("abc", 2048);
 
     @Test
-    public void testGetId() {
+    void testGetId() {
         assertEquals("abc", record.getId());
     }
 
     @Test
-    public void testGetSize() {
+    void testGetSize() {
         assertEquals(2048, record.getSize());
     }
 }

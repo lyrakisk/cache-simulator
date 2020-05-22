@@ -103,4 +103,9 @@ public class LeastFrequentlyUsed extends Policy {
         minCount = pos;
         return found;
     }
+
+    @Override
+    public int numberOfItemsInCache() {
+        return items.size();
+    }
 }

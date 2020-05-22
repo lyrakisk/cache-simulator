@@ -16,7 +16,7 @@ import parser.Record;
 public class CambridgeTraceParserTest {
 
     @Test
-    public void parseTest() {
+    void parseTest() {
         CambridgeTraceParser parser = new CambridgeTraceParser();
         Record actual = parser
                 .parse("src/test/resources/msr-cambridge1-sample.csv")
@@ -28,7 +28,7 @@ public class CambridgeTraceParserTest {
     }
 
     @Test
-    public void testExceptionCatch() {
+    void testExceptionCatch() {
         final PrintStream originalErr = System.err;
         final ByteArrayOutputStream err = new ByteArrayOutputStream();
         System.setErr(new PrintStream(err));
