@@ -38,13 +38,10 @@ public class LeastFrequentlyUsed extends Policy {
                 this.removeFromCache(items.remove(toRemove));
                 counts.remove(toRemove);
             }
-
-//            System.out.println("minCount=" + minCount);
             if (currentMin.isEmpty()) {
                 if (items.isEmpty()) {
                     minCount = -1;
                 } else {
-//                    System.out.println(items);
                     while (frequencies.get(minCount).size() == 0) {
                         ++ minCount;
                     }
