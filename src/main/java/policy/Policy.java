@@ -30,14 +30,6 @@ public abstract class Policy {
     public long getCacheSize() {
         return cacheSize;
     }
-//
-//    /**
-//     * Adds a certain amount of bytes/records from the cache.
-//     * @param size the amount of bytes/records which should be added
-//     */
-//    public void addToCache(long size) {
-//        usedCacheSpace += size;
-//    }
 
     /**
      * Updates the cache size.
@@ -51,14 +43,6 @@ public abstract class Policy {
             usedCacheSpace -= size;
         }
     }
-
-//    /**
-//     * Removes a certain amount of bytes/records from the cache.
-//     * @param size the amount of bytes/records which should be removed
-//     */
-//    public void removeFromCache(long size) {
-//        usedCacheSpace -= size;
-//    }
 
     /**
      * Returns the remaining cache space.
