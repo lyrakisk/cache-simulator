@@ -9,8 +9,8 @@ package report;
 public class Result {
     private transient String policy;
     private transient double hitRate;
-    private transient int numberOfHits;
-    private transient int numberOfRequests;
+    private transient long numberOfHits;
+    private transient long numberOfRequests;
     private transient long evictions;
 
     /**
@@ -34,15 +34,15 @@ public class Result {
         return hitRate;
     }
 
-    public int getNumberOfHits() {
+    public long getNumberOfHits() {
         return numberOfHits;
     }
 
-    public int getNumberOfRequests() {
+    public long getNumberOfRequests() {
         return numberOfRequests;
     }
 
-    public void setNumberOfRequests(int numberOfRequests) {
+    public void setNumberOfRequests(long numberOfRequests) {
         this.numberOfRequests = numberOfRequests;
     }
 
@@ -50,10 +50,9 @@ public class Result {
         this.hitRate = hitRate;
     }
 
-    public void setNumberOfHits(int numberOfHits) {
+    public void setNumberOfHits(long numberOfHits) {
         this.numberOfHits = numberOfHits;
     }
-
 
     public long getEvictions() {
         return evictions;
