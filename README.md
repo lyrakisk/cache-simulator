@@ -1,6 +1,6 @@
 # Cache Simulator for OpenDC
-![BRANCH](https://img.shields.io/badge/branch--coverage-100%25-brightgreen.svg)
-![LINE](https://img.shields.io/badge/line--coverage-100%25-brightgreen.svg)
+![LINE](http://line.coverage.link)
+![BRANCH](http://branch.coverage.link)  
 # Architecture
 ![architecture of the application](resources/architecture.png)
 
