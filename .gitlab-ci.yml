@@ -55,8 +55,8 @@ PMD:
 
 test:
   stage: test
-  coverage: '/Branch coverage: \d+(\.\d+)?/'
+  coverage: '/Branch coverage: \d+\.\d+/'
   script:
     - gradle check jacocoTestReport jacocoTestCoverageVerification
-    - awk -F"," '{ branches += $6 + $7; covered += $7 } END { print covered, "/", branches, " branches covered"; print "Branch coverage:", 100*covered/branches }' build/reports/jacoco/test/jacocoTestReport.csv || true
+    - awk -F"," '{ branches += $6 + $7; covered += $7 } END { print covered, "/", branches, " branches covered"; print "Branch coverage:", 100.0*covered/branches }' build/reports/jacoco/test/jacocoTestReport.csv || true
 
