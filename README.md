@@ -1,6 +1,5 @@
 # Cache Simulator for OpenDC
-![LINE](http://line.coverage.link)
-![BRANCH](http://branch.coverage.link)  
+![BRANCH](https://gitlab.com/gitlab-org/gitlab-foss/badges/master/coverage.svg?job=test)
 # Architecture
 ![architecture of the application](resources/architecture.png)
 
