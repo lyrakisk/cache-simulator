@@ -55,7 +55,7 @@ PMD:
 
 test:
   stage: test
-  coverage: '/Branch coverage: \d+\.\d+/'
+  coverage: '/Branch coverage: \d+(\.\d+)?/'
   script:
     gradle check jacocoTestReport jacocoTestCoverageVerification
   after_script:
