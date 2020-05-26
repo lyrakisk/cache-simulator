@@ -24,7 +24,7 @@ public class UmassTraceParser extends AbstractParserClass {
     public Record parseRecord(String line) {
         String[] sliced = line.split(",");
         String id = sliced[1];
-        long size = Long.valueOf(sliced[2]);
+        long size = Long.parseLong(sliced[2]);
 
         return new Record(id, size);
     }
