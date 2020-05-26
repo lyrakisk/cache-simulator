@@ -59,5 +59,5 @@ test:
   script:
     gradle check jacocoTestReport jacocoTestCoverageVerification
   after_script:
-    - awk -F"," '{ branches += $6 + $7; covered += $7 } END { print covered, "/", branches, " branches covered"; printf "Branch coverage:%s%0.2f%%" " " 100*covered/branches }' build/reports/jacoco/test/jacocoTestReport.csv || true
+    - awk -F"," '{ branches += $6 + $7; covered += $7 } END { print covered, "/", branches, " branches covered"; printf "Branch coverage:%s%0.2f%%", " ", 100*covered/branches }' build/reports/jacoco/test/jacocoTestReport.csv || true
 
