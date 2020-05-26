@@ -116,7 +116,7 @@ public class Arc extends Policy {
                 this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
             }
         } else if ((sizeL1 < maxSize) && ((sizeL1 + sizeL2) >= maxSize)) {
-            if ((sizeL1 + sizeL2) >= (2 * maxSize)) {
+            if ((sizeL1 + sizeL2) == (2 * maxSize)) {
                 QueueNode<Record> queueNodeToBeRemoved = b2.getNext();
                 dataNodes.remove(queueNodeToBeRemoved.getKey());
                 queueNodeToBeRemoved.remove();
@@ -130,7 +130,9 @@ public class Arc extends Policy {
         dataNodes.put(record.getId(), queueNode);
         queueNode.addToLast(t1);
         lastRecordAdded = queueNode.getRecord();
-        makeSpace();
+        if (isBytes) {
+            makeSpace();
+        }
     }
 
     /**
@@ -154,7 +156,9 @@ public class Arc extends Policy {
         nodeRecord.setQueueType(Type.QueueType.T2);
         nodeRecord.addToLast(t2);
         lastRecordAdded = nodeRecord.getRecord();
-        makeSpace();
+        if (isBytes) {
+            makeSpace();
+        }
     }
 
     /**
@@ -178,7 +182,9 @@ public class Arc extends Policy {
         nodeRecord.setQueueType(Type.QueueType.T2);
         nodeRecord.addToLast(t2);
         lastRecordAdded = nodeRecord.getRecord();
-        makeSpace();
+        if (isBytes) {
+            makeSpace();
+        }
     }
 
     /**
@@ -204,7 +210,7 @@ public class Arc extends Policy {
     private void replace(QueueNode<Record> queueNode) {
         while (this.getRemainingCache() < 0) {
             if ((t1CacheSize >= 1) && ((queueNode.getType() == Type.QueueType.B2)
-                    || (hitPerBytesB1 >= hitPerBytesB2))) {
+                    || (t1CacheSize > adaptiveParameter))) {
                 QueueNode<Record> queueNodeToBeRemoved = t1.getNext();
                 queueNodeToBeRemoved.remove();
                 queueNodeToBeRemoved.setQueueType(Type.QueueType.B1);
