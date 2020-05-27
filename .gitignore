@@ -12,5 +12,6 @@ codemr/**
 
 /src/main/resources/reports/
 
-# Ignore the file produced by the simulation
+# Ignore the files modified before/after the simulation by the user
 results.json
+src/main/resources/custom.yml
