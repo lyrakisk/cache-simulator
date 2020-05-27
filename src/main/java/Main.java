@@ -56,8 +56,12 @@ public class Main {
             Simulator simulator = new Simulator(
                     policies,
                     parser.parse(filePath));
+            long startTime = System.nanoTime();
             Result[] results = simulator.simulate();
+            long endTime = System.nanoTime();
 
+            // convert time to milliseconds
+            double totalTime = (endTime - startTime) / 1000000.0;
 
             // write results to the json file
             ObjectMapper resultsMapper = new ObjectMapper();
@@ -68,7 +72,7 @@ public class Main {
 
             // print results to console
             AsciiTable table = new AsciiTable();
-            table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions");
+            table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions", "Avg. Time per Request (millis)");
             table.addRule();
             for (Result result: results) {
                 table.addRow(
@@ -76,7 +80,8 @@ public class Main {
                         result.getNumberOfRequests(),
                         result.getHitRate(),
                         result.getNumberOfHits(),
-                        result.getEvictions());
+                        result.getEvictions(),
+                        result.getAverageProcessTimePerRequest());
                 table.addRule();
             }
             table.getContext().setGrid(U8_Grids.borderDouble());
@@ -84,6 +89,7 @@ public class Main {
 
             String renderedTable = table.render();
             System.out.println(renderedTable);
+            System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

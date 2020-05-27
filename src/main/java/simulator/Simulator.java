@@ -44,13 +44,19 @@ public class Simulator {
         records.forEachOrdered(record -> processRecord(record, results));
 
 
-        // Calculat the hit ratio for each policy
+        // Calculate the hit ratio for each policy
+        // Calculate the average process time per request for each policy
         for (Result result: results) {
             result.setHitRate(
                     ((int) (result.getNumberOfHits()
                     / ((float) result.getNumberOfRequests())
                     * 10000))
                     / 100.0);
+            result.setAverageProcessTimePerRequest(
+                    ( (long) (result.getTimeToProcessAllRequests()
+                    / ((double) result.getNumberOfRequests())
+                    * 10000))
+                    / 10000.0);
         }
 
         return results;
@@ -73,6 +79,7 @@ public class Simulator {
 
             int items = policy.numberOfItemsInCache();
 
+            long startTime = System.nanoTime();
             if (policy.isPresentInCache(record)) {
                 results[i].setNumberOfHits(results[i].getNumberOfHits() + 1);
             } else {
@@ -85,6 +92,13 @@ public class Simulator {
                         .setEvictions(
                                 results[i].getEvictions() + items + 1 - policy.numberOfItemsInCache());
             }
+            long endTime = System.nanoTime();
+
+            // convert time to milliseconds
+            double timeToProcessCurrentRequest = (endTime - startTime) / 1000000.0;
+            results[i]
+                    .setTimeToProcessAllRequests(
+                            results[i].getTimeToProcessAllRequests() + timeToProcessCurrentRequest);
         }
     }
 
