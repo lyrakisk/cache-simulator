@@ -17,13 +17,11 @@ import parser.Record;
  */
 public class AdaptSizeParser extends AbstractParserClass {
 
-
-
     @Override
     public Record parseRecord(String line) {
         String[] lineS = line.split(" ");
         String id = lineS[1];
-        //String size =
-        return null;
+        String size = lineS[2];
+        return new Record(id, Long.parseLong(size));
     }
 }
