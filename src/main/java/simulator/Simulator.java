@@ -38,12 +38,15 @@ public class Simulator {
         // initialize results
         for (int i = 0; i < results.length; i++) {
             results[i] = new Result(policies.get(i).getClass().getSimpleName(), 0, 0, 0);
+            results[i].setEvictions(0);
         }
 
         records.forEachOrdered(record -> processRecord(record, results));
 
+
+        // Calculat the hit ratio for each policy
         for (Result result: results) {
-            result.setHitRatio(
+            result.setHitRate(
                     ((int) (result.getNumberOfHits()
                     / ((float) result.getNumberOfRequests())
                     * 10000))
@@ -57,16 +60,30 @@ public class Simulator {
      * This function processes a record and updates the results of the simulation.
      * For each record it checks if the requested item is in the cache of each simulated policy
      * and it updates the results.
+     * DataflowAnomalyAnalysis warning is supressed in this method. It's probably caused by a
+     * bug in PMD. PMD thinks that the variable items, is undefined (which is not the case).
      * @param record record to be processed.
      * @param results current results of the simulation
      */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public void processRecord(Record record, Result[] results) {
         for (int i = 0; i < results.length; i++) {
             Policy policy = policies.get(i);
-
             results[i].setNumberOfRequests(results[i].getNumberOfRequests() + 1);
+
+            int items = policy.numberOfItemsInCache();
+
             if (policy.isPresentInCache(record)) {
                 results[i].setNumberOfHits(results[i].getNumberOfHits() + 1);
+            } else {
+                // If the policy does not contain the object and the object is accepted
+                // by the cache, then if the cache had to remove items to accept the new object
+                // the total number of items in cache would not increase.
+                // So the number of evictions is:
+                // itemsBefore + 1 - itemsNow
+                results[i]
+                        .setEvictions(
+                                results[i].getEvictions() + items + 1 - policy.numberOfItemsInCache());
             }
         }
     }

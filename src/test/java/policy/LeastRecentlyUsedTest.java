@@ -96,4 +96,25 @@ public class LeastRecentlyUsedTest {
         Assertions.assertFalse(lruRecords.isPresentInCache(third));
         Assertions.assertFalse(lruRecords.isPresentInCache(first));
     }
+
+    @Test
+    void testSameRecordsButDifferentSizes() {
+        LeastRecentlyUsed leastRecentlyUsed = new LeastRecentlyUsed(2048, true);
+        Record first = new Record("1", 512);
+        Record againFirstShouldDeletePrevious = new Record("1", 256);
+        Record check = new Record("1", 512);
+        Assertions.assertFalse(leastRecentlyUsed.isPresentInCache(first));
+        Assertions.assertFalse(leastRecentlyUsed.isPresentInCache(againFirstShouldDeletePrevious));
+        Assertions.assertFalse(leastRecentlyUsed.isPresentInCache(check));
+    }
+
+    @Test
+    void testSameIdButSecondWithHugeSize() {
+        Record first = new Record("1", 256);
+        Record firstBigSize = new Record("1", 2000000);
+
+        Assertions.assertFalse(lru.isPresentInCache(first));
+        Assertions.assertFalse(lru.isPresentInCache(firstBigSize));
+        Assertions.assertFalse(lru.isPresentInCache(first));
+    }
 }

@@ -1,6 +1,8 @@
 package policy;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import parser.Record;
 
@@ -9,7 +11,48 @@ import parser.Record;
  */
 public class LeastRecentlyUsed extends Policy {
 
-    private transient LinkedHashMap<Record, Boolean> cache;
+    /**
+     * Class to represent a doubly-linked list.
+     */
+    private class Node {
+        private transient String id;
+        private transient long sz;
+        private transient Node prev;
+        private transient Node next;
+
+        /**
+         * Constructor for a node of the doubly-linked list.
+         * @param id the identifier of the record this node represents
+         * @param sz the size of the record this node represents
+         */
+        private Node(String id, long sz) {
+            this.id = id;
+            this.sz = sz;
+        }
+
+        /**
+         * Removes this node from the doubly-linked list.
+         */
+        private void removeFromList() {
+            next.prev = prev;
+            prev.next = next;
+        }
+
+        /**
+         * Adds this node after another node in the doubly-linked list.
+         * @param after the node to be added after
+         */
+        private void addAfter(Node after) {
+            next = after.next;
+            prev = after;
+            after.next.prev = this;
+            after.next = this;
+        }
+    }
+
+    private transient Map<String, Node> cache;
+    private transient Node head;
+    private transient Node tail;
 
     /**
      * Constructing a new cache using the LRU policy.
@@ -18,7 +61,11 @@ public class LeastRecentlyUsed extends Policy {
      */
     public LeastRecentlyUsed(int size, boolean isBytes) {
         super(size, isBytes);
-        cache = new LinkedHashMap<>(16, .75f, true);
+        cache = new HashMap<>();
+        head = new Node("head", 0);
+        tail = new Node("tail", 0);
+        head.next = tail;
+        tail.prev = head;
     }
 
     /**
@@ -32,25 +79,52 @@ public class LeastRecentlyUsed extends Policy {
     // well structured).
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public boolean isPresentInCache(Record record) {
+        String id = record.getId();
         this.checkIsBytes(record);
         boolean existing = true;
 
         if (record.getSize() > this.getCacheSize()) {
+            if (cache.containsKey(id)) {
+                Node toRemove = cache.get(id);
+                cache.remove(toRemove.id);
+                this.updateCacheSize(toRemove.sz, false);
+                toRemove.removeFromList();
+            }
             return false;
         }
 
-        if (cache.get(record) == null) {
-            cache.put(record, true);
+        if (cache.get(id) == null) {
+            Node forRecord = new Node(record.getId(), record.getSize());
+            cache.put(id, forRecord);
+            forRecord.addAfter(head);
             this.updateCacheSize(record.getSize(), true);
             existing = false;
+        } else {
+            Node current = cache.get(id);
+
+            if (current.sz != record.getSize()) {
+                this.updateCacheSize(current.sz, false);
+                current.sz = record.getSize();
+                this.updateCacheSize(current.sz, true);
+                existing = false;
+            }
+
+            current.removeFromList();
+            current.addAfter(head);
         }
 
         while (this.getRemainingCache() < 0) {
-            Record toRemove = cache.keySet().iterator().next();
-            cache.remove(toRemove);
-            this.updateCacheSize(toRemove.getSize(), false);
+            Node toRemove = tail.prev;
+            toRemove.removeFromList();
+            cache.remove(toRemove.id);
+            this.updateCacheSize(toRemove.sz, false);
         }
 
         return existing;
+    }
+
+    @Override
+    public int numberOfItemsInCache() {
+        return cache.size();
     }
 }

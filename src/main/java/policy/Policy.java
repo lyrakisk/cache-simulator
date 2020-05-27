@@ -68,4 +68,6 @@ public abstract class Policy {
      * @return true if the record is present, false otherwise
      */
     public abstract boolean isPresentInCache(Record record);
+
+    public abstract int numberOfItemsInCache();
 }
