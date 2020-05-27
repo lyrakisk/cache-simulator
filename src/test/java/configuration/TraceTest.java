@@ -19,27 +19,27 @@ public class TraceTest {
     }
 
     @Test
-    public void testCambridgeTraceParser() {
+    void testCambridgeTraceParser() {
         assertTrue(Trace.Cambridge.getParser() instanceof  CambridgeTraceParser);
     }
 
     @Test
-    public void testArcTracePath() {
+    void testArcTracePath() {
         assertEquals("src/main/resources/traces/arc/OLTP.lis", Trace.ARC.getFilePath());
     }
 
     @Test
-    public void testArcTraceParser() {
+    void testArcTraceParser() {
         assertTrue(Trace.ARC.getParser() instanceof ArcTraceParser);
     }
 
     @Test
-    public void testUpennTracePath() {
+    void testUpennTracePath() {
         assertEquals("src/main/resources/traces/upenn/aligned.trace", Trace.UPENN.getFilePath());
     }
 
     @Test
-    public void testUpennTraceParser() {
+    void testUpennTraceParser() {
         assertTrue(Trace.UPENN.getParser() instanceof UpennTraceParser);
     }
 }

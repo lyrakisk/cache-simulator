@@ -22,7 +22,7 @@ public class LeastFrequentlyUsedTest {
             Assertions.assertFalse(lfuBytes.isPresentInCache(toAdd));
         }
         Assertions.assertFalse(lfuBytes.isPresentInCache(new Record(String.valueOf(1), 1001)));
-        Assertions.assertTrue(lfuBytes.isPresentInCache(new Record(String.valueOf(2), 10)));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(new Record(String.valueOf(2), 10)));
     }
 
     @Test
@@ -42,8 +42,8 @@ public class LeastFrequentlyUsedTest {
         Assertions.assertFalse(lfuBytes.isPresentInCache(first));
         Assertions.assertFalse(lfuBytes.isPresentInCache(second));
         Assertions.assertEquals(996, lfuBytes.getRemainingCache());
-        Assertions.assertTrue(lfuBytes.isPresentInCache(againFirst));
-        Assertions.assertTrue(lfuBytes.isPresentInCache(againSecond));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(againFirst));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(againSecond));
         Assertions.assertEquals(998, lfuBytes.getRemainingCache());
     }
 
@@ -54,11 +54,11 @@ public class LeastFrequentlyUsedTest {
         Assertions.assertFalse(lfuBytes.isPresentInCache(first));
 
         Record againFirst = new Record("1", 1);
-        Assertions.assertTrue(lfuBytes.isPresentInCache(againFirst));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(againFirst));
 
         Assertions.assertFalse(lfuBytes.isPresentInCache(second));
         Record firstThird = new Record("1", 5);
-        Assertions.assertTrue(lfuBytes.isPresentInCache(firstThird));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(firstThird));
         Assertions.assertEquals(993, lfuBytes.getRemainingCache());
     }
 
@@ -85,7 +85,7 @@ public class LeastFrequentlyUsedTest {
 
         Assertions.assertFalse(lfuBytes.isPresentInCache(first));
         Assertions.assertFalse(lfuBytes.isPresentInCache(second));
-        Assertions.assertTrue(lfuBytes.isPresentInCache(secondAgain));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(secondAgain));
         Assertions.assertEquals(10, lfuBytes.getRemainingCache());
         Assertions.assertFalse(lfuBytes.isPresentInCache(third));
         Assertions.assertEquals(300, lfuBytes.getRemainingCache());

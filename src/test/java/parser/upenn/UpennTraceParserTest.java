@@ -16,7 +16,7 @@ import parser.Record;
 public class UpennTraceParserTest {
 
     @Test
-    public void sampleFileCheckFirstLineTest() {
+    void sampleFileCheckFirstLineTest() {
         UpennTraceParser parser = new UpennTraceParser();
         Record actual = parser
             .parse("src/test/resources/aligned-sample")
@@ -29,7 +29,7 @@ public class UpennTraceParserTest {
 
 
     @Test
-    public void sampleFileCheckContentSizeTest() {
+    void sampleFileCheckContentSizeTest() {
         UpennTraceParser parser = new UpennTraceParser();
         long size = parser
             .parse("src/test/resources/aligned-sample")
@@ -39,7 +39,7 @@ public class UpennTraceParserTest {
     }
 
     @Test
-    public void testExceptionCatch() {
+    void testExceptionCatch() {
         final PrintStream originalErr = System.err;
         final ByteArrayOutputStream err = new ByteArrayOutputStream();
         System.setErr(new PrintStream(err));
