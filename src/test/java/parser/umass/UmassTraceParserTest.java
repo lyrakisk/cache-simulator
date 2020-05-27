@@ -8,7 +8,7 @@ import parser.Record;
 
 public class UmassTraceParserTest {
 
-    transient String path = "src/test/resources/WebSearch-sample.spc";
+   private transient String path = "src/test/resources/WebSearch-sample.spc";
 
     @Test
     public void fileCheckFirstLineTest() {
