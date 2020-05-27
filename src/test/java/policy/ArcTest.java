@@ -103,7 +103,7 @@ public class ArcTest {
     }
 
     @Test
-    void testHitOnB1() {
+    void testHitOnB1True() {
         Record first = new Record("1", 3);
         Record second = new Record("2", 5);
         Record third = new Record("3", 7);
@@ -123,6 +123,26 @@ public class ArcTest {
         Assertions.assertTrue(arcRecords.isPresentInCache(third));
         Assertions.assertTrue(arcRecords.isPresentInCache(fourth));
 
+    }
+
+    @Test
+    void testHitOnB1False() {
+        Record first = new Record("1", 3);
+        Record second = new Record("2", 5);
+        Record third = new Record("3", 7);
+        Record fourth = new Record("4", 3);
+
+        Arc arcRecords = new Arc(2, false);
+        arcRecords.isPresentInCache(first);
+        arcRecords.isPresentInCache(first);
+        arcRecords.isPresentInCache(second);
+        arcRecords.isPresentInCache(second);
+
+        arcRecords.isPresentInCache(third);
+        arcRecords.isPresentInCache(fourth);
+        arcRecords.isPresentInCache(third);
+        Assertions.assertTrue(arcRecords.isPresentInCache(third));
+        Assertions.assertTrue(arcRecords.isPresentInCache(fourth));
     }
 
     @Test
@@ -150,6 +170,48 @@ public class ArcTest {
         Assertions.assertTrue(arcRecords.isPresentInCache(fourth));
         Assertions.assertTrue(arcRecords.isPresentInCache(sixth));
 
+    }
+
+    @Test
+    void testB2() {
+        Arc arcRecords = new Arc(3, false);
+
+        Record first = new Record("1", 10);
+        Record second = new Record("2", 5);
+        Record third = new Record("3", 7);
+        arcRecords.isPresentInCache(first);
+        arcRecords.isPresentInCache(second);
+        arcRecords.isPresentInCache(third);
+
+        Record fourth = new Record("4", 7);
+        arcRecords.isPresentInCache(fourth);
+        arcRecords.isPresentInCache(fourth);
+
+        Record fifth = new Record("5", 7);
+        arcRecords.isPresentInCache(fifth);
+        arcRecords.isPresentInCache(fifth);
+
+        Record six = new Record("6", 7);
+        arcRecords.isPresentInCache(six);
+        arcRecords.isPresentInCache(six);
+
+        Record seven = new Record("7", 7);
+        arcRecords.isPresentInCache(seven);
+
+        Record eight = new Record("8", 7);
+        arcRecords.isPresentInCache(eight);
+
+        Record nine = new Record("9", 7);
+        arcRecords.isPresentInCache(nine);
+
+        arcRecords.isPresentInCache(fourth);
+        arcRecords.isPresentInCache(fifth);
+        arcRecords.isPresentInCache(six);
+
+
+        Assertions.assertTrue(arcRecords.isPresentInCache(fourth));
+        Assertions.assertTrue(arcRecords.isPresentInCache(fifth));
+        Assertions.assertTrue(arcRecords.isPresentInCache(six));
     }
 
 
