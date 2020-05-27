@@ -1,5 +1,5 @@
 # Cache Simulator for OpenDC
-![BRANCH](https://gitlab.com/gitlab-org/gitlab-foss/badges/master/coverage.svg?job=test)
+![BRANCH](https://gitlab.ewi.tudelft.nl/cse2000-software-project/2019-2020-q4/cluster-12/opendc/opendc/badges/master/coverage.svg)
 # Architecture
 ![architecture of the application](resources/architecture.png)
 
