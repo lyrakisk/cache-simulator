@@ -82,6 +82,7 @@ check.dependsOn integrationTest,
         spotbugsMain,
         spotbugsTest,
         spotbugsIntegrationTest,
+        jacocoTestReport,
         jacocoTestCoverageVerification
 integrationTest.mustRunAfter test
 
@@ -91,6 +92,7 @@ jacocoTestReport {
     //    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
     reports {
         xml.enabled true
+        csv.enabled true
     }
     // exclude classes from the coverage rules
     afterEvaluate {
