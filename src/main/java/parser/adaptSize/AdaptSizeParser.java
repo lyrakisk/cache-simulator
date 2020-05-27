@@ -1,5 +1,8 @@
-package parser;
+package parser.adaptSize;
 
+
+import parser.AbstractParserClass;
+import parser.Record;
 
 /**
  * Trace parser for the files taken from:
@@ -18,6 +21,9 @@ public class AdaptSizeParser extends AbstractParserClass {
 
     @Override
     public Record parseRecord(String line) {
+        String[] lineS = line.split(" ");
+        String id = lineS[1];
+        //String size =
         return null;
     }
 }
