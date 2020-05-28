@@ -8,6 +8,11 @@ import parser.Record;
 import policy.helpers.QueueNode;
 import policy.helpers.Type;
 
+/**
+ * AvoidDuplicateLiterals is suppressed, because it cccurs from suppressing multiple times
+ * the PMD.DataflowAnomalyAnalysis warning.
+ */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Arc extends Policy {
 
     public final transient Map<String, QueueNode<Record>> dataNodes;
@@ -87,6 +92,18 @@ public class Arc extends Policy {
             }
         }
         return existing;
+    }
+
+    @Override
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+    public int numberOfItemsInCache() {
+        int items = 0;
+        for (QueueNode<Record> node: dataNodes.values()) {
+            if (node.getType() == Type.QueueType.T1 || node.getType() == Type.QueueType.T2) {
+                items++;
+            }
+        }
+        return items;
     }
 
     /**
@@ -291,32 +308,5 @@ public class Arc extends Policy {
         dataNodes.remove(queueNodeToBeRemoved.getKey());
         queueNodeToBeRemoved.remove();
     }
-
-
-    /*
-    public void listaValues() {
-
-        System.out.println(dataNodes.keySet());
-        Iterator<QueueNode<Record>> itr = this.dataNodes.values().iterator();
-        System.out.println("The cache is filled with: " + (t1CacheSize + t2CacheSize));
-        while (itr.hasNext()) {
-            QueueNode<Record> test = itr.next();
-            System.out.print(String.format("%s (size=%s), ", test.getType(),
-                    test.getRecord().getSize()));
-        }
-        System.out.println("Adaptive param: " + this.adaptiveParameter);
-        System.out.println("Remaining cache is: " + this.getRemainingCache());
-
-
-        //dataNodes.forEach((key,value) -> System.out.print(value.getType() + ", "));
-        //System.out.println("Adaptive param: " + this.adaptiveParameter);
-        //        System.out.println(dataNodes.keySet());
-        //        Iterator<QueueNode<Record>> itr = this.dataNodes.values().iterator();
-        //        while (itr.hasNext()) {
-        //            System.out.print(itr.next().getType() + ", ");
-        //        }
-        //        System.out.println("Adaptive param: " + this.adaptiveParameter);
-    }
-    */
 
 }
