@@ -17,7 +17,7 @@ public class CambridgeTraceParser extends AbstractParserClass {
      */
     public Record parseRecord(String line) {
         String[] fields = line.split(",");
-        Record record = new Record(fields[4], Integer.parseInt(fields[5]));
+        Record record = new Record(fields[4], Long.parseLong(fields[5]));
         return record;
     }
 }
