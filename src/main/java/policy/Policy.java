@@ -1,6 +1,7 @@
 package policy;
 
 import parser.Record;
+import policy.helpers.PolicyStats;
 
 /**
  * Abstract class which all different cache policies will extend from.
@@ -10,7 +11,7 @@ public abstract class Policy {
     private transient long cacheSize;
     private transient long usedCacheSpace;
     private transient boolean isBytes;
-
+    private transient PolicyStats stats;
     /**
      * Constructor for the policy.
      * @param cacheSize the size of the cache.
@@ -21,6 +22,7 @@ public abstract class Policy {
         this.cacheSize = cacheSize;
         this.usedCacheSpace = 0;
         this.isBytes = isBytes;
+        this.stats = new PolicyStats();
     }
 
     /**
@@ -70,4 +72,8 @@ public abstract class Policy {
     public abstract boolean isPresentInCache(Record record);
 
     public abstract int numberOfItemsInCache();
+
+    public PolicyStats getStats() {
+        return stats;
+    }
 }

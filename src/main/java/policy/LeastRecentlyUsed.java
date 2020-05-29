@@ -1,7 +1,6 @@
 package policy;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import parser.Record;
@@ -85,6 +84,7 @@ public class LeastRecentlyUsed extends Policy {
 
         if (record.getSize() > this.getCacheSize()) {
             if (cache.containsKey(id)) {
+                this.getStats().recordOperation();
                 Node toRemove = cache.get(id);
                 cache.remove(toRemove.id);
                 this.updateCacheSize(toRemove.sz, false);
@@ -94,12 +94,14 @@ public class LeastRecentlyUsed extends Policy {
         }
 
         if (cache.get(id) == null) {
+            this.getStats().recordOperation();
             Node forRecord = new Node(record.getId(), record.getSize());
             cache.put(id, forRecord);
             forRecord.addAfter(head);
             this.updateCacheSize(record.getSize(), true);
             existing = false;
         } else {
+            this.getStats().recordOperation();
             Node current = cache.get(id);
 
             if (current.sz != record.getSize()) {
@@ -114,6 +116,7 @@ public class LeastRecentlyUsed extends Policy {
         }
 
         while (this.getRemainingCache() < 0) {
+            this.getStats().recordOperation();
             Node toRemove = tail.prev;
             toRemove.removeFromList();
             cache.remove(toRemove.id);

@@ -43,6 +43,10 @@ public class Simulator {
 
         records.forEachOrdered(record -> processRecord(record, results));
 
+        // get the number of operations from each policy
+        for(int i = 0; i < policies.size(); i++) {
+            results[i].setNumberOfOperations(policies.get(i).getStats().getOperations());
+        }
 
         // Calculate the hit ratio for each policy
         // Calculate the average process time per request for each policy

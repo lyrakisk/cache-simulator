@@ -14,6 +14,7 @@ public class Result {
     private transient long evictions;
     private transient double timeToProcessAllRequests;
     private transient double averageProcessTimePerRequest;
+    private transient long numberOfOperations;
 
     /**
      * Constructor.
@@ -94,5 +95,13 @@ public class Result {
      */
     public double getAverageProcessTimePerRequest() {
         return averageProcessTimePerRequest;
+    }
+
+    public long getNumberOfOperations() {
+        return numberOfOperations;
+    }
+
+    public void setNumberOfOperations(long numberOfOperations) {
+        this.numberOfOperations = numberOfOperations;
     }
 }
