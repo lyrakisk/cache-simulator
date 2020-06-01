@@ -42,6 +42,11 @@ public class Record {
         return identifier;
     }
 
+    @Override
+    public String toString() {
+        return "ID=" + identifier + ",size=" + size;
+    }
+
 
     @Override
     public int hashCode() {

@@ -81,6 +81,7 @@ public class LeastFrequentlyUsed extends Policy {
             int currCount = counts.get(id);
             counts.put(id, currCount + 1);
             frequencies.get(currCount).remove(id);
+            items.remove(id);
 
             if (minCount == currCount && frequencies.get(currCount).isEmpty()) {
                 ++ minCount;
