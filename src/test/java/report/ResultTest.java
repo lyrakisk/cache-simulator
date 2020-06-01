@@ -34,4 +34,10 @@ public class ResultTest {
         result.setEvictions(10);
         assertEquals(10, result.getEvictions());
     }
+
+    @Test
+    void testGetAverageProcessTimePerRequest() {
+        result.setAverageProcessTimePerRequest(0.02);
+        assertEquals(0.02, result.getAverageProcessTimePerRequest());
+    }
 }
