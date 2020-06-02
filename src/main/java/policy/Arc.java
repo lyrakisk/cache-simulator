@@ -121,6 +121,8 @@ public class Arc extends Policy {
 
         long sizeL1 = (t1CacheSize + b1CacheSize);
         long sizeL2 = (t2CacheSize + b2CacheSize);
+//        System.out.println(t1CacheSize + " " + b1CacheSize);
+//        System.out.println(t2CacheSize + " " + b2CacheSize);
         if (sizeL1 == maxSize) {
             if (t1CacheSize < maxSize) {
                 QueueNode<Record> queueNodeToBeRemoved = b1.getNext();
@@ -143,16 +145,25 @@ public class Arc extends Policy {
                 -- numberOfItems;
             }
         } else if ((sizeL1 < maxSize) && ((sizeL1 + sizeL2) >= maxSize)) {
-            if ((sizeL1 + sizeL2) == (2 * maxSize)) {
+            if ((sizeL1 + sizeL2) == (2 * maxSize) && b2CacheSize > 0) {
                 QueueNode<Record> queueNodeToBeRemoved = b2.getNext();
                 dataNodes.remove(queueNodeToBeRemoved.getKey());
                 queueNodeToBeRemoved.remove();
+//                System.out.println(sizeL1 + " " + sizeL2 + " " + t2CacheSize);
+//                System.out.println(queueNodeToBeRemoved.getRecord());
                 b2CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
                 if (b2CacheSize == 0) {
                     hitPerBytesB2 = 0;
                 } else {
                     hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
                 }
+            } else if ((sizeL1 + sizeL2) == (2 * maxSize)) {
+                QueueNode<Record> recordQueueNode = t2.getNext();
+                dataNodes.remove(recordQueueNode.getKey());
+                recordQueueNode.remove();
+                t2CacheSize -= recordQueueNode.getRecord().getSize();
+                -- numberOfItems;
+                this.updateCacheSize(recordQueueNode.getRecord().getSize(), false);
             }
             replace(queueNode);
         }
