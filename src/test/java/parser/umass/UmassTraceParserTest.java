@@ -3,7 +3,7 @@ package parser.umass;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import parser.data.Record;
+import parser.Record;
 
 
 public class UmassTraceParserTest {

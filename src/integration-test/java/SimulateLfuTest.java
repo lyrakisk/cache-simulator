@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import parser.data.Record;
+import parser.Record;
 import parser.snia.CambridgeTraceParser;
 import policy.LeastFrequentlyUsed;
 import policy.Policy;

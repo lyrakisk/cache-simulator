@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import parser.AbstractParserClass;
-import parser.data.Record;
-import parser.data.robinHood.Query;
-import parser.data.robinHood.Request;
+import parser.Record;
 
 import java.util.ArrayList;
 import java.util.Iterator;

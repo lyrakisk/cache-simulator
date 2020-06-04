@@ -3,7 +3,7 @@ package policy;
 import java.util.HashMap;
 import java.util.Map;
 
-import parser.data.Record;
+import parser.Record;
 import policy.helpers.QueueNode;
 import policy.helpers.Type;
 

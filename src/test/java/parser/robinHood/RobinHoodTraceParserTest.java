@@ -1,9 +1,6 @@
 package parser.robinHood;
 
 import org.junit.jupiter.api.Test;
-import parser.data.Record;
-import parser.data.robinHood.Query;
-import parser.data.robinHood.Request;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -1,6 +1,6 @@
-package parser.data.robinHood;
+package parser.robinHood;
 
-import parser.data.Record;
+import parser.Record;
 
 import java.util.ArrayList;
 

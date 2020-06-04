@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import parser.AbstractParserClass;
-import parser.data.Record;
+import parser.Record;
 
 
 

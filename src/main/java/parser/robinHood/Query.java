@@ -1,4 +1,4 @@
-package parser.data.robinHood;
+package parser.robinHood;
 
 public class Query {
     String backend;

@@ -1,6 +1,5 @@
 package parser;
 
-import parser.data.Record;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

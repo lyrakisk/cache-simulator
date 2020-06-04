@@ -3,7 +3,7 @@ package simulator;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import parser.data.Record;
+import parser.Record;
 import policy.Policy;
 import report.Result;
 

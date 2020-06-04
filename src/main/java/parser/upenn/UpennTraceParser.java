@@ -1,7 +1,7 @@
 package parser.upenn;
 
 import parser.AbstractParserClass;
-import parser.data.Record;
+import parser.Record;
 
 /**
  * Parser for trace file provided by the university of Pennsylvania

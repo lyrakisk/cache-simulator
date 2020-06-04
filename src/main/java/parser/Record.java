@@ -1,4 +1,4 @@
-package parser.data;
+package parser;
 
 public class Record {
     private transient long size;

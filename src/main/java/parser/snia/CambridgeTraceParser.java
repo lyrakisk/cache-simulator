@@ -1,7 +1,7 @@
 package parser.snia;
 
 import parser.AbstractParserClass;
-import parser.data.Record;
+import parser.Record;
 
 
 /**
