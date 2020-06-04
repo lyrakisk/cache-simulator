@@ -1,10 +1,10 @@
 package parser.robinHood;
 
 public class Query {
-    String backend;
-    long size;
-    String url;
-    byte cachable; // 1 for cachable, 0 for non-cachable
+    private transient String backend;
+    private transient long size;
+    private transient String url;
+    private transient byte cachable; // 1 for cachable, 0 for non-cachable
 
     public Query(String backend, long size, String url, byte cachable) {
         this.backend = backend;
