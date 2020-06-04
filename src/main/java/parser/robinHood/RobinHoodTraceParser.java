@@ -69,6 +69,10 @@ public class RobinHoodTraceParser extends AbstractParserClass {
                         urls = mapper.readValue(queryField.getValue().toString(), String[].class);
                     } else if (queryField.getKey().equals("C")) {
                         cachables = mapper.readValue(queryField.getValue().toString(), byte[].class);
+                    } else {
+                        System.err.print("ERROR: The field " + queryField.getKey()
+                                + " is not recognized as part of a Query\n");
+                        return new Request("", new ArrayList<>());
                     }
 
                 }
@@ -81,13 +85,10 @@ public class RobinHoodTraceParser extends AbstractParserClass {
 
             }
 
-
-
             return new Request(id, queries);
 
         } catch (Exception e) {
-            System.err.print("ERROR: Couldn't parse the line: " + line);
-            e.printStackTrace();
+            System.err.print("ERROR: Couldn't parse the line: " + line + "\n");
         }
 
         return new Request("", new ArrayList<>());
