@@ -26,6 +26,8 @@ public class Request extends Record {
 
     }
 
-
+    public ArrayList<Query> getQueries() {
+        return queries;
+    }
 
 }

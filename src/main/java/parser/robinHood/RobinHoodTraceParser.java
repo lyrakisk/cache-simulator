@@ -77,12 +77,7 @@ public class RobinHoodTraceParser extends AbstractParserClass {
 
             }
 
-            for (Query query: queries) {
-                System.out.println("backend: " + query.getBackend());
-                System.out.println("  size: " + query.getSize());
-                System.out.println("  url: " + query.getUrl());
-                System.out.println("  is cachable : " + query.isCachable());
-            }
+
 
             return new Request(id, queries);
 
