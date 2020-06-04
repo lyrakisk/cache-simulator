@@ -1,7 +1,7 @@
 package parser.umass;
 
 import parser.AbstractParserClass;
-import parser.Record;
+import parser.data.Record;
 
 /**
  * Traces taken  from and described here:

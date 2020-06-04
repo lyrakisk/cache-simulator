@@ -1,8 +1,7 @@
 package parser.adaptSize;
 
 import org.junit.jupiter.api.Test;
-import parser.Record;
-import parser.upenn.UpennTraceParser;
+import parser.data.Record;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

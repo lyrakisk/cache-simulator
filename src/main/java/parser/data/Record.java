@@ -1,6 +1,4 @@
-package parser;
-
-import java.util.Objects;
+package parser.data;
 
 public class Record {
     private transient long size;

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
-import parser.Record;
+import parser.data.Record;
 
 
 public class UpennTraceParserTest {

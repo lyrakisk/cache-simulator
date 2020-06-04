@@ -1,7 +1,7 @@
 package parser.snia;
 
 import parser.AbstractParserClass;
-import parser.Record;
+import parser.data.Record;
 
 
 /**
@@ -11,9 +11,9 @@ import parser.Record;
 public class CambridgeTraceParser extends AbstractParserClass {
 
     /**
-     * Construct a parser.Record object from a given string line.
+     * Construct a parser.record.Record object from a given string line.
      * @param line String line.
-     * @return parser.Record
+     * @return parser.record.Record
      */
     public Record parseRecord(String line) {
         String[] fields = line.split(",");

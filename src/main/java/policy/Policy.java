@@ -1,6 +1,6 @@
 package policy;
 
-import parser.Record;
+import parser.data.Record;
 
 /**
  * Abstract class which all different cache policies will extend from.

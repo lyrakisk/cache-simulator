@@ -2,7 +2,7 @@ package parser.adaptSize;
 
 
 import parser.AbstractParserClass;
-import parser.Record;
+import parser.data.Record;
 
 /**
  * Trace parser for the files taken from:

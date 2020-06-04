@@ -3,9 +3,8 @@ package policy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import parser.Record;
+import parser.data.Record;
 import policy.helpers.QueueNode;
-import policy.helpers.Type;
 
 public class ArcTest {
 

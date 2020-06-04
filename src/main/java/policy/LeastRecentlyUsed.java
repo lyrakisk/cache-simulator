@@ -1,10 +1,9 @@
 package policy;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import parser.Record;
+import parser.data.Record;
 
 /**
  * Class representing the LRU cache policy.

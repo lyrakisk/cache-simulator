@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import parser.Record;
+import parser.data.Record;
 
 public class LeastFrequentlyUsed extends Policy {
     private transient Map<String, Record> items;

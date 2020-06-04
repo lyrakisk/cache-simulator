@@ -1,10 +1,9 @@
 package policy;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import parser.Record;
+import parser.data.Record;
 import policy.helpers.QueueNode;
 import policy.helpers.Type;
 

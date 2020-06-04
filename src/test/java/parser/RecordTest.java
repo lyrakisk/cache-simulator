@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 import org.junit.jupiter.api.Test;
+import parser.data.Record;
 
 // The literal 'abc' is used 4 times in the file, but this is because of testing the equals method.
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
