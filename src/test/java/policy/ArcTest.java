@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import parser.Record;
+import policy.helpers.Entry;
 import policy.helpers.QueueNode;
-import policy.helpers.Type;
 
 public class ArcTest {
 
@@ -336,9 +336,9 @@ public class ArcTest {
         Record testa = new Record("1", 2);
         Record testa2 = new Record("2", 2);
         QueueNode test = new QueueNode();
-        test.setRecord(testa);
+        test.setEntry(new Entry(testa.getId(), testa.getSize()));
         QueueNode test2 = new QueueNode();
-        test2.setRecord(testa2);
+        test2.setEntry(new Entry(testa2.getId(), testa2.getSize()));
         test.addToLast(test2);
         test.remove();
         test.remove();

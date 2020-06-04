@@ -53,7 +53,7 @@ public class Simulator {
                     * 10000))
                     / 100.0);
             result.setAverageProcessTimePerRequest(
-                    ( (long) (result.getTimeToProcessAllRequests()
+                    ((long) (result.getTimeToProcessAllRequests()
                     / ((double) result.getNumberOfRequests())
                     * 10000))
                     / 10000.0);
@@ -90,7 +90,8 @@ public class Simulator {
                 // itemsBefore + 1 - itemsNow
                 results[i]
                         .setEvictions(
-                                results[i].getEvictions() + items + 1 - policy.numberOfItemsInCache());
+                                results[i].getEvictions()
+                                        + items + 1 - policy.numberOfItemsInCache());
             }
             long endTime = System.nanoTime();
 

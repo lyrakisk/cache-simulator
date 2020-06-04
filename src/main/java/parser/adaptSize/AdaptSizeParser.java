@@ -1,6 +1,5 @@
 package parser.adaptSize;
 
-
 import parser.AbstractParserClass;
 import parser.Record;
 
