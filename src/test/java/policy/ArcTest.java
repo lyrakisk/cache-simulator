@@ -347,4 +347,28 @@ public class ArcTest {
 
     }
 
+    @Test
+    void testMakeSpace() {
+        Record zero = new Record("10", 14);
+        Record first = new Record("1", 7);
+        Record second = new Record("2", 7);
+        Record third = new Record("3", 7);
+        Record fourth = new Record("4", 7);
+        Arc arcRecords = new Arc(15, true);
+        arcRecords.isPresentInCache(third);
+        arcRecords.isPresentInCache(fourth);
+        arcRecords.isPresentInCache(zero);
+        arcRecords.isPresentInCache(zero);
+        arcRecords.isPresentInCache(second);
+        arcRecords.isPresentInCache(second);
+        arcRecords.isPresentInCache(zero);
+        arcRecords.isPresentInCache(first);
+        arcRecords.isPresentInCache(third);
+        arcRecords.isPresentInCache(fourth);
+        arcRecords.isPresentInCache(zero);
+        arcRecords.isPresentInCache(second);
+        Assertions.assertTrue(arcRecords.isPresentInCache(second));
+    }
+
+
 }
