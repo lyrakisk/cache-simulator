@@ -1,6 +1,7 @@
 package parser.robinHood;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import configuration.Trace;
 import org.junit.jupiter.api.Test;
 import parser.Record;
 import parser.snia.CambridgeTraceParser;
@@ -104,5 +105,20 @@ public class RobinHoodTraceParserTest {
 
         System.setErr(originalErr);
 
+    }
+
+    @Test
+    void testParseMethod() {
+        Stream<Record> records = parser.parse("src/test/resources/robinHood-sample.json");
+
+        List<Record> recordList = records.collect(Collectors.toList());
+
+        assertEquals(21, recordList.size());
+    }
+
+    @Test
+    void testPathFromTraceEnum() {
+        Stream<Record> records = parser.parse(Trace.RobinHood.getFilePath());
+        assertEquals("0", records.findFirst().get().getId());
     }
 }
