@@ -97,16 +97,13 @@ public class Arc extends Policy {
         return existing;
     }
 
+    /**
+     * Method to return the number of items in the cache.
+     * @return number of items in the cache.
+     */
     @Override
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public int numberOfItemsInCache() {
-//        int items = 0;
-//        for (QueueNode<Record> node: dataNodes.values()) {
-//            if (node.getType() == Type.QueueType.T1 || node.getType() == Type.QueueType.T2) {
-//                items++;
-//            }
-//        }
-//        return items;
         return numberOfItems;
     }
 
@@ -121,8 +118,8 @@ public class Arc extends Policy {
 
         long sizeL1 = (t1CacheSize + b1CacheSize);
         long sizeL2 = (t2CacheSize + b2CacheSize);
-//        System.out.println(t1CacheSize + " " + b1CacheSize);
-//        System.out.println(t2CacheSize + " " + b2CacheSize);
+        //        System.out.println(t1CacheSize + " " + b1CacheSize);
+        //        System.out.println(t2CacheSize + " " + b2CacheSize);
         if (sizeL1 == maxSize) {
             if (t1CacheSize < maxSize) {
                 QueueNode<Record> queueNodeToBeRemoved = b1.getNext();
@@ -149,8 +146,8 @@ public class Arc extends Policy {
                 QueueNode<Record> queueNodeToBeRemoved = b2.getNext();
                 dataNodes.remove(queueNodeToBeRemoved.getKey());
                 queueNodeToBeRemoved.remove();
-//                System.out.println(sizeL1 + " " + sizeL2 + " " + t2CacheSize);
-//                System.out.println(queueNodeToBeRemoved.getRecord());
+                //                System.out.println(sizeL1 + " " + sizeL2 + " " + t2CacheSize);
+                //                System.out.println(queueNodeToBeRemoved.getRecord());
                 b2CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
                 if (b2CacheSize == 0) {
                     hitPerBytesB2 = 0;
