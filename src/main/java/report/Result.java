@@ -12,6 +12,8 @@ public class Result {
     private transient long numberOfHits;
     private transient long numberOfRequests;
     private transient long evictions;
+    private transient double timeToProcessAllRequests;
+    private transient double averageProcessTimePerRequest;
 
     /**
      * Constructor.
@@ -60,5 +62,37 @@ public class Result {
 
     public void setEvictions(long evictions) {
         this.evictions = evictions;
+    }
+
+    /**
+     * Time is in milliseconds.
+     * @return time to process all requests.
+     */
+    public double getTimeToProcessAllRequests() {
+        return timeToProcessAllRequests;
+    }
+
+    /**
+     * Time is in milliseconds.
+     * @param timeToProcessAllRequests
+     */
+    public void setTimeToProcessAllRequests(double timeToProcessAllRequests) {
+        this.timeToProcessAllRequests = timeToProcessAllRequests;
+    }
+
+    /**
+     * Time is in milliseconds.
+     * @param averageProcessTimePerRequest
+     */
+    public void setAverageProcessTimePerRequest(double averageProcessTimePerRequest) {
+        this.averageProcessTimePerRequest = averageProcessTimePerRequest;
+    }
+
+    /**
+     * Time is in milliseconds.
+     * @return average process time per request.
+     */
+    public double getAverageProcessTimePerRequest() {
+        return averageProcessTimePerRequest;
     }
 }
