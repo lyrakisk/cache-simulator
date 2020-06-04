@@ -6,6 +6,13 @@ public class Query {
     private transient String url;
     private transient byte cachable; // 1 for cachable, 0 for non-cachable
 
+    /**
+     * Constructor.
+     * @param backend name of the backend that received the query
+     * @param size size of the requested object
+     * @param url url of the object (object identifier)
+     * @param cachable  (1 if cachable, 0 if not cachable)
+     */
     public Query(String backend, long size, String url, byte cachable) {
         this.backend = backend;
         this.size = size;

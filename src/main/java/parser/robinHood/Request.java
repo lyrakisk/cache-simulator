@@ -1,8 +1,7 @@
 package parser.robinHood;
 
-import parser.Record;
-
 import java.util.ArrayList;
+import parser.Record;
 
 /**
  * Requests for the RobinHood policy. Each request can consist of multiple queries.
