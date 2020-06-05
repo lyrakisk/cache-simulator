@@ -60,7 +60,7 @@ public class RobinHoodTraceParser extends AbstractParserClass {
                 byte[] cachables = {};
 
                 while (queryIterator.hasNext()) {
-                    Map.Entry<String,JsonNode> queryField = queryIterator.next();
+                    Map.Entry<String, JsonNode> queryField = queryIterator.next();
 
                     if (queryField.getKey().equals("S")) {
                         sizes =  mapper.readValue(queryField.getValue().toString(), long[].class);
