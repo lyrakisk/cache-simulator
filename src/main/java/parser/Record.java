@@ -39,6 +39,4 @@ public class Record {
     public String getId() {
         return identifier;
     }
-
-
 }
