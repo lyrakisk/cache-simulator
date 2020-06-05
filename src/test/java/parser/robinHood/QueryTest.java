@@ -9,7 +9,7 @@ public class QueryTest {
 
     @Test
     void testIsNotCachable() {
-        Query query = new Query("backend", 100, "www.google.com", (byte) 0);
+        Query query = new Query("backend", 100, "www.google.com", false);
         assertFalse(query.isCachable());
     }
 }

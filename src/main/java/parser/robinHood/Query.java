@@ -4,7 +4,7 @@ public class Query {
     private transient String backend;
     private transient long size;
     private transient String url;
-    private transient byte cachable; // 1 for cachable, 0 for non-cachable
+    private transient boolean cachable; // 1 for cachable, 0 for non-cachable
 
     /**
      * Constructor.
@@ -13,7 +13,7 @@ public class Query {
      * @param url url of the object (object identifier)
      * @param cachable  (1 if cachable, 0 if not cachable)
      */
-    public Query(String backend, long size, String url, byte cachable) {
+    public Query(String backend, long size, String url, boolean cachable) {
         this.backend = backend;
         this.size = size;
         this.url = url;
@@ -33,6 +33,6 @@ public class Query {
     }
 
     public boolean isCachable() {
-        return cachable == 1;
+        return cachable;
     }
 }
