@@ -29,7 +29,7 @@ public class RobinHoodTraceParser extends AbstractParserClass {
             ObjectMapper mapper = new ObjectMapper(factory);
             JsonNode rootNode = mapper.readTree(line);
 
-            Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
+            Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
 
                 Map.Entry<String, JsonNode> field = fieldsIterator.next();
