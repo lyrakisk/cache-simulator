@@ -25,11 +25,7 @@ public class RecordTest {
         assertNotEquals(record, 2);
     }
 
-    @Test
-    void testEqualsSameObjects() {
-        Record same = new Record("abc", 2048);
-        assertEquals(record, same);
-    }
+
 
     @Test
     void testSameIdDifferentSize() {
