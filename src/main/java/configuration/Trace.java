@@ -2,6 +2,7 @@ package configuration;
 
 import parser.AbstractParserClass;
 import parser.arc.ArcTraceParser;
+import parser.robinHood.RobinHoodTraceParser;
 import parser.snia.CambridgeTraceParser;
 import parser.upenn.UpennTraceParser;
 
@@ -14,7 +15,10 @@ public enum Trace {
             new ArcTraceParser()),
     UPENN(
             "src/main/resources/traces/upenn/aligned.trace",
-            new UpennTraceParser());
+            new UpennTraceParser()),
+    RobinHood(
+            "src/main/resources/traces/robinHood/robinhood.json",
+            new RobinHoodTraceParser());
 
     private String filePath;
     private AbstractParserClass parser;

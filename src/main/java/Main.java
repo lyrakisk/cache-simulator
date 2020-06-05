@@ -72,7 +72,8 @@ public class Main {
 
             // print results to console
             AsciiTable table = new AsciiTable();
-            table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions", "Avg. Time per Request (millis)");
+            table.addRow("Policy", "Requests",
+                    "Hit Rate", "Hits", "Evictions", "Avg. Time per Request (millis)");
             table.addRule();
             for (Result result: results) {
                 table.addRow(

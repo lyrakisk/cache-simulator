@@ -3,7 +3,6 @@ package parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-
 import org.junit.jupiter.api.Test;
 
 // The literal 'abc' is used 4 times in the file, but this is because of testing the equals method.
@@ -26,11 +25,7 @@ public class RecordTest {
         assertNotEquals(record, 2);
     }
 
-    @Test
-    void testEqualsSameObjects() {
-        Record same = new Record("abc", 2048);
-        assertEquals(record, same);
-    }
+
 
     @Test
     void testSameIdDifferentSize() {

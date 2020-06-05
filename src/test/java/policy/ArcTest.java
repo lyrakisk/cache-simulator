@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import parser.Record;
 import policy.helpers.QueueNode;
-import policy.helpers.Type;
 
 public class ArcTest {
 

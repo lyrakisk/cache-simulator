@@ -6,7 +6,6 @@ import parser.Record;
 /**
  * Traces taken  from and described here:
  * http://traces.cs.umass.edu/index.php/Storage/Storage?fbclid=IwAR2XFXBKz2AKUgV8UUPgo2fBqmJ9sF6gwc1K_l9wo9EhdkTWfxZZIrdmjK4
- *
  * example line:
  *0,20941264,8192,W,0.551706,Alpha/NT
  * Field 1: Application specific unit
@@ -15,7 +14,6 @@ import parser.Record;
  * Field 4: Operation Code
  * Field 5: Timestamp
  * ... optional fields.
- *
  */
 
 public class UmassTraceParser extends AbstractParserClass {
