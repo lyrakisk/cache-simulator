@@ -32,7 +32,7 @@ public class RobinHoodTraceParser extends AbstractParserClass {
             Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
 
-                Map.Entry<String,JsonNode> field = fieldsIterator.next();
+                Map.Entry<String, JsonNode> field = fieldsIterator.next();
 
                 if (field.getKey().equals("t")) {
                     id = field.getValue().toString();
