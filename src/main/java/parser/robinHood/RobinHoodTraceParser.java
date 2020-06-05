@@ -35,10 +35,10 @@ public class RobinHoodTraceParser extends AbstractParserClass {
             ObjectMapper mapper = new ObjectMapper(factory);
             JsonNode rootNode = mapper.readTree(line);
 
-            Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
+            Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
 
-                Map.Entry<String,JsonNode> field = fieldsIterator.next();
+                Map.Entry<String, JsonNode> field = fieldsIterator.next();
 
                 if (field.getKey().equals("t")) {
                     id = field.getValue().toString();
@@ -55,18 +55,18 @@ public class RobinHoodTraceParser extends AbstractParserClass {
             fieldsIterator = rootNode.fields();
             while (fieldsIterator.hasNext()) {
 
-                Map.Entry<String,JsonNode> field = fieldsIterator.next();
+                Map.Entry<String, JsonNode> field = fieldsIterator.next();
 
                 String backend = field.getKey().toString();
                 JsonNode queryRootNode = mapper.readTree(field.getValue().toString());
 
-                Iterator<Map.Entry<String,JsonNode>> queryIterator = queryRootNode.fields();
+                Iterator<Map.Entry<String, JsonNode>> queryIterator = queryRootNode.fields();
                 long[] sizes = {};
                 String[] urls = {};
                 byte[] cachables = {};
 
                 while (queryIterator.hasNext()) {
-                    Map.Entry<String,JsonNode> queryField = queryIterator.next();
+                    Map.Entry<String, JsonNode> queryField = queryIterator.next();
 
                     if (queryField.getKey().equals("S")) {
                         sizes =  mapper.readValue(queryField.getValue().toString(), long[].class);
