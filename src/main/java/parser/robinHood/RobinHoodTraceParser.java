@@ -16,6 +16,12 @@ import parser.Record;
  */
 public class RobinHoodTraceParser extends AbstractParserClass {
 
+    /**
+     * The PMD.DataflowAnomalyAnalysis is suppressed because it raises errors
+     * for all the variables related to the Query class.
+     * They have to be initialized before the while loop, so PMD gives DU/DD warnings.
+     * I considered these warnings to be false positives, this is why I suppressed the warning.
+     */
     @Override
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public Record parseRecord(String line) {

@@ -14,7 +14,12 @@ import org.junit.jupiter.api.Test;
 import parser.Record;
 
 
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "checkstyle:linelength"})
+/**
+ * PMD raises an error for the query variable in lines 62-64
+ * because it is assigned multiple times (as it should be since this is a for loop).
+ * This is why I suppressed PMD.DataflowAnomalyAnalysis.
+ */
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class RobinHoodTraceParserTest {
     private transient String json =
             "{\"t\": 0, \"d\": [{\"7385c12d\": "
@@ -82,7 +87,7 @@ public class RobinHoodTraceParserTest {
                 + " \"03eb3847b6c9198d0\", \"e36470eff6abb2ff2\", \"c85a93b4541fecf55\","
                 + " \"bf2f61f5dfaf86b16\"], \"C\": [1, 1, 1, 1, 1]}}]}";
         assertThrows(AssertionError.class, () -> {
-            Request request = (Request) parser.parseRecord(record); });
+            parser.parseRecord(record); });
     }
 
     @Test
@@ -98,7 +103,7 @@ public class RobinHoodTraceParserTest {
                 + "\"03eb3847b6c9198d0\", \"e36470eff6abb2ff2\", \"c85a93b4541fecf55\","
                 + " \"bf2f61f5dfaf86b16\"], \"C\": [1, 1, 1, 1, 1]}}]}";
         assertThrows(AssertionError.class, () -> {
-            Request request = (Request) parser.parseRecord(record); });
+            parser.parseRecord(record); });
     }
 
     @Test
@@ -116,7 +121,7 @@ public class RobinHoodTraceParserTest {
                 + " \"e36470eff6abb2ff2\", \"c85a93b4541fecf55\", \"bf2f61f5dfaf86b16\"], "
                 + "\"C\": [1, 1, 1, 1]}}]}";
         assertThrows(AssertionError.class, () -> {
-            Request request = (Request) parser.parseRecord(record); });
+            parser.parseRecord(record); });
     }
 
     @Test
@@ -133,7 +138,7 @@ public class RobinHoodTraceParserTest {
                 + " \"e36470eff6abb2ff2\", \"c85a93b4541fecf55\", \"bf2f61f5dfaf86b16\"], "
                 + "\"C\": [1, 1, 1, 1]}}]}";
         assertThrows(AssertionError.class, () -> {
-            Request request = (Request) parser.parseRecord(record); });
+            parser.parseRecord(record); });
     }
 
     @Test
@@ -143,7 +148,7 @@ public class RobinHoodTraceParserTest {
         System.setErr(new PrintStream(err));
 
         String record = "test";
-        Request request = (Request) parser.parseRecord(record);
+        parser.parseRecord(record);
         String expectedMessage = "ERROR: Couldn't parse the line: test\n";
         assertEquals(expectedMessage, err.toString());
 
@@ -169,7 +174,7 @@ public class RobinHoodTraceParserTest {
                 + " 20788], \"U\": [\"f0bd9a2a45492adca\", "
                 + "\"03eb3847b6c9198d0\", \"e36470eff6abb2ff2\", "
                 + "\"c85a93b4541fecf55\", \"bf2f61f5dfaf86b16\"], \"C\": [1, 1, 1, 1, 1]}}]}";
-        Request request = (Request) parser.parseRecord(record);
+        parser.parseRecord(record);
         String expectedMessage =
                 "ERROR: The field Soutzoukakia is not recognized as part of a Query\n";
         assertEquals(expectedMessage, err.toString());
