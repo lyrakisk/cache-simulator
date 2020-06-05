@@ -54,7 +54,7 @@ public class RobinHoodTraceParser extends AbstractParserClass {
                 String backend = field.getKey().toString();
                 JsonNode queryRootNode = mapper.readTree(field.getValue().toString());
 
-                Iterator<Map.Entry<String,JsonNode>> queryIterator = queryRootNode.fields();
+                Iterator<Map.Entry<String, JsonNode>> queryIterator = queryRootNode.fields();
                 long[] sizes = {};
                 String[] urls = {};
                 byte[] cachables = {};
