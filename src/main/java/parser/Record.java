@@ -1,7 +1,5 @@
 package parser;
 
-import java.util.Objects;
-
 public class Record {
     private transient long size;
     private transient String identifier;
@@ -40,35 +38,5 @@ public class Record {
      */
     public String getId() {
         return identifier;
-    }
-
-    @Override
-    public String toString() {
-        return "ID=" + identifier + ",size=" + size;
-    }
-
-
-    /**
-     * Returns the object's hash code.
-     * @return the hash code of the object
-     */
-    @Override
-    public int hashCode() {
-        return identifier.hashCode() + (int) size;
-    }
-
-    /**
-     * Checks whether another object is the same as this one.
-     * @param obj the object to be checked against
-     * @return true if the objects are the same, false otherwise
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Record)) {
-            return false;
-        }
-
-        Record other = (Record) obj;
-        return this.identifier.equals(other.identifier) && this.size == other.size;
     }
 }
