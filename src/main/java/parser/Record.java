@@ -1,7 +1,5 @@
 package parser;
 
-import java.util.Objects;
-
 public class Record {
     private transient long size;
     private transient String identifier;
@@ -43,18 +41,4 @@ public class Record {
     }
 
 
-    @Override
-    public int hashCode() {
-        return identifier.hashCode() + (int) size;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Record)) {
-            return false;
-        }
-
-        Record other = (Record) obj;
-        return this.identifier.equals(other.identifier) && this.size == other.size;
-    }
 }

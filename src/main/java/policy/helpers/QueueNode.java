@@ -1,7 +1,5 @@
 package policy.helpers;
 
-import parser.Record;
-
 @SuppressWarnings("checkstyle:ClassTypeParameterName")
 public class QueueNode<Record> {
     transient String key;

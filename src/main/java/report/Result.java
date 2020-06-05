@@ -75,7 +75,7 @@ public class Result {
 
     /**
      * Time is in milliseconds.
-     * @param timeToProcessAllRequests
+     * @param timeToProcessAllRequests total process time
      */
     public void setTimeToProcessAllRequests(double timeToProcessAllRequests) {
         this.timeToProcessAllRequests = timeToProcessAllRequests;
@@ -83,7 +83,7 @@ public class Result {
 
     /**
      * Time is in milliseconds.
-     * @param averageProcessTimePerRequest
+     * @param averageProcessTimePerRequest average process time
      */
     public void setAverageProcessTimePerRequest(double averageProcessTimePerRequest) {
         this.averageProcessTimePerRequest = averageProcessTimePerRequest;
