@@ -38,7 +38,6 @@ public class Simulator {
         // initialize results
         for (int i = 0; i < results.length; i++) {
             results[i] = new Result(policies.get(i).getClass().getSimpleName(), 0, 0, 0);
-            results[i].setEvictions(0);
         }
 
         records.forEachOrdered(record -> processRecord(record, results));
@@ -47,6 +46,7 @@ public class Simulator {
         for(int i = 0; i < policies.size(); i++) {
             results[i].setNumberOfOperations(policies.get(i).getStats().getOperations());
             results[i].setEvictions(policies.get(i).getStats().getEvictions());
+            results[i].setNumberOfHits(policies.get(i).getStats().getHits());
         }
 
         // Calculate the hit ratio for each policy
@@ -84,9 +84,12 @@ public class Simulator {
 
 
             long startTime = System.nanoTime();
-            if (policy.isPresentInCache(record)) {
-                results[i].setNumberOfHits(results[i].getNumberOfHits() + 1);
-            }
+
+            policy.isPresentInCache(record);
+
+//            if (policy.isPresentInCache(record)) {
+//                results[i].setNumberOfHits(results[i].getNumberOfHits() + 1);
+//            }
 //            else {
 //                // If the policy does not contain the object and the object is accepted
 //                // by the cache, then if the cache had to remove items to accept the new object

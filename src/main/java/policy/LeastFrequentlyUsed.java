@@ -111,6 +111,10 @@ public class LeastFrequentlyUsed extends Policy {
         if (pos < minCount || minCount == -1) {
             minCount = pos;
         }
+
+        if (found) {
+            this.getStats().recordHit();
+        }
         return found;
     }
 

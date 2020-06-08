@@ -95,6 +95,10 @@ public class Arc extends Policy {
                 existing = true;
             }
         }
+
+        if (existing) {
+            this.getStats().recordHit();
+        }
         return existing;
     }
 
