@@ -1,12 +1,12 @@
 package policy.helpers;
 
 @SuppressWarnings("checkstyle:ClassTypeParameterName")
-public class QueueNode<Record> {
+public class QueueNode<T> {
     transient String key;
     transient QueueNode prev;
     transient QueueNode next;
     transient Type.QueueType queueType;
-    Record record;
+    T entry;
 
     /**
      * Default constructor.
@@ -18,20 +18,21 @@ public class QueueNode<Record> {
     }
 
     /**
-     * A constructor with a record as a parameter.
-     * @param record The record to be added in the Node.
+     * A constructor with an entry as a parameter.
+     * @param key the key of the entry
+     * @param entry the entry to be added in the node
      */
-    public QueueNode(String key, Record record) {
+    public QueueNode(String key, T entry) {
         this.key = key;
-        this.record = record;
+        this.entry = entry;
     }
 
     /**
-     * Get record data.
-     * @return record
+     * Get entry data.
+     * @return the entry of the node
      */
-    public Record getRecord() {
-        return record;
+    public T getEntry() {
+        return entry;
     }
 
     /**
@@ -51,11 +52,11 @@ public class QueueNode<Record> {
     }
 
     /**
-     * Set page data.
-     * @param record record data
+     * Set entry data.
+     * @param entry the entry to be set
      */
-    public void setRecord(Record record) {
-        this.record = record;
+    public void setEntry(T entry) {
+        this.entry = entry;
     }
 
     /**
