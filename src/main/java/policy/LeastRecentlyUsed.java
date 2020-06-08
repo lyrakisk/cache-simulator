@@ -124,7 +124,7 @@ public class LeastRecentlyUsed extends Policy {
             this.updateCacheSize(toRemove.sz, false);
         }
 
-        if(existing) {
+        if (existing) {
             this.getStats().recordHit();
         }
         return existing;

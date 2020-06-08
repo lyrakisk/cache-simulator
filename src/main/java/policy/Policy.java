@@ -12,6 +12,7 @@ public abstract class Policy {
     private transient long usedCacheSpace;
     private transient boolean isBytes;
     private transient PolicyStats stats;
+
     /**
      * Constructor for the policy.
      * @param cacheSize the size of the cache.
