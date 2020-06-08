@@ -117,6 +117,7 @@ public class LeastRecentlyUsed extends Policy {
 
         while (this.getRemainingCache() < 0) {
             this.getStats().recordOperation();
+            this.getStats().recordEviction();
             Node toRemove = tail.prev;
             toRemove.removeFromList();
             cache.remove(toRemove.id);

@@ -35,6 +35,7 @@ public class LeastFrequentlyUsed extends Policy {
             Set<String> currentMin = frequencies.get(minCount);
             while (!currentMin.isEmpty() && this.getRemainingCache() < 0) {
                 this.getStats().recordOperation();
+                this.getStats().recordEviction();
                 String toRemove = currentMin.iterator().next();
                 currentMin.remove(toRemove);
                 this.updateCacheSize(items.remove(toRemove).getSize(), false);

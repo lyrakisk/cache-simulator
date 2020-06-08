@@ -46,6 +46,7 @@ public class Simulator {
         // get the number of operations from each policy
         for(int i = 0; i < policies.size(); i++) {
             results[i].setNumberOfOperations(policies.get(i).getStats().getOperations());
+            results[i].setEvictions(policies.get(i).getStats().getEvictions());
         }
 
         // Calculate the hit ratio for each policy
@@ -81,22 +82,22 @@ public class Simulator {
             Policy policy = policies.get(i);
             results[i].setNumberOfRequests(results[i].getNumberOfRequests() + 1);
 
-            int items = policy.numberOfItemsInCache();
 
             long startTime = System.nanoTime();
             if (policy.isPresentInCache(record)) {
                 results[i].setNumberOfHits(results[i].getNumberOfHits() + 1);
-            } else {
-                // If the policy does not contain the object and the object is accepted
-                // by the cache, then if the cache had to remove items to accept the new object
-                // the total number of items in cache would not increase.
-                // So the number of evictions is:
-                // itemsBefore + 1 - itemsNow
-                results[i]
-                        .setEvictions(
-                                results[i].getEvictions()
-                                        + items + 1 - policy.numberOfItemsInCache());
             }
+//            else {
+//                // If the policy does not contain the object and the object is accepted
+//                // by the cache, then if the cache had to remove items to accept the new object
+//                // the total number of items in cache would not increase.
+//                // So the number of evictions is:
+//                // itemsBefore + 1 - itemsNow
+//                results[i]
+//                        .setEvictions(
+//                                results[i].getEvictions()
+//                                        + items + 1 - policy.numberOfItemsInCache());
+//            }
             long endTime = System.nanoTime();
 
             // convert time to milliseconds
