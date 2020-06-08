@@ -9,7 +9,7 @@ import policy.helpers.QueueNode;
 import policy.helpers.Type;
 
 /**
- * AvoidDuplicateLiterals is suppressed, because it cccurs from suppressing multiple times
+ * AvoidDuplicateLiterals is suppressed, because it occcurs from suppressing multiple times
  * the PMD.DataflowAnomalyAnalysis warning.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
