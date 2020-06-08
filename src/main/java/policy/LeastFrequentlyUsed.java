@@ -61,9 +61,9 @@ public class LeastFrequentlyUsed extends Policy {
     public boolean isPresentInCache(Record record) {
         String id = record.getId();
         this.checkIsBytes(record);
+        this.getStats().recordOperation();
         if (record.getSize() > this.getCacheSize()) {
             if (items.containsKey(id)) {
-                this.getStats().recordOperation();
                 Entry toRemove = items.remove(id);
                 int occurrences = counts.remove(toRemove.getId());
                 frequencies.get(occurrences).remove(toRemove.getId());
