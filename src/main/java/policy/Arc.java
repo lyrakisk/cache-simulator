@@ -291,6 +291,7 @@ public class Arc extends Policy {
                 hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
 
             }
+            this.getStats().recordEviction();
             -- numberOfItems;
         }
     }
@@ -312,6 +313,7 @@ public class Arc extends Policy {
                 t1CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
                 b1CacheSize += queueNodeToBeRemoved.getEntry().getSize();
                 hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
+                this.getStats().recordEviction();
                 -- numberOfItems;
             } else {
                 if (t2CacheSize != 0 && !lastRecordAdded.getId().equals(t2.getNext().getKey())) {
@@ -323,6 +325,7 @@ public class Arc extends Policy {
                     t2CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
                     b2CacheSize += queueNodeToBeRemoved.getEntry().getSize();
                     hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
+                    this.getStats().recordEviction();
                     -- numberOfItems;
                 }
             }
