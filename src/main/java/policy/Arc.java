@@ -68,7 +68,7 @@ public class Arc extends Policy {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @Override
     public boolean isPresentInCache(Record record) {
-        //System.out.println(record);
+        this.getStats().recordOperation();
         this.checkIsBytes(record);
         boolean existing = false;
         String key = record.getId();
@@ -118,6 +118,7 @@ public class Arc extends Policy {
      */
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public void onMissInCache(Record record) {
+        this.getStats().recordOperation();
         Entry entry = new Entry(record.getId(), record.getSize());
         QueueNode<Entry> queueNode = new QueueNode<Entry>(record.getId(), entry);
         queueNode.setQueueType(Type.QueueType.T1);
@@ -188,6 +189,7 @@ public class Arc extends Policy {
      * @param isBytes true if the cache is in number of bytes, false otherwise
      */
     public void onHitB1(QueueNode<Entry> nodeEntry, boolean isBytes) {
+        this.getStats().recordOperation();
         if (isBytes) {
             hitsB1++;
             this.hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
@@ -221,6 +223,7 @@ public class Arc extends Policy {
      * @param isBytes true if the cache is in number of bytes, false otherwise
      */
     public void onHitB2(QueueNode<Entry> nodeEntry, boolean isBytes) {
+        this.getStats().recordOperation();
         if (isBytes) {
             hitsB2++;
             this.hitPerBytesB2 = Math.max(0, (((double) hitsB2 / b2CacheSize) * 100));
@@ -253,6 +256,7 @@ public class Arc extends Policy {
      * @param nodeEntry the node to add
      */
     public void onHitT1orT2(QueueNode<Entry> nodeEntry) {
+        this.getStats().recordOperation();
         if (nodeEntry.getType() == Type.QueueType.T1) {
             t1CacheSize -= nodeEntry.getEntry().getSize();
             t2CacheSize += nodeEntry.getEntry().getSize();
@@ -270,6 +274,7 @@ public class Arc extends Policy {
      */
     private void replace(QueueNode<Entry> queueNode) {
         while (this.getRemainingCache() < 0) {
+            this.getStats().recordOperation();
             if ((t1CacheSize >= 1) && ((queueNode.getType() == Type.QueueType.B2)
                     || (t1CacheSize > adaptiveParameter))) {
                 QueueNode<Entry> queueNodeToBeRemoved = t1.getNext();
@@ -303,6 +308,7 @@ public class Arc extends Policy {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     private void makeSpace() {
         while (this.getRemainingCache() < 0) {
+            this.getStats().recordOperation();
             if (t2CacheSize == 0 || (hitPerBytesB1 >= hitPerBytesB2 && t1CacheSize != 0
                     && !lastRecordAdded.getId().equals(t1.getNext().getKey()))) {
                 QueueNode<Entry> queueNodeToBeRemoved = t1.getNext();
@@ -332,6 +338,7 @@ public class Arc extends Policy {
         }
         while ((b1CacheSize + b2CacheSize) > maxSize  && (b1CacheSize < maxSize)
                 && (b2CacheSize < maxSize)) {
+            this.getStats().recordOperation();
             if (hitPerBytesB1 >= hitPerBytesB2) {
                 QueueNode<Entry> b1NodeToBeRemoved = b1.getNext();
                 removeNodeCompletely(b1NodeToBeRemoved);
@@ -359,6 +366,7 @@ public class Arc extends Policy {
      * @param queueNodeToBeRemoved the node to be removed
      */
     private void removeNodeCompletely(QueueNode<Entry> queueNodeToBeRemoved) {
+        this.getStats().recordOperation();
         if (queueNodeToBeRemoved.getType() == Type.QueueType.T1) {
             this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
             t1CacheSize = t1CacheSize - queueNodeToBeRemoved.getEntry().getSize();
