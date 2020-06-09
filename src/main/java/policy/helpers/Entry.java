@@ -19,7 +19,7 @@ public class Entry {
 
     /**
      * Getter for the size of the cache entry.
-     * @return the skze lf the entry
+     * @return the size of the entry
      */
     public long getSize() {
         return size;

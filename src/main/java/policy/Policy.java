@@ -1,5 +1,6 @@
 package policy;
 
+import configuration.Configuration;
 import parser.Record;
 
 /**
@@ -62,6 +63,10 @@ public abstract class Policy {
         }
     }
 
+    public void setCacheSize(long cacheSize) {
+        this.cacheSize = cacheSize;
+    }
+
     /**
      * Check whether a record is present in the cache.
      * @param record the record to be checked
@@ -70,4 +75,6 @@ public abstract class Policy {
     public abstract boolean isPresentInCache(Record record);
 
     public abstract int numberOfItemsInCache();
+
+    public abstract void deleteUntilCacheNotOverloaded();
 }

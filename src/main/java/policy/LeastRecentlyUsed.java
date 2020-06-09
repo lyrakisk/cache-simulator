@@ -55,11 +55,11 @@ public class LeastRecentlyUsed extends Policy {
 
     /**
      * Constructing a new cache using the LRU policy.
-     * @param size the size of the cache
+     * @param cacheSize the size of the cache
      * @param isBytes the cache size parameter
      */
-    public LeastRecentlyUsed(int size, boolean isBytes) {
-        super(size, isBytes);
+    public LeastRecentlyUsed(long cacheSize, boolean isBytes) {
+        super(cacheSize, isBytes);
         cache = new HashMap<>();
         head = new Node("head", 0);
         tail = new Node("tail", 0);
@@ -125,5 +125,15 @@ public class LeastRecentlyUsed extends Policy {
     @Override
     public int numberOfItemsInCache() {
         return cache.size();
+    }
+
+    @Override
+    public void deleteUntilCacheNotOverloaded() {
+        while (this.getRemainingCache() < 0) {
+            Node toRemove = tail.prev;
+            toRemove.removeFromList();
+            cache.remove(toRemove.id);
+            this.updateCacheSize(toRemove.sz, false);
+        }
     }
 }

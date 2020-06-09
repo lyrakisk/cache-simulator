@@ -43,7 +43,7 @@ public class Arc extends Policy {
      * @param cacheSize the size of the cache.
      * @param isBytes the cache size parameter.
      */
-    public Arc(int cacheSize, boolean isBytes) {
+    public Arc(long cacheSize, boolean isBytes) {
         super(cacheSize, isBytes);
         dataNodes = new HashMap<String, QueueNode<Entry>>();
         this.t1 = new QueueNode<Entry>();
@@ -367,4 +367,9 @@ public class Arc extends Policy {
         queueNodeToBeRemoved.remove();
     }
 
+    // TODO: Implement this method.
+    @Override
+    public void deleteUntilCacheNotOverloaded() {
+        return;
+    }
 }

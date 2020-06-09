@@ -27,4 +27,8 @@ public class Request extends Record {
         return queries;
     }
 
+    public void addQuery(Query query) {
+        queries.add(query);
+    }
+
 }
