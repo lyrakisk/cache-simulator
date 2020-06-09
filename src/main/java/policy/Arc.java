@@ -112,6 +112,7 @@ public class Arc extends Policy {
         return numberOfItems;
     }
 
+
     /**
      * Add the record to the appropriate list (T1 or T2).
      * @param record the record to add
@@ -179,7 +180,7 @@ public class Arc extends Policy {
         queueNode.addToLast(t1);
         lastRecordAdded = queueNode.getEntry();
         if (isBytes) {
-            makeSpace();
+            deleteUntilCacheNotOverloaded();
         }
     }
 
@@ -213,7 +214,7 @@ public class Arc extends Policy {
         nodeEntry.addToLast(t2);
         lastRecordAdded = nodeEntry.getEntry();
         if (isBytes) {
-            makeSpace();
+            deleteUntilCacheNotOverloaded();
         }
     }
 
@@ -247,7 +248,7 @@ public class Arc extends Policy {
         nodeEntry.addToLast(t2);
         lastRecordAdded = nodeEntry.getEntry();
         if (isBytes) {
-            makeSpace();
+            deleteUntilCacheNotOverloaded();
         }
     }
 
@@ -305,8 +306,9 @@ public class Arc extends Policy {
     /**
      * Maintains that the cache has always capacity withing the specified one.
      */
+    @Override
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
-    private void makeSpace() {
+    public void deleteUntilCacheNotOverloaded() {
         while (this.getRemainingCache() < 0) {
             this.getStats().recordOperation();
             if (t2CacheSize == 0 || (hitPerBytesB1 >= hitPerBytesB2 && t1CacheSize != 0
@@ -382,9 +384,4 @@ public class Arc extends Policy {
         queueNodeToBeRemoved.remove();
     }
 
-    // TODO: Implement this method.
-    @Override
-    public void deleteUntilCacheNotOverloaded() {
-        return;
-    }
 }
