@@ -87,7 +87,8 @@ public class RobinHoodTraceParser extends AbstractParserClass {
                 assert sizes.length == cachables.length;
                 for (int i = 0; i < sizes.length; i++) {
                     if (cachables[i] != 1 && cachables[i] != 0) {
-                        System.err.print("ERROR: The field C can be either 0 or 1, but instead it was "
+                        System.err.print(
+                                "ERROR: The field C can be either 0 or 1, but instead it was "
                                 + cachables[i] + "\n");
                     }
                     queries.add(new Query(backend, sizes[i], urls[i], cachables[i] == 1));
