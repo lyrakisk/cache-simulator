@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import report.Result;
+import report.reporter.ConsoleReporter;
+import report.reporter.JsonReporter;
 import simulation.policy.Policy;
 import simulation.simulator.Simulator;
 
@@ -43,7 +45,7 @@ public class Main {
             for (String className: configuration.getPolicies()) {
                 Class<?> policyClass = Class.forName("simulation.policy." + className);
                 Constructor<?> policyConstructor =
-                        policyClass.getConstructor(int.class, boolean.class);
+                        policyClass.getConstructor(long.class, boolean.class);
                 policies.add((Policy) policyConstructor.newInstance(
                         configuration.getCacheSize(), configuration.isSizeInBytes()));
             }
@@ -63,34 +65,11 @@ public class Main {
             // convert time to milliseconds
             double totalTime = (endTime - startTime) / 1000000.0;
 
-            // write results to the json file
-            ObjectMapper resultsMapper = new ObjectMapper();
+            JsonReporter jsonReporter = new JsonReporter(results);
+            jsonReporter.report();
+            ConsoleReporter consoleReporter = new ConsoleReporter(results);
+            consoleReporter.report();
 
-            resultsMapper
-                    .writerWithDefaultPrettyPrinter()
-                    .writeValue(new File("results.json"), results);
-
-            // print results to console
-            AsciiTable table = new AsciiTable();
-            table.addRow("Policy", "Requests", "Hit Rate",
-                    "Hits", "Evictions", "Avg. Time per Request (millis)", "Operations");
-            table.addRule();
-            for (Result result: results) {
-                table.addRow(
-                        result.getPolicy(),
-                        result.getNumberOfRequests(),
-                        result.getHitRate(),
-                        result.getNumberOfHits(),
-                        result.getEvictions(),
-                        result.getAverageProcessTimePerRequest(),
-                        result.getNumberOfOperations());
-                table.addRule();
-            }
-            table.getContext().setGrid(U8_Grids.borderDouble());
-            table.setTextAlignment(TextAlignment.CENTER);
-
-            String renderedTable = table.render();
-            System.out.println(renderedTable);
             System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
         } catch (IOException e) {
