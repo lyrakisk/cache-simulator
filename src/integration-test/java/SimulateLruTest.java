@@ -1,15 +1,14 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import data.parser.Record;
 import data.parser.snia.CambridgeTraceParser;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import report.Result;
 import simulation.policy.LeastRecentlyUsed;
 import simulation.policy.Policy;
-import report.Result;
 import simulation.simulator.Simulator;
 
 
