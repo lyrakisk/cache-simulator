@@ -22,11 +22,10 @@ public class Result {
      * @param hitRate (number of hits) / (total number of requests)
      * @param numberOfHits total number of items found in cache
      */
-    public Result(String policy, double hitRate, int numberOfHits, int numberOfRequests) {
+    public Result(String policy, double hitRate, int numberOfHits) {
         this.policy = policy;
         this.hitRate = hitRate;
         this.numberOfHits = numberOfHits;
-        this.numberOfRequests = numberOfRequests;
     }
 
     public String getPolicy() {

@@ -36,7 +36,7 @@ public class Simulator {
 
         // initialize results
         for (int i = 0; i < results.length; i++) {
-            results[i] = new Result(policies.get(i).getClass().getSimpleName(), 0, 0, 0);
+            results[i] = new Result(policies.get(i).getClass().getSimpleName(), 0, 0);
         }
 
         records.forEachOrdered(record -> processRecord(record, results));
@@ -46,10 +46,11 @@ public class Simulator {
             results[i].setNumberOfOperations(policies.get(i).getStats().getOperations());
             results[i].setEvictions(policies.get(i).getStats().getEvictions());
             results[i].setNumberOfHits(policies.get(i).getStats().getHits());
+            results[i].setNumberOfRequests(policies.get(i).getStats().getRequests());
         }
 
-        // Calculate the hit ratio for each simulation.policy
-        // Calculate the average process time per request for each simulation.policy
+        // Calculate the hit ratio for each policy
+        // Calculate the average process time per request for each policy
         for (Result result: results) {
             result.setHitRate(
                     ((int) (result.getNumberOfHits()
@@ -79,7 +80,6 @@ public class Simulator {
     public void processRecord(Record record, Result[] results) {
         for (int i = 0; i < results.length; i++) {
             Policy policy = policies.get(i);
-            results[i].setNumberOfRequests(results[i].getNumberOfRequests() + 1);
 
 
             long startTime = System.nanoTime();

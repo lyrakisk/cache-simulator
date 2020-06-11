@@ -67,6 +67,7 @@ public class Arc extends Policy {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @Override
     public boolean isPresentInCache(Record record) {
+        this.getStats().recordRequest();
         this.getStats().recordOperation();
         this.checkIsBytes(record);
         boolean existing = false;

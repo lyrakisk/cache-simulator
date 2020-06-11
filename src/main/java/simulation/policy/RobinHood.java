@@ -13,8 +13,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 // A number of variables are used in the faster-to-write for-loop construction
 // and thus giving a UR-anomaly, which is not a bug.
-// Also, for now we are calling system.exit when the data.record is not a request,
-// which is going to be discussed later.
 @SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.DoNotCallSystemExit"})
 public class RobinHood extends Policy {
 
@@ -57,6 +55,7 @@ public class RobinHood extends Policy {
     private transient int beginningDelta;
     private transient int delta;
 
+
     /**
      * Constructor for the RobinHood simulation.policy.
      * @param cacheSize the size of the cache
@@ -72,6 +71,7 @@ public class RobinHood extends Policy {
         delta = 5000;
 
         // There are 2 backends in the traces available - 39f00c48 and b4fbebd8.
+        // todo: let the user pass the backend names in the constructor as an array or list.
         cachePerBackend.put("39f00c48", (long) (0.5 * (double) this.getCacheSize()));
         cachePerBackend.put("b4fbebd8", (long) (0.5 * (double) this.getCacheSize()));
         latencyPerBackend.put("39f00c48", randomLatency(100, 10000));
@@ -156,11 +156,14 @@ public class RobinHood extends Policy {
         boolean allInCache = true;
 
         for (Query query: queries) {
+            this.getStats().recordRequest();
+            this.getStats().recordOperation();
             String backend = query.getBackend();
             Policy evictionPolicyForQuery = evictionPolicyPerBackend.get(backend);
             Record recordToCheck = new Record(query.getUrl(), query.getSize());
 
             if (!query.isCachable() || !evictionPolicyForQuery.isPresentInCache(recordToCheck)) {
+                this.getStats().recordOperation();
                 allInCache = false;
                 if (!latencyPerBackendForRequest.containsKey(backend)) {
                     latencyPerBackendForRequest.put(backend, 0);
@@ -169,10 +172,22 @@ public class RobinHood extends Policy {
                 int previousLatency = latencyPerBackendForRequest.get(backend);
                 latencyPerBackendForRequest.put(backend, previousLatency + latencyForBackend);
             }
+
+            // update RobinHood stats
+            long hits = 0L;
+            long evictions = 0L;
+            for (Policy policy: evictionPolicyPerBackend.values()) {
+                this.getStats().recordOperation();
+                hits += policy.getStats().getHits();
+                evictions += policy.getStats().getEvictions();
+            }
+            this.getStats().setHits(hits);
+            this.getStats().setEvictions(evictions);
         }
         latencyPerRequest.put(request.getId(), latencyPerBackendForRequest);
 
         if (delta == 0) {
+            this.getStats().recordOperation();
             delta = beginningDelta;
             updateCacheSizes();
             latencyPerRequest.clear();
@@ -196,16 +211,19 @@ public class RobinHood extends Policy {
     @Override
     public void deleteUntilCacheNotOverloaded() {
         for (Policy policy: evictionPolicyPerBackend.values()) {
+            this.getStats().recordOperation();
             policy.deleteUntilCacheNotOverloaded();
         }
     }
 
     public void setDelta(int delta) {
+        this.getStats().recordOperation();
         this.beginningDelta = delta;
         this.delta = delta;
     }
 
     public void setLatencyForBackend(String backend, int latency) {
+        this.getStats().recordOperation();
         latencyPerBackend.put(backend, latency);
     }
 }

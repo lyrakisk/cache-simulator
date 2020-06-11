@@ -78,6 +78,7 @@ public class LeastRecentlyUsed extends Policy {
     // well structured).
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public boolean isPresentInCache(Record record) {
+        this.getStats().recordRequest();
         String id = record.getId();
         this.checkIsBytes(record);
         boolean existing = true;
@@ -138,6 +139,7 @@ public class LeastRecentlyUsed extends Policy {
     @Override
     public void deleteUntilCacheNotOverloaded() {
         while (this.getRemainingCache() < 0) {
+            this.getStats().recordEviction();
             Node toRemove = tail.prev;
             toRemove.removeFromList();
             cache.remove(toRemove.id);

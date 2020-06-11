@@ -59,6 +59,7 @@ public class LeastFrequentlyUsed extends Policy {
      */
     @Override
     public boolean isPresentInCache(Record record) {
+        this.getStats().recordRequest();
         String id = record.getId();
         this.checkIsBytes(record);
         this.getStats().recordOperation();
