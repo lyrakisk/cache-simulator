@@ -5,12 +5,12 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import parser.Record;
-import parser.snia.CambridgeTraceParser;
-import policy.LeastRecentlyUsed;
-import policy.Policy;
+import data.parser.Record;
+import data.parser.snia.CambridgeTraceParser;
+import simulation.policy.LeastRecentlyUsed;
+import simulation.policy.Policy;
 import report.Result;
-import simulator.Simulator;
+import simulation.simulator.Simulator;
 
 
 public class SimulateLruTest {

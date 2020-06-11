@@ -2,6 +2,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import configuration.Configuration;
 import configuration.Trace;
+import data.parser.AbstractParserClass;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciithemes.u8.U8_Grids;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
@@ -9,10 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import parser.AbstractParserClass;
-import policy.Policy;
 import report.Result;
-import simulator.Simulator;
+import simulation.policy.Policy;
+import simulation.simulator.Simulator;
 
 /**
  * The DataflowAnomalyAnalysis is suppressed here, because it's raised
@@ -24,7 +24,7 @@ public class Main {
     private static final String configurationFilePath = "src/main/resources/custom.yml";
 
     /**
-     * Run parser.
+     * Run data.parser.
      * @param args args.
      */
     public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class Main {
             ArrayList<Policy> policies = new ArrayList<Policy>();
 
             for (String className: configuration.getPolicies()) {
-                Class<?> policyClass = Class.forName("policy." + className);
+                Class<?> policyClass = Class.forName("simulation.policy." + className);
                 Constructor<?> policyConstructor =
                         policyClass.getConstructor(int.class, boolean.class);
                 policies.add((Policy) policyConstructor.newInstance(

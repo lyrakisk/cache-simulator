@@ -18,7 +18,7 @@ public class Result {
 
     /**
      * Constructor.
-     * @param policy the policy that was simulated.
+     * @param policy the simulation.policy that was simulated.
      * @param hitRate (number of hits) / (total number of requests)
      * @param numberOfHits total number of items found in cache
      */
