@@ -117,4 +117,20 @@ public class LeastRecentlyUsedTest {
         Assertions.assertFalse(lru.isPresentInCache(firstBigSize));
         Assertions.assertFalse(lru.isPresentInCache(first));
     }
+
+    @Test
+    void testDeleteUntilCacheNotOverloaded() {
+        Record first = new Record("1", 1000);
+        Record second = new Record("2", 2000);
+
+        Assertions.assertFalse(lru.isPresentInCache(first));
+        Assertions.assertFalse(lru.isPresentInCache(second));
+        Assertions.assertTrue(lru.isPresentInCache(first));
+        Assertions.assertTrue(lru.isPresentInCache(second));
+
+        lru.setCacheSize(2500);
+        lru.deleteUntilCacheNotOverloaded();
+
+        Assertions.assertTrue(lru.isPresentInCache(second));
+    }
 }

@@ -108,4 +108,21 @@ public class LeastFrequentlyUsedTest {
         Assertions.assertTrue(lfuRecords.isPresentInCache(secondThirdTime));
         Assertions.assertEquals(0, lfuRecords.getRemainingCache());
     }
+
+    @Test
+    void testDeleteUntilCacheNotOverloaded() {
+        Record first = new Record("1", 100);
+        Record second = new Record("2", 200);
+
+        Assertions.assertFalse(lfuBytes.isPresentInCache(first));
+        Assertions.assertFalse(lfuBytes.isPresentInCache(second));
+        Assertions.assertTrue(lfuBytes.isPresentInCache(first));
+        Assertions.assertTrue(lfuBytes.isPresentInCache(first));
+        Assertions.assertTrue(lfuBytes.isPresentInCache(second));
+
+        lfuBytes.setCacheSize(250);
+        lfuBytes.deleteUntilCacheNotOverloaded();
+
+        Assertions.assertFalse(lfuBytes.isPresentInCache(second));
+    }
 }

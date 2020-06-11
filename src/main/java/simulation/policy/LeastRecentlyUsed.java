@@ -47,6 +47,10 @@ public class LeastRecentlyUsed extends Policy {
             after.next.prev = this;
             after.next = this;
         }
+
+        public String toString() {
+            return id + " " + sz;
+        }
     }
 
     private transient Map<String, Node> cache;
