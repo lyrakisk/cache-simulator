@@ -6,9 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 import parser.Record;
+import policy.helpers.Entry;
 
 public class LeastFrequentlyUsed extends Policy {
-    private transient Map<String, Record> items;
+    private transient Map<String, Entry> items;
     private transient Map<String, Integer> counts;
     private transient Map<Integer, Set<String>> frequencies;
     private transient int minCount;
@@ -33,6 +34,8 @@ public class LeastFrequentlyUsed extends Policy {
         while (this.getRemainingCache() < 0) {
             Set<String> currentMin = frequencies.get(minCount);
             while (!currentMin.isEmpty() && this.getRemainingCache() < 0) {
+                this.getStats().recordOperation();
+                this.getStats().recordEviction();
                 String toRemove = currentMin.iterator().next();
                 currentMin.remove(toRemove);
                 this.updateCacheSize(items.remove(toRemove).getSize(), false);
@@ -59,9 +62,10 @@ public class LeastFrequentlyUsed extends Policy {
     public boolean isPresentInCache(Record record) {
         String id = record.getId();
         this.checkIsBytes(record);
+        this.getStats().recordOperation();
         if (record.getSize() > this.getCacheSize()) {
             if (items.containsKey(id)) {
-                Record toRemove = items.remove(id);
+                Entry toRemove = items.remove(id);
                 int occurrences = counts.remove(toRemove.getId());
                 frequencies.get(occurrences).remove(toRemove.getId());
                 this.updateCacheSize(toRemove.getSize(), false);
@@ -102,10 +106,14 @@ public class LeastFrequentlyUsed extends Policy {
 
         this.updateCache();
         int pos = counts.get(id);
-        items.put(id, record);
+        items.put(id, new Entry(record.getId(), record.getSize()));
         frequencies.get(pos).add(id);
         if (pos < minCount || minCount == -1) {
             minCount = pos;
+        }
+
+        if (found) {
+            this.getStats().recordHit();
         }
         return found;
     }

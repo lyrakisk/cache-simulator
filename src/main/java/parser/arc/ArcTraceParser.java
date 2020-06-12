@@ -26,7 +26,7 @@ import parser.Record;
  * Citation:
  * Nimrod Megiddo and Dharmendra S. Modha,
  * "Arc: A Self-Tuning, Low Overhead Replacement Cache,
- * " USENIX Conference on File and Storage Technologies (FAST 03),
+ * " USENIX Conference on Entry and Storage Technologies (FAST 03),
  * San Francisco, CA, pp. 115-130, March 31-April 2, 2003.
  */
 public class ArcTraceParser extends AbstractParserClass {

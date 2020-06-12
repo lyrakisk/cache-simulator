@@ -17,6 +17,8 @@ plugins {
 
     // Jacoco badge
     id "com.github.dawnwords.jacoco.badge" version "0.2.0"
+
+    id 'application'
 }
 
 group 'nl.tudelft.cse.sem.template'
@@ -173,4 +175,8 @@ tasks.withType(SpotBugsTask) {
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
+}
+
+application {
+    mainClassName = 'Main'
 }

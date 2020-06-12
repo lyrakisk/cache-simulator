@@ -72,7 +72,8 @@ public class Main {
 
             // print results to console
             AsciiTable table = new AsciiTable();
-            table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions", "Avg. Time per Request (millis)");
+            table.addRow("Policy", "Requests", "Hit Rate",
+                    "Hits", "Evictions", "Avg. Time per Request (millis)", "Operations");
             table.addRule();
             for (Result result: results) {
                 table.addRow(
@@ -81,7 +82,8 @@ public class Main {
                         result.getHitRate(),
                         result.getNumberOfHits(),
                         result.getEvictions(),
-                        result.getAverageProcessTimePerRequest());
+                        result.getAverageProcessTimePerRequest(),
+                        result.getNumberOfOperations());
                 table.addRule();
             }
             table.getContext().setGrid(U8_Grids.borderDouble());

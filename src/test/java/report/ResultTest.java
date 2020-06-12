@@ -40,4 +40,5 @@ public class ResultTest {
         result.setAverageProcessTimePerRequest(0.02);
         assertEquals(0.02, result.getAverageProcessTimePerRequest());
     }
+
 }

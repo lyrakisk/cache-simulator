@@ -38,11 +38,16 @@ public class Simulator {
         // initialize results
         for (int i = 0; i < results.length; i++) {
             results[i] = new Result(policies.get(i).getClass().getSimpleName(), 0, 0, 0);
-            results[i].setEvictions(0);
         }
 
         records.forEachOrdered(record -> processRecord(record, results));
 
+        // get the number of operations from each policy
+        for (int i = 0; i < policies.size(); i++) {
+            results[i].setNumberOfOperations(policies.get(i).getStats().getOperations());
+            results[i].setEvictions(policies.get(i).getStats().getEvictions());
+            results[i].setNumberOfHits(policies.get(i).getStats().getHits());
+        }
 
         // Calculate the hit ratio for each policy
         // Calculate the average process time per request for each policy
@@ -53,7 +58,7 @@ public class Simulator {
                     * 10000))
                     / 100.0);
             result.setAverageProcessTimePerRequest(
-                    ( (long) (result.getTimeToProcessAllRequests()
+                    ((long) (result.getTimeToProcessAllRequests()
                     / ((double) result.getNumberOfRequests())
                     * 10000))
                     / 10000.0);
@@ -77,21 +82,13 @@ public class Simulator {
             Policy policy = policies.get(i);
             results[i].setNumberOfRequests(results[i].getNumberOfRequests() + 1);
 
-            int items = policy.numberOfItemsInCache();
 
             long startTime = System.nanoTime();
-            if (policy.isPresentInCache(record)) {
-                results[i].setNumberOfHits(results[i].getNumberOfHits() + 1);
-            } else {
-                // If the policy does not contain the object and the object is accepted
-                // by the cache, then if the cache had to remove items to accept the new object
-                // the total number of items in cache would not increase.
-                // So the number of evictions is:
-                // itemsBefore + 1 - itemsNow
-                results[i]
-                        .setEvictions(
-                                results[i].getEvictions() + items + 1 - policy.numberOfItemsInCache());
-            }
+
+            // Send the record to the policy to process it.
+            policy.isPresentInCache(record);
+
+
             long endTime = System.nanoTime();
 
             // convert time to milliseconds

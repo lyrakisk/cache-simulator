@@ -1,26 +1,26 @@
 package policy;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import parser.Record;
+import policy.helpers.Entry;
 import policy.helpers.QueueNode;
 import policy.helpers.Type;
 
 /**
- * AvoidDuplicateLiterals is suppressed, because it cccurs from suppressing multiple times
+ * AvoidDuplicateLiterals is suppressed, because it occcurs from suppressing multiple times
  * the PMD.DataflowAnomalyAnalysis warning.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class Arc extends Policy {
 
-    public final transient Map<String, QueueNode<Record>> dataNodes;
+    public final transient Map<String, QueueNode<Entry>> dataNodes;
 
-    private final transient QueueNode<Record> t1;
-    private final transient QueueNode<Record> t2;
-    private final transient QueueNode<Record> b1;
-    private final transient QueueNode<Record> b2;
+    private final transient QueueNode<Entry> t1;
+    private final transient QueueNode<Entry> t2;
+    private final transient QueueNode<Entry> b1;
+    private final transient QueueNode<Entry> b2;
 
     private transient long adaptiveParameter;
     private transient double hitPerBytesB1;
@@ -29,7 +29,7 @@ public class Arc extends Policy {
     private transient long hitsB2;
     private transient boolean isBytes;
 
-    private transient Record lastRecordAdded;
+    private transient Entry lastRecordAdded;
 
     private final transient long maxSize;
     private transient long t1CacheSize;
@@ -45,11 +45,11 @@ public class Arc extends Policy {
      */
     public Arc(int cacheSize, boolean isBytes) {
         super(cacheSize, isBytes);
-        dataNodes = new HashMap<String, QueueNode<Record>>();
-        this.t1 = new QueueNode<Record>();
-        this.t2 = new QueueNode<Record>();
-        this.b1 = new QueueNode<Record>();
-        this.b2 = new QueueNode<Record>();
+        dataNodes = new HashMap<String, QueueNode<Entry>>();
+        this.t1 = new QueueNode<Entry>();
+        this.t2 = new QueueNode<Entry>();
+        this.b1 = new QueueNode<Entry>();
+        this.b2 = new QueueNode<Entry>();
         this.maxSize = cacheSize;
         this.adaptiveParameter = 0;
         this.hitPerBytesB1 = 0;
@@ -68,12 +68,13 @@ public class Arc extends Policy {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @Override
     public boolean isPresentInCache(Record record) {
-        //System.out.println(record);
+        this.getStats().recordOperation();
         this.checkIsBytes(record);
         boolean existing = false;
         String key = record.getId();
-        QueueNode<Record> queueNode = dataNodes.get(key);
-        if ((queueNode != null) && queueNode.getRecord().getSize() != record.getSize()) {
+        QueueNode<Entry> queueNode = dataNodes.get(key);
+        Entry entry = new Entry(record.getId(), record.getSize());
+        if ((queueNode != null) && queueNode.getEntry().getSize() != record.getSize()) {
             removeNodeCompletely(queueNode);
             onMissInCache(record);
         } else {
@@ -83,23 +84,27 @@ public class Arc extends Policy {
             if (queueNode == null) {
                 onMissInCache(record);
             } else if (queueNode.getType() == Type.QueueType.B1) {
-                queueNode.setRecord(record);
+                queueNode.setEntry(entry);
                 onHitB1(queueNode, this.isBytes);
             } else if (queueNode.getType() == Type.QueueType.B2) {
-                queueNode.setRecord(record);
+                queueNode.setEntry(entry);
                 onHitB2(queueNode, this.isBytes);
             } else {
-                queueNode.setRecord(record);
+                queueNode.setEntry(entry);
                 onHitT1orT2(queueNode);
                 existing = true;
             }
+        }
+
+        if (existing) {
+            this.getStats().recordHit();
         }
         return existing;
     }
 
     /**
      * Method to return the number of items in the cache.
-     * @return number of items in the cache.
+     * @return number of items in the cache
      */
     @Override
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
@@ -109,11 +114,13 @@ public class Arc extends Policy {
 
     /**
      * Add the record to the appropriate list (T1 or T2).
-     * @param record The record to add.
+     * @param record the record to add
      */
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public void onMissInCache(Record record) {
-        QueueNode<Record> queueNode = new QueueNode<Record>(record.getId(), record);
+        this.getStats().recordOperation();
+        Entry entry = new Entry(record.getId(), record.getSize());
+        QueueNode<Entry> queueNode = new QueueNode<Entry>(record.getId(), entry);
         queueNode.setQueueType(Type.QueueType.T1);
 
         long sizeL1 = (t1CacheSize + b1CacheSize);
@@ -122,10 +129,10 @@ public class Arc extends Policy {
         //        System.out.println(t2CacheSize + " " + b2CacheSize);
         if (sizeL1 == maxSize) {
             if (t1CacheSize < maxSize) {
-                QueueNode<Record> queueNodeToBeRemoved = b1.getNext();
+                QueueNode<Entry> queueNodeToBeRemoved = b1.getNext();
                 dataNodes.remove(queueNodeToBeRemoved.getKey());
                 queueNodeToBeRemoved.remove();
-                b1CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
+                b1CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
                 if (b1CacheSize == 0) {
                     hitPerBytesB1 = 0;
                 } else {
@@ -134,43 +141,43 @@ public class Arc extends Policy {
 
                 replace(queueNode);
             } else {
-                QueueNode<Record> queueNodeToBeRemoved = t1.getNext();
+                QueueNode<Entry> queueNodeToBeRemoved = t1.getNext();
                 dataNodes.remove(queueNodeToBeRemoved.getKey());
                 queueNodeToBeRemoved.remove();
-                t1CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
-                this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
+                t1CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
+                this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
                 -- numberOfItems;
             }
         } else if ((sizeL1 < maxSize) && ((sizeL1 + sizeL2) >= maxSize)) {
             if ((sizeL1 + sizeL2) == (2 * maxSize) && b2CacheSize > 0) {
-                QueueNode<Record> queueNodeToBeRemoved = b2.getNext();
+                QueueNode<Entry> queueNodeToBeRemoved = b2.getNext();
                 dataNodes.remove(queueNodeToBeRemoved.getKey());
                 queueNodeToBeRemoved.remove();
                 //                System.out.println(sizeL1 + " " + sizeL2 + " " + t2CacheSize);
                 //                System.out.println(queueNodeToBeRemoved.getRecord());
-                b2CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
+                b2CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
                 if (b2CacheSize == 0) {
                     hitPerBytesB2 = 0;
                 } else {
                     hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
                 }
             } else if ((sizeL1 + sizeL2) == (2 * maxSize)) {
-                QueueNode<Record> recordQueueNode = t2.getNext();
-                dataNodes.remove(recordQueueNode.getKey());
-                recordQueueNode.remove();
-                t2CacheSize -= recordQueueNode.getRecord().getSize();
+                QueueNode<Entry> entryQueueNode = t2.getNext();
+                dataNodes.remove(entryQueueNode.getKey());
+                entryQueueNode.remove();
+                t2CacheSize -= entryQueueNode.getEntry().getSize();
                 -- numberOfItems;
-                this.updateCacheSize(recordQueueNode.getRecord().getSize(), false);
+                this.updateCacheSize(entryQueueNode.getEntry().getSize(), false);
             }
             replace(queueNode);
         }
 
         t1CacheSize += record.getSize();
-        this.updateCacheSize(queueNode.getRecord().getSize(), true);
+        this.updateCacheSize(queueNode.getEntry().getSize(), true);
         ++ numberOfItems;
         dataNodes.put(record.getId(), queueNode);
         queueNode.addToLast(t1);
-        lastRecordAdded = queueNode.getRecord();
+        lastRecordAdded = queueNode.getEntry();
         if (isBytes) {
             makeSpace();
         }
@@ -178,31 +185,33 @@ public class Arc extends Policy {
 
     /**
      * Add the node to the appropriate list.
-     * @param nodeRecord The node to record.
+     * @param nodeEntry the node to add
+     * @param isBytes true if the cache is in number of bytes, false otherwise
      */
-    public void onHitB1(QueueNode<Record> nodeRecord, boolean isBytes) {
-        if (isBytes == true) {
+    public void onHitB1(QueueNode<Entry> nodeEntry, boolean isBytes) {
+        this.getStats().recordOperation();
+        if (isBytes) {
             hitsB1++;
             this.hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
         } else {
             adaptiveParameter = Math.min(maxSize, adaptiveParameter
                     + Math.max(b2CacheSize / b1CacheSize, 1));
         }
-        this.updateCacheSize(nodeRecord.getRecord().getSize(), true);
+        this.updateCacheSize(nodeEntry.getEntry().getSize(), true);
         ++ numberOfItems;
-        replace(nodeRecord);
+        replace(nodeEntry);
 
-        t2CacheSize += nodeRecord.getRecord().getSize();
-        b1CacheSize -= nodeRecord.getRecord().getSize();
+        t2CacheSize += nodeEntry.getEntry().getSize();
+        b1CacheSize -= nodeEntry.getEntry().getSize();
         if (b1CacheSize == 0) {
             hitPerBytesB1 = 0;
         } else {
             hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
         }
-        nodeRecord.remove();
-        nodeRecord.setQueueType(Type.QueueType.T2);
-        nodeRecord.addToLast(t2);
-        lastRecordAdded = nodeRecord.getRecord();
+        nodeEntry.remove();
+        nodeEntry.setQueueType(Type.QueueType.T2);
+        nodeEntry.addToLast(t2);
+        lastRecordAdded = nodeEntry.getEntry();
         if (isBytes) {
             makeSpace();
         }
@@ -210,31 +219,33 @@ public class Arc extends Policy {
 
     /**
      * Add the node to the appropriate list.
-     * @param nodeRecord The node to record.
+     * @param nodeEntry the node to add
+     * @param isBytes true if the cache is in number of bytes, false otherwise
      */
-    public void onHitB2(QueueNode<Record> nodeRecord, boolean isBytes) {
-        if (isBytes == true) {
+    public void onHitB2(QueueNode<Entry> nodeEntry, boolean isBytes) {
+        this.getStats().recordOperation();
+        if (isBytes) {
             hitsB2++;
             this.hitPerBytesB2 = Math.max(0, (((double) hitsB2 / b2CacheSize) * 100));
         } else {
             adaptiveParameter = Math.max(0,
                     adaptiveParameter - Math.max(b1CacheSize / b2CacheSize, 1));
         }
-        this.updateCacheSize(nodeRecord.getRecord().getSize(), true);
+        this.updateCacheSize(nodeEntry.getEntry().getSize(), true);
         ++ numberOfItems;
-        replace(nodeRecord);
+        replace(nodeEntry);
 
-        t2CacheSize += nodeRecord.getRecord().getSize();
-        b2CacheSize -= nodeRecord.getRecord().getSize();
+        t2CacheSize += nodeEntry.getEntry().getSize();
+        b2CacheSize -= nodeEntry.getEntry().getSize();
         if (b2CacheSize == 0) {
             hitPerBytesB2 = 0;
         } else {
             hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
         }
-        nodeRecord.remove();
-        nodeRecord.setQueueType(Type.QueueType.T2);
-        nodeRecord.addToLast(t2);
-        lastRecordAdded = nodeRecord.getRecord();
+        nodeEntry.remove();
+        nodeEntry.setQueueType(Type.QueueType.T2);
+        nodeEntry.addToLast(t2);
+        lastRecordAdded = nodeEntry.getEntry();
         if (isBytes) {
             makeSpace();
         }
@@ -242,17 +253,18 @@ public class Arc extends Policy {
 
     /**
      * Add the node to the appropriate list.
-     * @param nodeRecord The node to record.
+     * @param nodeEntry the node to add
      */
-    public void onHitT1orT2(QueueNode<Record> nodeRecord) {
-        if (nodeRecord.getType() == Type.QueueType.T1) {
-            t1CacheSize -= nodeRecord.getRecord().getSize();
-            t2CacheSize += nodeRecord.getRecord().getSize();
+    public void onHitT1orT2(QueueNode<Entry> nodeEntry) {
+        this.getStats().recordOperation();
+        if (nodeEntry.getType() == Type.QueueType.T1) {
+            t1CacheSize -= nodeEntry.getEntry().getSize();
+            t2CacheSize += nodeEntry.getEntry().getSize();
         }
-        nodeRecord.remove();
-        nodeRecord.setQueueType(Type.QueueType.T2);
-        nodeRecord.addToLast(t2);
-        lastRecordAdded = nodeRecord.getRecord();
+        nodeEntry.remove();
+        nodeEntry.setQueueType(Type.QueueType.T2);
+        nodeEntry.addToLast(t2);
+        lastRecordAdded = nodeEntry.getEntry();
     }
 
 
@@ -260,29 +272,31 @@ public class Arc extends Policy {
      * Replace QueueNode (Case: L1 (T1 or B1) has less than c pages).
      * @param queueNode queue node
      */
-    private void replace(QueueNode<Record> queueNode) {
+    private void replace(QueueNode<Entry> queueNode) {
         while (this.getRemainingCache() < 0) {
+            this.getStats().recordOperation();
             if ((t1CacheSize >= 1) && ((queueNode.getType() == Type.QueueType.B2)
                     || (t1CacheSize > adaptiveParameter))) {
-                QueueNode<Record> queueNodeToBeRemoved = t1.getNext();
+                QueueNode<Entry> queueNodeToBeRemoved = t1.getNext();
                 queueNodeToBeRemoved.remove();
                 queueNodeToBeRemoved.setQueueType(Type.QueueType.B1);
                 queueNodeToBeRemoved.addToLast(b1);
-                this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
-                t1CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
-                b1CacheSize += queueNodeToBeRemoved.getRecord().getSize();
+                this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
+                t1CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
+                b1CacheSize += queueNodeToBeRemoved.getEntry().getSize();
                 hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
             } else {
-                QueueNode<Record> queueNodeToBeRemoved = t2.getNext();
+                QueueNode<Entry> queueNodeToBeRemoved = t2.getNext();
                 queueNodeToBeRemoved.remove();
                 queueNodeToBeRemoved.setQueueType(Type.QueueType.B2);
                 queueNodeToBeRemoved.addToLast(b2);
-                this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
-                t2CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
-                b2CacheSize += queueNodeToBeRemoved.getRecord().getSize();
+                this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
+                t2CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
+                b2CacheSize += queueNodeToBeRemoved.getEntry().getSize();
                 hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
 
             }
+            this.getStats().recordEviction();
             -- numberOfItems;
         }
     }
@@ -294,35 +308,39 @@ public class Arc extends Policy {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     private void makeSpace() {
         while (this.getRemainingCache() < 0) {
+            this.getStats().recordOperation();
             if (t2CacheSize == 0 || (hitPerBytesB1 >= hitPerBytesB2 && t1CacheSize != 0
                     && !lastRecordAdded.getId().equals(t1.getNext().getKey()))) {
-                QueueNode<Record> queueNodeToBeRemoved = t1.getNext();
-                this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
+                QueueNode<Entry> queueNodeToBeRemoved = t1.getNext();
+                this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
                 queueNodeToBeRemoved.remove();
                 queueNodeToBeRemoved.setQueueType(Type.QueueType.B1);
                 queueNodeToBeRemoved.addToLast(b1);
-                t1CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
-                b1CacheSize += queueNodeToBeRemoved.getRecord().getSize();
+                t1CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
+                b1CacheSize += queueNodeToBeRemoved.getEntry().getSize();
                 hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
+                this.getStats().recordEviction();
                 -- numberOfItems;
             } else {
                 if (t2CacheSize != 0 && !lastRecordAdded.getId().equals(t2.getNext().getKey())) {
-                    QueueNode<Record> queueNodeToBeRemoved = t2.getNext();
-                    this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
+                    QueueNode<Entry> queueNodeToBeRemoved = t2.getNext();
+                    this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
                     queueNodeToBeRemoved.remove();
                     queueNodeToBeRemoved.setQueueType(Type.QueueType.B2);
                     queueNodeToBeRemoved.addToLast(b2);
-                    t2CacheSize -= queueNodeToBeRemoved.getRecord().getSize();
-                    b2CacheSize += queueNodeToBeRemoved.getRecord().getSize();
+                    t2CacheSize -= queueNodeToBeRemoved.getEntry().getSize();
+                    b2CacheSize += queueNodeToBeRemoved.getEntry().getSize();
                     hitPerBytesB2 = Math.max(0.0, (((double) hitsB2 / b2CacheSize) * 100));
+                    this.getStats().recordEviction();
                     -- numberOfItems;
                 }
             }
         }
         while ((b1CacheSize + b2CacheSize) > maxSize  && (b1CacheSize < maxSize)
                 && (b2CacheSize < maxSize)) {
+            this.getStats().recordOperation();
             if (hitPerBytesB1 >= hitPerBytesB2) {
-                QueueNode<Record> b1NodeToBeRemoved = b1.getNext();
+                QueueNode<Entry> b1NodeToBeRemoved = b1.getNext();
                 removeNodeCompletely(b1NodeToBeRemoved);
                 if (b1CacheSize == 0) {
                     hitPerBytesB1 = 0;
@@ -330,7 +348,7 @@ public class Arc extends Policy {
                     hitPerBytesB1 = Math.max(0.0, (((double) hitsB1 / b1CacheSize) * 100));
                 }
             } else {
-                QueueNode<Record> b2NodeToBeRemoved = b2.getNext();
+                QueueNode<Entry> b2NodeToBeRemoved = b2.getNext();
                 removeNodeCompletely(b2NodeToBeRemoved);
                 if (b2CacheSize == 0) {
                     hitPerBytesB2 = 0;
@@ -345,19 +363,20 @@ public class Arc extends Policy {
 
     /**
      * Removes a node completely from the dataNodes HashMap.
-     * @param queueNodeToBeRemoved The node to be removed.
+     * @param queueNodeToBeRemoved the node to be removed
      */
-    private void removeNodeCompletely(QueueNode<Record> queueNodeToBeRemoved) {
+    private void removeNodeCompletely(QueueNode<Entry> queueNodeToBeRemoved) {
+        this.getStats().recordOperation();
         if (queueNodeToBeRemoved.getType() == Type.QueueType.T1) {
-            this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
-            t1CacheSize = t1CacheSize - queueNodeToBeRemoved.getRecord().getSize();
+            this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
+            t1CacheSize = t1CacheSize - queueNodeToBeRemoved.getEntry().getSize();
         } else if (queueNodeToBeRemoved.getType() == Type.QueueType.T2) {
-            this.updateCacheSize(queueNodeToBeRemoved.getRecord().getSize(), false);
-            t2CacheSize = t2CacheSize - queueNodeToBeRemoved.getRecord().getSize();
+            this.updateCacheSize(queueNodeToBeRemoved.getEntry().getSize(), false);
+            t2CacheSize = t2CacheSize - queueNodeToBeRemoved.getEntry().getSize();
         } else if (queueNodeToBeRemoved.getType() == Type.QueueType.B1) {
-            b1CacheSize = b1CacheSize - queueNodeToBeRemoved.getRecord().getSize();
+            b1CacheSize = b1CacheSize - queueNodeToBeRemoved.getEntry().getSize();
         } else {
-            b2CacheSize = b2CacheSize - queueNodeToBeRemoved.getRecord().getSize();
+            b2CacheSize = b2CacheSize - queueNodeToBeRemoved.getEntry().getSize();
         }
         dataNodes.remove(queueNodeToBeRemoved.getKey());
         queueNodeToBeRemoved.remove();
