@@ -3,9 +3,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import configuration.Configuration;
 import configuration.Trace;
 import data.parser.AbstractParserClass;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.asciithemes.u8.U8_Grids;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -83,5 +80,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 }
