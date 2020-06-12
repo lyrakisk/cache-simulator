@@ -1,0 +1,22 @@
+# Edit this file to run the simulator with your own configuration
+---
+
+# Select the policies you want to simulate.
+# Available policies: LeastRecentlyUsed, LeastFrequentlyUsed
+policies:
+  - Arc
+  - LeastRecentlyUsed
+  - LeastFrequentlyUsed
+
+cacheSize : 80000
+
+# True: cacheSize will represent the size of cache in Bytes.
+# False: cacheSize will represent the size of cache in number of items.
+sizeInBytes : false
+
+# Select the trace file you want be used by the simulator.
+# You can find more information about the traces in the corresponding parsers.
+# todo : Add documentation for the traces in the wiki.
+# The RobinHood trace is compatible only with the RobinHood policy!!
+# Available traces: Cambridge, ARC, UPENN, RobinHood
+trace: ARC

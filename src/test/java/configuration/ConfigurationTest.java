@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class ConfigurationTest {
 
     static Configuration configuration;
-    static String configurationFilePath = "src/main/resources/default.yml";
+    static String configurationFilePath = "configuration/default.yml";
 
     @BeforeAll
     static void setUp() {

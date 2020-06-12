@@ -21,7 +21,7 @@ import simulator.Simulator;
  */
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Main {
-    private static final String configurationFilePath = "src/main/resources/custom.yml";
+    private static final String configurationFilePath = "configuration/custom.yml";
 
     /**
      * Run parser.
