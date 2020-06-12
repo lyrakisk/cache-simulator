@@ -3,10 +3,10 @@ package configuration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import data.parser.arc.ArcTraceParser;
+import data.parser.snia.CambridgeTraceParser;
+import data.parser.upenn.UpennTraceParser;
 import org.junit.jupiter.api.Test;
-import parser.arc.ArcTraceParser;
-import parser.snia.CambridgeTraceParser;
-import parser.upenn.UpennTraceParser;
 
 
 public class TraceTest {
