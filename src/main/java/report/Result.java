@@ -14,18 +14,18 @@ public class Result {
     private transient long evictions;
     private transient double timeToProcessAllRequests;
     private transient double averageProcessTimePerRequest;
+    private transient long numberOfOperations;
 
     /**
      * Constructor.
-     * @param policy the policy that was simulated.
+     * @param policy the simulation.policy that was simulated.
      * @param hitRate (number of hits) / (total number of requests)
      * @param numberOfHits total number of items found in cache
      */
-    public Result(String policy, double hitRate, int numberOfHits, int numberOfRequests) {
+    public Result(String policy, double hitRate, int numberOfHits) {
         this.policy = policy;
         this.hitRate = hitRate;
         this.numberOfHits = numberOfHits;
-        this.numberOfRequests = numberOfRequests;
     }
 
     public String getPolicy() {
@@ -74,7 +74,7 @@ public class Result {
 
     /**
      * Time is in milliseconds.
-     * @param timeToProcessAllRequests
+     * @param timeToProcessAllRequests total process time
      */
     public void setTimeToProcessAllRequests(double timeToProcessAllRequests) {
         this.timeToProcessAllRequests = timeToProcessAllRequests;
@@ -82,7 +82,7 @@ public class Result {
 
     /**
      * Time is in milliseconds.
-     * @param averageProcessTimePerRequest
+     * @param averageProcessTimePerRequest average process time
      */
     public void setAverageProcessTimePerRequest(double averageProcessTimePerRequest) {
         this.averageProcessTimePerRequest = averageProcessTimePerRequest;
@@ -94,5 +94,13 @@ public class Result {
      */
     public double getAverageProcessTimePerRequest() {
         return averageProcessTimePerRequest;
+    }
+
+    public long getNumberOfOperations() {
+        return numberOfOperations;
+    }
+
+    public void setNumberOfOperations(long numberOfOperations) {
+        this.numberOfOperations = numberOfOperations;
     }
 }

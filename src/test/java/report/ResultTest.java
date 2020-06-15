@@ -11,7 +11,7 @@ public class ResultTest {
 
     @BeforeAll
     static void setUp() {
-        result = new Result("LeastRecentlyUsed", 50, 2134, 20000);
+        result = new Result("LeastRecentlyUsed", 50, 2134);
     }
 
     @Test
@@ -40,4 +40,5 @@ public class ResultTest {
         result.setAverageProcessTimePerRequest(0.02);
         assertEquals(0.02, result.getAverageProcessTimePerRequest());
     }
+
 }
