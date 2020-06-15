@@ -52,7 +52,7 @@ public class Main {
 
             ArrayList<Policy> policies = new ArrayList<Policy>();
 
-            for (String className : configuration.getPolicies()) {
+            for (String className: configuration.getPolicies()) {
                 Class<?> policyClass = Class.forName("policy." + className);
                 Constructor<?> policyConstructor =
                         policyClass.getConstructor(int.class, boolean.class);
