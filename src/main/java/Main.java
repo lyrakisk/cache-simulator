@@ -86,7 +86,7 @@ public class Main {
             AsciiTable table = new AsciiTable();
             table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions", "Avg. Time per Request (millis)");
             table.addRule();
-            for (Result result : results) {
+            for (Result result: results) {
                 table.addRow(
                         result.getPolicy(),
                         result.getNumberOfRequests(),
