@@ -1,5 +1,6 @@
 package policy;
 
+import configuration.Configuration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,7 +85,10 @@ public class LeastRecentlyUsedTest {
 
     @Test
     void testCacheSizeIsNumberOfFiles() {
-        LeastRecentlyUsed lruRecords = new LeastRecentlyUsed(2, false);
+        Configuration configuration = new Configuration();
+        configuration.setCacheSize(2);
+        configuration.setSizeInBytes(false);
+        LeastRecentlyUsed lruRecords = new LeastRecentlyUsed(configuration);
         Record first = new Record("1", 2048);
         Record second = new Record("2", 1024);
         Record third = new Record("3", 512);

@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import configuration.Configuration;
 import parser.Record;
 
 public class LeastFrequentlyUsed extends Policy {
@@ -18,8 +19,20 @@ public class LeastFrequentlyUsed extends Policy {
      * @param size the size of the cache
      * @param isBytes the cache size parameter
      */
-    public LeastFrequentlyUsed(int size, boolean isBytes) {
+    public LeastFrequentlyUsed(long size, boolean isBytes) {
         super(size, isBytes);
+        items = new HashMap<>();
+        counts = new HashMap<>();
+        frequencies = new HashMap<>();
+        minCount = -1;
+    }
+
+    /**
+     * Constructing a new LFU policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public LeastFrequentlyUsed(Configuration configuration) {
+        super(configuration);
         items = new HashMap<>();
         counts = new HashMap<>();
         frequencies = new HashMap<>();

@@ -1,5 +1,6 @@
 package policy;
 
+import configuration.Configuration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,11 @@ public class LeastFrequentlyUsedTest {
 
     @BeforeEach
     void init() {
-        lfuBytes = new LeastFrequentlyUsed(1000, true);
+        Configuration confBytes = new Configuration();
+        confBytes.setCacheSize(1000);
+        confBytes.setSizeInBytes(true);
+        lfuBytes = new LeastFrequentlyUsed(confBytes);
+
         lfuRecords = new LeastFrequentlyUsed(2, false);
     }
 

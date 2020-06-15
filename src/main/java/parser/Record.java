@@ -43,12 +43,6 @@ public class Record {
     }
 
     @Override
-    public String toString() {
-        return "ID=" + identifier + ",size=" + size;
-    }
-
-
-    @Override
     public int hashCode() {
         return identifier.hashCode() + (int) size;
     }

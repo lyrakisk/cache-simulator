@@ -1,20 +1,20 @@
 package policy;
 
+import configuration.Configuration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import parser.Record;
 import policy.helpers.QueueNode;
-import policy.helpers.Type;
 
-public class ArcTest {
+public class AdaptiveReplacementCacheTest {
 
-    private transient Arc arc;
+    private transient AdaptiveReplacementCache arc;
 
 
     @BeforeEach
     void init() {
-        arc = new Arc(1048576, true);
+        arc = new AdaptiveReplacementCache(1048576, true);
     }
 
     @Test
@@ -38,7 +38,10 @@ public class ArcTest {
 
     @Test
     void testCacheSizeIsNumberOfFiles() {
-        Arc arcRecords = new Arc(2, false);
+        Configuration configuration = new Configuration();
+        configuration.setCacheSize(2);
+        configuration.setSizeInBytes(false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(configuration);
         Record first = new Record("1", 2048);
         Record second = new Record("2", 1024);
         Record third = new Record("3", 512);
@@ -56,7 +59,7 @@ public class ArcTest {
         Record first = new Record("1", 2048);
         Record second = new Record("2", 1024);
         Record third = new Record("3", 512);
-        Arc arcRecords = new Arc(2, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(2, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(second);
@@ -73,7 +76,7 @@ public class ArcTest {
         Record second = new Record("2", 1024);
         Record third = new Record("3", 512);
         Record fourth = new Record("4", 256);
-        Arc arcRecords = new Arc(2, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(2, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(third);
@@ -90,7 +93,7 @@ public class ArcTest {
         Record third = new Record("3", 512);
         Record fourth = new Record("4", 256);
 
-        Arc arcRecords = new Arc(2, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(2, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(first);
@@ -111,7 +114,7 @@ public class ArcTest {
         Record fifth = new Record("1", 4);
 
 
-        Arc arcRecords = new Arc(15, true);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(15, true);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(third);
@@ -132,7 +135,7 @@ public class ArcTest {
         Record third = new Record("3", 7);
         Record fourth = new Record("4", 3);
 
-        Arc arcRecords = new Arc(2, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(2, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
@@ -152,7 +155,7 @@ public class ArcTest {
         Record third = new Record("3", 7);
         Record fourth = new Record("4", 3);
 
-        Arc arcRecords = new Arc(2, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(2, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
 
@@ -181,7 +184,7 @@ public class ArcTest {
         Record fourth = new Record("4", 7);
         Record fifth = new Record("5", 7);
         Record sixth = new Record("6", 7);
-        Arc arcRecords = new Arc(15, true);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(15, true);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(first2);
@@ -208,7 +211,7 @@ public class ArcTest {
         Record fourth = new Record("4", 7);
         Record fifth = new Record("5", 7);
         Record sixth = new Record("6", 7);
-        Arc arcRecords = new Arc(2, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(2, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(first2);
@@ -227,7 +230,7 @@ public class ArcTest {
 
     @Test
     void testB2() {
-        Arc arcRecords = new Arc(3, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(3, false);
 
         Record first = new Record("1", 10);
         Record second = new Record("2", 5);
@@ -275,7 +278,7 @@ public class ArcTest {
         Record third = new Record("3", 7);
         Record fourth = new Record("4", 7);
         Record fifth = new Record("5", 7);
-        Arc arcRecords = new Arc(3, false);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(3, false);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         arcRecords.isPresentInCache(third);
@@ -295,7 +298,7 @@ public class ArcTest {
     void testRemoveNodeCompletely() {
         Record first = new Record("1", 10);
         Record second = new Record("1", 15);
-        Arc arcRecords = new Arc(15, true);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(15, true);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
@@ -311,7 +314,7 @@ public class ArcTest {
     void testHitB2isBytesTrue() {
         Record first = new Record("1", 9);
         Record second = new Record("2", 8);
-        Arc arcRecords = new Arc(10, true);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(10, true);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
@@ -324,7 +327,7 @@ public class ArcTest {
     void testNumberOfItems() {
         Record first = new Record("1", 9);
         Record second = new Record("2", 8);
-        Arc arcRecords = new Arc(20, true);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(20, true);
         arcRecords.isPresentInCache(first);
         arcRecords.isPresentInCache(second);
         Assertions.assertEquals(2, arcRecords.numberOfItemsInCache());
@@ -354,7 +357,7 @@ public class ArcTest {
         Record second = new Record("2", 7);
         Record third = new Record("3", 7);
         Record fourth = new Record("4", 7);
-        Arc arcRecords = new Arc(15, true);
+        AdaptiveReplacementCache arcRecords = new AdaptiveReplacementCache(15, true);
         arcRecords.isPresentInCache(third);
         arcRecords.isPresentInCache(fourth);
         arcRecords.isPresentInCache(zero);

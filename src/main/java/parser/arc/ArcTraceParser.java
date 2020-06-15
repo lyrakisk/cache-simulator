@@ -25,7 +25,7 @@ import parser.Record;
  * =IwAR3MxmGYHx-du67uRz1ZbfM_pGmAmWkS22Lbj5YQ4j4Tl6Ji8itCg8mSnyE
  * Citation:
  * Nimrod Megiddo and Dharmendra S. Modha,
- * "Arc: A Self-Tuning, Low Overhead Replacement Cache,
+ * "AdaptiveReplacementCache: A Self-Tuning, Low Overhead Replacement Cache,
  * " USENIX Conference on File and Storage Technologies (FAST 03),
  * San Francisco, CA, pp. 115-130, March 31-April 2, 2003.
  */

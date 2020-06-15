@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import configuration.Configuration;
 import parser.Record;
 
 /**
@@ -59,8 +60,21 @@ public class LeastRecentlyUsed extends Policy {
      * @param size the size of the cache
      * @param isBytes the cache size parameter
      */
-    public LeastRecentlyUsed(int size, boolean isBytes) {
+    public LeastRecentlyUsed(long size, boolean isBytes) {
         super(size, isBytes);
+        cache = new HashMap<>();
+        head = new Node("head", 0);
+        tail = new Node("tail", 0);
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    /**
+     * Constructor for the LRU policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public LeastRecentlyUsed(Configuration configuration) {
+        super(configuration);
         cache = new HashMap<>();
         head = new Node("head", 0);
         tail = new Node("tail", 0);

@@ -1,5 +1,6 @@
 package policy;
 
+import configuration.Configuration;
 import parser.Record;
 
 /**
@@ -21,6 +22,16 @@ public abstract class Policy {
         this.cacheSize = cacheSize;
         this.usedCacheSpace = 0;
         this.isBytes = isBytes;
+    }
+
+    /**
+     * Constructor for the policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public Policy(Configuration configuration) {
+        this.cacheSize = configuration.getCacheSize();
+        this.usedCacheSpace = 0;
+        this.isBytes = configuration.isSizeInBytes();
     }
 
     /**
