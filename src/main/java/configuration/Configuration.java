@@ -8,7 +8,7 @@ public class Configuration {
     private transient String trace;
     private transient boolean printResultsToConsole;
     private transient String resultsFilePath;
-
+    private transient int robinHoodDelta;
     public String[] getPolicies() {
         return policies;
     }
@@ -33,4 +33,7 @@ public class Configuration {
         return resultsFilePath;
     }
 
+    public int getRobinHoodDelta() {
+        return robinHoodDelta;
+    }
 }

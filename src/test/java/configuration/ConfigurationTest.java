@@ -54,4 +54,19 @@ public class ConfigurationTest {
     void testGetTrace() {
         assertEquals(Trace.Cambridge, Trace.valueOf(configuration.getTrace()));
     }
+
+    @Test
+    void testPrintResultsToConsole() {
+        assertTrue(configuration.isPrintResultsToConsole());
+    }
+
+    @Test
+    void testGetResultsFilePath() {
+        assertEquals("results.json", configuration.getResultsFilePath());
+    }
+
+    @Test
+    void testGetRobinHoodDelta() {
+        assertEquals(5000, configuration.getRobinHoodDelta());
+    }
 }

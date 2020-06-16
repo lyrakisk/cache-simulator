@@ -23,7 +23,9 @@ trace: Cambridge
 # Set this to true if you want the results of the simulation to be printed to the console.
 printResultsToConsole: true
 
-# Selec the path where you want the results to be saved.
+# Select the path where you want the results to be saved.
 # Make sure that the directory you select exists!
 resultsFilePath: "results.json"
 
+# RobinHood parameters
+robinHoodDelta: 5000
