@@ -23,7 +23,8 @@ import simulation.simulator.Simulator;
  */
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Main {
-    private static final String configurationFilePath = "src/main/resources/custom.yml";
+    private static final String customConfigurationFilePath = "src/main/resources/custom.yml";
+    private static  final String defaultConfigurationFilePath = "src/main/resources/default.yml";
 
     /**
      * Run data.parser.
@@ -34,11 +35,22 @@ public class Main {
         // Read configuration file
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
+        Configuration configuration =
+                null;
         try {
-            Configuration configuration =
-                    mapper.readValue(
-                            new File(configurationFilePath),
-                            Configuration.class);
+            configuration = mapper.readValue(
+                    new File(customConfigurationFilePath),
+                    Configuration.class);
+        } catch (IOException e) {
+            try {
+                configuration = mapper.readValue(new File(defaultConfigurationFilePath),
+                        Configuration.class);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        try {
 
             ArrayList<Policy> policies = new ArrayList<Policy>();
 
@@ -72,9 +84,6 @@ public class Main {
 
             System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
