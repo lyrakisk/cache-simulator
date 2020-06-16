@@ -81,7 +81,18 @@ public class RobinHood extends Policy {
 
         // There are 2 backends in the traces available - 39f00c48 and b4fbebd8.
         // todo: let the user pass the backend names in the constructor as an array or list.
-        for (String backend: backends) {
+        for (int i = 0; i < backends.size(); ++ i) {
+            String backend = backends.get(i);
+            if (i == 0) {
+                long sizeForFirstEntry = sizeForEachBackend + cacheSize % backends.size();
+                cachePerBackend.put(backend, sizeForFirstEntry);
+                latencyPerBackend.put(backend, randomLatency(100, 10000));
+                evictionPolicyPerBackend.put(backend,
+                        new LeastRecentlyUsed(sizeForFirstEntry, isBytes));
+
+                continue;
+            }
+
             cachePerBackend.put(backend, sizeForEachBackend);
             latencyPerBackend.put(backend, randomLatency(100, 10000));
             evictionPolicyPerBackend.put(backend,
