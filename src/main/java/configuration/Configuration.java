@@ -6,6 +6,8 @@ public class Configuration {
     private transient long cacheSize;
     private transient boolean sizeInBytes;
     private transient String trace;
+    private transient boolean printResultsToConsole;
+    private transient String resultsFilePath;
 
     public String[] getPolicies() {
         return policies;
@@ -21,5 +23,13 @@ public class Configuration {
 
     public String getTrace() {
         return trace;
+    }
+
+    public boolean isPrintResultsToConsole() {
+        return printResultsToConsole;
+    }
+
+    public String getResultsFilePath() {
+        return resultsFilePath;
     }
 }

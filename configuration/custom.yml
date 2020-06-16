@@ -18,4 +18,12 @@ sizeInBytes : true
 # You can find more information about the traces in the corresponding parsers.
 # The RobinHood trace is compatible only with the RobinHood policy!!
 # Available traces: Cambridge, ARC, UPENN, RobinHood, AdaptSize, UMASS
-trace: ARC
+trace: Cambridge
+
+# Set this to true if you want the results of the simulation to be printed to the console.
+printResultsToConsole: true
+
+# Selec the path where you want the results to be saved.
+# Make sure that the directory you select exists!
+resultsFilePath: "results.json"
+

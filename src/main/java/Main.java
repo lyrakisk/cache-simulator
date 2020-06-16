@@ -62,10 +62,13 @@ public class Main {
             // convert time to milliseconds
             double totalTime = (endTime - startTime) / 1000000.0;
 
-            JsonReporter jsonReporter = new JsonReporter(results);
+            JsonReporter jsonReporter = new JsonReporter(results, configuration);
             jsonReporter.report();
-            ConsoleReporter consoleReporter = new ConsoleReporter(results);
-            consoleReporter.report();
+
+            if (configuration.isPrintResultsToConsole()) {
+                ConsoleReporter consoleReporter = new ConsoleReporter(results);
+                consoleReporter.report();
+            }
 
             System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
