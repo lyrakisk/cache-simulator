@@ -1,5 +1,6 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import simulation.policy.helpers.Type;
  * the PMD.DataflowAnomalyAnalysis warning.
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public class Arc extends Policy {
+public class AdaptiveReplacementCache extends Policy {
 
     public final transient Map<String, QueueNode<Entry>> dataNodes;
 
@@ -42,7 +43,7 @@ public class Arc extends Policy {
      * @param cacheSize the size of the cache.
      * @param isBytes the cache size parameter.
      */
-    public Arc(long cacheSize, boolean isBytes) {
+    public AdaptiveReplacementCache(long cacheSize, boolean isBytes) {
         super(cacheSize, isBytes);
         dataNodes = new HashMap<String, QueueNode<Entry>>();
         this.t1 = new QueueNode<Entry>();
@@ -57,6 +58,27 @@ public class Arc extends Policy {
         this.hitsB2 = 0;
         this.isBytes = isBytes;
         this.numberOfItems = 0;
+    }
+
+    /**
+     * Constructing a new ARC policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public AdaptiveReplacementCache(Configuration configuration) {
+        super(configuration);
+        dataNodes = new HashMap<>();
+        t1 = new QueueNode<>();
+        t2 = new QueueNode<>();
+        b1 = new QueueNode<>();
+        b2 = new QueueNode<>();
+        maxSize = configuration.getCacheSize();
+        adaptiveParameter = 0;
+        hitPerBytesB1 = 0;
+        hitPerBytesB2 = 0;
+        hitsB1 = 0;
+        hitsB2 = 0;
+        isBytes = configuration.isSizeInBytes();
+        numberOfItems = 0;
     }
 
     /**

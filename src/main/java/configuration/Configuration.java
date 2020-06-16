@@ -22,4 +22,12 @@ public class Configuration {
     public String getTrace() {
         return trace;
     }
+
+    public void setCacheSize(long cacheSize) {
+        this.cacheSize = cacheSize;
+    }
+
+    public void setSizeInBytes(boolean sizeInBytes) {
+        this.sizeInBytes = sizeInBytes;
+    }
 }

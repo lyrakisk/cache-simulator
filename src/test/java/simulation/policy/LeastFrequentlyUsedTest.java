@@ -1,5 +1,6 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,11 @@ public class LeastFrequentlyUsedTest {
 
     @BeforeEach
     void init() {
-        lfuBytes = new LeastFrequentlyUsed(1000, true);
+        Configuration confBytes = new Configuration();
+        confBytes.setCacheSize(1000);
+        confBytes.setSizeInBytes(true);
+        lfuBytes = new LeastFrequentlyUsed(confBytes);
+
         lfuRecords = new LeastFrequentlyUsed(2, false);
     }
 
@@ -60,6 +65,7 @@ public class LeastFrequentlyUsedTest {
         Record firstThird = new Record("1", 5);
         Assertions.assertFalse(lfuBytes.isPresentInCache(firstThird));
         Assertions.assertEquals(993, lfuBytes.getRemainingCache());
+        Assertions.assertEquals(2, lfuBytes.numberOfItemsInCache());
     }
 
     @Test

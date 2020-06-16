@@ -56,10 +56,8 @@ public class Main {
 
             for (String className: configuration.getPolicies()) {
                 Class<?> policyClass = Class.forName("simulation.policy." + className);
-                Constructor<?> policyConstructor =
-                        policyClass.getConstructor(long.class, boolean.class);
-                policies.add((Policy) policyConstructor.newInstance(
-                        configuration.getCacheSize(), configuration.isSizeInBytes()));
+                Constructor<?> policyConstructor = policyClass.getConstructor(Configuration.class);
+                policies.add((Policy) policyConstructor.newInstance(configuration));
             }
 
 

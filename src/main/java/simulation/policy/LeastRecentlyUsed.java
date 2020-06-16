@@ -1,12 +1,13 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import java.util.HashMap;
 import java.util.Map;
 
 
 /**
- * Class representing the LRU cache simulation.policy.
+ * Class representing the LRU cache policy.
  */
 public class LeastRecentlyUsed extends Policy {
 
@@ -47,10 +48,6 @@ public class LeastRecentlyUsed extends Policy {
             after.next.prev = this;
             after.next = this;
         }
-
-        public String toString() {
-            return id + " " + sz;
-        }
     }
 
     private transient Map<String, Node> cache;
@@ -72,9 +69,22 @@ public class LeastRecentlyUsed extends Policy {
     }
 
     /**
-     * Checks whether a data.record is present in the cache.
-     * @param record the data.record to be checked
-     * @return true if the data.record is present in the cache, false otherwise
+     * Constructor for the LRU policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public LeastRecentlyUsed(Configuration configuration) {
+        super(configuration);
+        cache = new HashMap<>();
+        head = new Node("head", 0);
+        tail = new Node("tail", 0);
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    /**
+     * Checks whether a record is present in the cache.
+     * @param record the record to be checked
+     * @return true if the record is present in the cache, false otherwise
      */
     @Override
     // DD and DU anomalies for the boolean existing which I don't seem
