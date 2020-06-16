@@ -1,12 +1,17 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
 import simulation.policy.helpers.Entry;
 
+/**
+ * Class representing the Least Frequently Used cache policy.
+ */
 public class LeastFrequentlyUsed extends Policy {
     private transient Map<String, Entry> items;
     private transient Map<String, Integer> counts;
@@ -20,6 +25,18 @@ public class LeastFrequentlyUsed extends Policy {
      */
     public LeastFrequentlyUsed(long size, boolean isBytes) {
         super(size, isBytes);
+        items = new HashMap<>();
+        counts = new HashMap<>();
+        frequencies = new HashMap<>();
+        minCount = -1;
+    }
+
+    /**
+     * Constructing a new LFU policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public LeastFrequentlyUsed(Configuration configuration) {
+        super(configuration);
         items = new HashMap<>();
         counts = new HashMap<>();
         frequencies = new HashMap<>();

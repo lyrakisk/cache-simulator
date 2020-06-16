@@ -32,4 +32,5 @@ public class Configuration {
     public String getResultsFilePath() {
         return resultsFilePath;
     }
+
 }

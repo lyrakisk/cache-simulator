@@ -35,7 +35,7 @@ public class ConfigurationTest {
     void testGetPolicies() {
         String[] policies = configuration.getPolicies();
 
-        assertEquals(2, policies.length);
+        assertEquals(3, policies.length);
         assertEquals("LeastRecentlyUsed", policies[0]);
         assertEquals("LeastFrequentlyUsed", policies[1]);
     }

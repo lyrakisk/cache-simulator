@@ -1,5 +1,6 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import simulation.policy.helpers.PolicyStats;
 
@@ -23,6 +24,17 @@ public abstract class Policy {
         this.cacheSize = cacheSize;
         this.usedCacheSpace = 0;
         this.isBytes = isBytes;
+        this.stats = new PolicyStats();
+    }
+
+    /**
+     * Constructor for the policy using a Configuration object.
+     * @param configuration the Configuration object
+     */
+    public Policy(Configuration configuration) {
+        this.cacheSize = configuration.getCacheSize();
+        this.usedCacheSpace = 0;
+        this.isBytes = configuration.isSizeInBytes();
         this.stats = new PolicyStats();
     }
 
@@ -57,7 +69,7 @@ public abstract class Policy {
 
     /**
      * If the cache should take only number of records into account, set the size to 1.
-     * @param record the data.record to be checked
+     * @param record the record to be checked
      */
     public void checkIsBytes(Record record) {
         if (!isBytes) {
@@ -70,16 +82,27 @@ public abstract class Policy {
     }
 
     /**
-     * Check whether a data.record is present in the cache.
-     * @param record the data.record to be checked
+     * Check whether a record is present in the cache.
+     * @param record the record to be checked
      * @return true if the data.record is present, false otherwise
      */
     public abstract boolean isPresentInCache(Record record);
 
+    /**
+     * Gives the number of items in the cache.
+     * @return the number of items in the cache
+     */
     public abstract int numberOfItemsInCache();
 
+    /**
+     * Delete records from the cache until there is space in it.
+     */
     public abstract void deleteUntilCacheNotOverloaded();
 
+    /**
+     * Returns the stats for the policy.
+     * @return the policy stats
+     */
     public PolicyStats getStats() {
         return stats;
     }

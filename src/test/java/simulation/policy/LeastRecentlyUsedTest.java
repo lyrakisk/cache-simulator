@@ -1,9 +1,14 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
+import static org.mockito.Mockito.mock;
 
 public class LeastRecentlyUsedTest {
     private transient LeastRecentlyUsed lru;
@@ -84,7 +89,12 @@ public class LeastRecentlyUsedTest {
 
     @Test
     void testCacheSizeIsNumberOfFiles() {
-        LeastRecentlyUsed lruRecords = new LeastRecentlyUsed(2, false);
+        Configuration configuration = mock(Configuration.class);
+        Mockito.when(configuration.getCacheSize()).thenReturn(2L);
+        Mockito.when(configuration.isSizeInBytes()).thenReturn(false);
+//        configuration.setCacheSize(2);
+//        configuration.setSizeInBytes(false);
+        LeastRecentlyUsed lruRecords = new LeastRecentlyUsed(configuration);
         Record first = new Record("1", 2048);
         Record second = new Record("2", 1024);
         Record third = new Record("3", 512);

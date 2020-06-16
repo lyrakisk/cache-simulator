@@ -13,6 +13,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 // A number of variables are used in the faster-to-write for-loop construction
 // and thus giving a UR-anomaly, which is not a bug.
+
+/**
+ * Class to implement the RobinHood cache policy.
+ */
 @SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.DoNotCallSystemExit"})
 public class RobinHood extends Policy {
 
@@ -84,10 +88,19 @@ public class RobinHood extends Policy {
                 new LeastRecentlyUsed(sizeForEachBackend, isBytes));
     }
 
+    /**
+     * Used to create a randomized latency for each backend.
+     * @param rangeMin minimum latency
+     * @param rangeMax maximum latency
+     * @return
+     */
     private int randomLatency(int rangeMin, int rangeMax) {
         return ThreadLocalRandom.current().nextInt(rangeMin, rangeMax + 1);
     }
 
+    /**
+     * Updates the caches for every backend.
+     */
     private void updateCacheSizes() {
         List<BiggestDelay> delaysOfRequests = new ArrayList<>();
         for (String request: latencyPerRequest.keySet()) {
@@ -140,6 +153,12 @@ public class RobinHood extends Policy {
     // I am not entirely sure what I am supposed to return here,
     // so I decided to return true only if every query of the request
     // is present in the cache.
+
+    /**
+     * Checks whether all of the queries in a request end up in a cache hit.
+     * @param record the record to be checked
+     * @return true if all of the queries are present in the cache, false otherwise
+     */
     @Override
     public boolean isPresentInCache(Record record) {
 
@@ -198,6 +217,11 @@ public class RobinHood extends Policy {
 
     // I made it return the total number of items in the cache
     // for every backend present.
+
+    /**
+     * Returns the number of items in the cache.
+     * @return the number of items in the cache
+     */
     @Override
     public int numberOfItemsInCache() {
         int nbrItems = 0;
@@ -208,6 +232,9 @@ public class RobinHood extends Policy {
         return nbrItems;
     }
 
+    /**
+     * Deletes elements from the cache until all the caches for a backend are not overflowed.
+     */
     @Override
     public void deleteUntilCacheNotOverloaded() {
         for (Policy policy: evictionPolicyPerBackend.values()) {
@@ -216,12 +243,21 @@ public class RobinHood extends Policy {
         }
     }
 
+    /**
+     * Sets the parameter delta which says after how many steps we update the cache.
+     * @param delta the parameter to say after how many steps we update
+     */
     public void setDelta(int delta) {
         this.getStats().recordOperation();
         this.beginningDelta = delta;
         this.delta = delta;
     }
 
+    /**
+     * Sets the latency of a backend to a specific one.
+     * @param backend the backend whose latency is going to be updated
+     * @param latency the latency to be added
+     */
     public void setLatencyForBackend(String backend, int latency) {
         this.getStats().recordOperation();
         latencyPerBackend.put(backend, latency);

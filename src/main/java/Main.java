@@ -20,7 +20,8 @@ import simulation.simulator.Simulator;
  */
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Main {
-    private static final String configurationFilePath = "configuration/custom.yml";
+    private static final String customConfigurationFilePath = "configuration/custom.yml";
+    private static  final String defaultConfigurationFilePath = "configuration/default.yml";
 
     /**
      * Run data.parser.
@@ -31,20 +32,29 @@ public class Main {
         // Read configuration file
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
+        Configuration configuration =
+                null;
         try {
-            Configuration configuration =
-                    mapper.readValue(
-                            new File(configurationFilePath),
-                            Configuration.class);
+            configuration = mapper.readValue(
+                    new File(customConfigurationFilePath),
+                    Configuration.class);
+        } catch (IOException e) {
+            try {
+                configuration = mapper.readValue(new File(defaultConfigurationFilePath),
+                        Configuration.class);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        try {
 
             ArrayList<Policy> policies = new ArrayList<Policy>();
 
             for (String className: configuration.getPolicies()) {
                 Class<?> policyClass = Class.forName("simulation.policy." + className);
-                Constructor<?> policyConstructor =
-                        policyClass.getConstructor(long.class, boolean.class);
-                policies.add((Policy) policyConstructor.newInstance(
-                        configuration.getCacheSize(), configuration.isSizeInBytes()));
+                Constructor<?> policyConstructor = policyClass.getConstructor(Configuration.class);
+                policies.add((Policy) policyConstructor.newInstance(configuration));
             }
 
 
@@ -72,9 +82,6 @@ public class Main {
 
             System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

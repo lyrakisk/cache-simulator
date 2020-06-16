@@ -1,9 +1,13 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import static org.mockito.Mockito.mock;
 
 public class LeastFrequentlyUsedTest {
     private transient LeastFrequentlyUsed lfuBytes;
@@ -11,7 +15,15 @@ public class LeastFrequentlyUsedTest {
 
     @BeforeEach
     void init() {
-        lfuBytes = new LeastFrequentlyUsed(1000, true);
+//        Configuration confBytes = new Configuration();
+//        confBytes.setCacheSize(1000);
+//        confBytes.setSizeInBytes(true);
+        Configuration confBytes = mock(Configuration.class);
+        Mockito.when(confBytes.getCacheSize()).thenReturn(1000L);
+        Mockito.when(confBytes.isSizeInBytes()).thenReturn(true);
+
+        lfuBytes = new LeastFrequentlyUsed(confBytes);
+
         lfuRecords = new LeastFrequentlyUsed(2, false);
     }
 
@@ -60,6 +72,7 @@ public class LeastFrequentlyUsedTest {
         Record firstThird = new Record("1", 5);
         Assertions.assertFalse(lfuBytes.isPresentInCache(firstThird));
         Assertions.assertEquals(993, lfuBytes.getRemainingCache());
+        Assertions.assertEquals(2, lfuBytes.numberOfItemsInCache());
     }
 
     @Test
