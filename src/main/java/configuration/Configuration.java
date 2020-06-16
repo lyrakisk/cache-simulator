@@ -3,7 +3,7 @@ package configuration;
 public class Configuration {
 
     private transient String[] policies;
-    private transient int cacheSize;
+    private transient long cacheSize;
     private transient boolean sizeInBytes;
     private transient String trace;
 
@@ -11,7 +11,7 @@ public class Configuration {
         return policies;
     }
 
-    public int getCacheSize() {
+    public long getCacheSize() {
         return cacheSize;
     }
 
