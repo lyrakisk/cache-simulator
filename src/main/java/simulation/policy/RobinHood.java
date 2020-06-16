@@ -3,7 +3,9 @@ package simulation.policy;
 import data.parser.Record;
 import data.parser.robinhood.Query;
 import data.parser.robinhood.Request;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,7 @@ public class RobinHood extends Policy {
     private transient Map<String, Policy> evictionPolicyPerBackend;
     private transient int beginningDelta;
     private transient int delta;
+    private transient List<String> backends = Arrays.asList("39f00c48", "b4fbebd8");
 
 
     /**
@@ -74,18 +77,16 @@ public class RobinHood extends Policy {
         beginningDelta = 5000;
         delta = 5000;
 
+        long sizeForEachBackend = cacheSize / backends.size();
+
         // There are 2 backends in the traces available - 39f00c48 and b4fbebd8.
         // todo: let the user pass the backend names in the constructor as an array or list.
-        cachePerBackend.put("39f00c48", (long) (0.5 * (double) this.getCacheSize()));
-        cachePerBackend.put("b4fbebd8", (long) (0.5 * (double) this.getCacheSize()));
-        latencyPerBackend.put("39f00c48", randomLatency(100, 10000));
-        latencyPerBackend.put("b4fbebd8", randomLatency(100, 10000));
-
-        long sizeForEachBackend = cacheSize / 2;
-        evictionPolicyPerBackend.put("39f00c48",
-                new LeastRecentlyUsed(sizeForEachBackend, isBytes));
-        evictionPolicyPerBackend.put("b4fbebd8",
-                new LeastRecentlyUsed(sizeForEachBackend, isBytes));
+        for (String backend: backends) {
+            cachePerBackend.put(backend, sizeForEachBackend);
+            latencyPerBackend.put(backend, randomLatency(100, 10000));
+            evictionPolicyPerBackend.put(backend,
+                    new LeastRecentlyUsed(sizeForEachBackend, isBytes));
+        }
     }
 
     /**
