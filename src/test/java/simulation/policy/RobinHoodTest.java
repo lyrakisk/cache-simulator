@@ -1,5 +1,7 @@
 package simulation.policy;
 
+import static org.mockito.Mockito.mock;
+
 import configuration.Configuration;
 import data.parser.robinhood.Query;
 import data.parser.robinhood.Request;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.mockito.Mockito.mock;
 
 
 // It gives a DU-anomaly in the test starting on line 65,

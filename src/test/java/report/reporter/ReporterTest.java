@@ -14,7 +14,6 @@ public class ReporterTest {
     @Test
     void testGetResults() {
         Configuration c = mock(Configuration.class);
-//        Mockito.when(c.getResultsFilePath()).thenReturn("results.json");
         JsonReporter r = new JsonReporter(new Result[0], c);
         assertEquals(0, r.getResults().length);
     }

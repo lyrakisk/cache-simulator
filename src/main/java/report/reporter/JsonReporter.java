@@ -1,10 +1,9 @@
 package report.reporter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import configuration.Configuration;
 import java.io.File;
 import java.io.IOException;
-
-import configuration.Configuration;
 import report.Result;
 
 

@@ -18,7 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Class to implement the RobinHood cache policy.
  */
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.DoNotCallSystemExit", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis",
+        "PMD.DoNotCallSystemExit", "PMD.AvoidDuplicateLiterals"})
 public class RobinHood extends Policy {
 
     /**
@@ -89,6 +90,10 @@ public class RobinHood extends Policy {
                 new LeastRecentlyUsed(sizeForEachBackend, isBytes));
     }
 
+    /**
+     * Constructor that takes as a parameter only a Configuration object.
+     * @param configuration configuration provided by the user.
+     */
     public RobinHood(Configuration configuration) {
         super(configuration);
         latencyPerRequest = new HashMap<>();
@@ -111,6 +116,7 @@ public class RobinHood extends Policy {
         evictionPolicyPerBackend.put("b4fbebd8",
                 new LeastRecentlyUsed(sizeForEachBackend, configuration.isSizeInBytes()));
     }
+
     /**
      * Used to create a randomized latency for each backend.
      * @param rangeMin minimum latency
