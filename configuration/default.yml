@@ -2,11 +2,11 @@
 ---
 
 # Select the policies you want to simulate.
-# Available policies: LeastRecentlyUsed, LeastFrequentlyUsed, Arc, RobinHood
+# Available policies: LeastRecentlyUsed, LeastFrequentlyUsed, AdaptiveReplacementCache, RobinHood
 policies:
   - LeastRecentlyUsed
   - LeastFrequentlyUsed
-  - Arc
+  - AdaptiveReplacementCache
 
 cacheSize : 20000
 
