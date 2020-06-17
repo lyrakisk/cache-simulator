@@ -1,5 +1,6 @@
 package simulation.policy;
 
+import configuration.Configuration;
 import data.parser.Record;
 import data.parser.robinhood.Query;
 import data.parser.robinhood.Request;
@@ -19,7 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Class to implement the RobinHood cache policy.
  */
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.DoNotCallSystemExit"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis",
+        "PMD.DoNotCallSystemExit", "PMD.AvoidDuplicateLiterals"})
 public class RobinHood extends Policy {
 
     /**
@@ -98,6 +100,33 @@ public class RobinHood extends Policy {
             evictionPolicyPerBackend.put(backend,
                     new LeastRecentlyUsed(sizeForEachBackend, isBytes));
         }
+    }
+
+    /**
+     * Constructor that takes as a parameter only a Configuration object.
+     * @param configuration configuration provided by the user.
+     */
+    public RobinHood(Configuration configuration) {
+        super(configuration);
+        latencyPerRequest = new HashMap<>();
+        cachePerBackend = new HashMap<>();
+        latencyPerBackend = new HashMap<>();
+        evictionPolicyPerBackend = new HashMap<>();
+        beginningDelta = 5000;
+        delta = configuration.getRobinHoodDelta();
+
+        // There are 2 backends in the traces available - 39f00c48 and b4fbebd8.
+        // todo: let the user pass the backend names in the constructor as an array or list.
+        cachePerBackend.put("39f00c48", (long) (0.5 * (double) this.getCacheSize()));
+        cachePerBackend.put("b4fbebd8", (long) (0.5 * (double) this.getCacheSize()));
+        latencyPerBackend.put("39f00c48", randomLatency(100, 10000));
+        latencyPerBackend.put("b4fbebd8", randomLatency(100, 10000));
+
+        long sizeForEachBackend = configuration.getCacheSize() / 2;
+        evictionPolicyPerBackend.put("39f00c48",
+                new LeastRecentlyUsed(sizeForEachBackend, configuration.isSizeInBytes()));
+        evictionPolicyPerBackend.put("b4fbebd8",
+                new LeastRecentlyUsed(sizeForEachBackend, configuration.isSizeInBytes()));
     }
 
     /**

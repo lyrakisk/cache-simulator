@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class ConfigurationTest {
 
     static Configuration configuration;
-    static String configurationFilePath = "src/main/resources/default.yml";
+    static String configurationFilePath = "configuration/default.yml";
 
     @BeforeAll
     static void setUp() {
@@ -35,7 +35,7 @@ public class ConfigurationTest {
     void testGetPolicies() {
         String[] policies = configuration.getPolicies();
 
-        assertEquals(2, policies.length);
+        assertEquals(3, policies.length);
         assertEquals("LeastRecentlyUsed", policies[0]);
         assertEquals("LeastFrequentlyUsed", policies[1]);
     }
@@ -53,5 +53,20 @@ public class ConfigurationTest {
     @Test
     void testGetTrace() {
         assertEquals(Trace.Cambridge, Trace.valueOf(configuration.getTrace()));
+    }
+
+    @Test
+    void testPrintResultsToConsole() {
+        assertTrue(configuration.isPrintResultsToConsole());
+    }
+
+    @Test
+    void testGetResultsFilePath() {
+        assertEquals("results.json", configuration.getResultsFilePath());
+    }
+
+    @Test
+    void testGetRobinHoodDelta() {
+        assertEquals(5000, configuration.getRobinHoodDelta());
     }
 }

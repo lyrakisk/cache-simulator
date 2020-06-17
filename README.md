@@ -1,7 +1,7 @@
 # Cache Simulator for OpenDC
 ![BRANCH](https://gitlab.ewi.tudelft.nl/cse2000-software-project/2019-2020-q4/cluster-12/opendc/opendc/badges/master/coverage.svg)
 # Architecture
-![architecture of the application](resources/architecture.png)
+![architecture of the application](images/architecture.png)
 
 # How to use
 - Import the project in Intellij(or other IDE) as a gradle project

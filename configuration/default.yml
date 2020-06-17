@@ -1,0 +1,31 @@
+# Edit this file to run the simulation.simulator with your own configuration
+---
+
+# Select the policies you want to simulate.
+# Available policies: LeastRecentlyUsed, LeastFrequentlyUsed, AdaptiveReplacementCache, RobinHood
+policies:
+  - LeastRecentlyUsed
+  - LeastFrequentlyUsed
+  - AdaptiveReplacementCache
+
+cacheSize : 20000
+
+# True: cacheSize will represent the size of cache in Bytes.
+# False: cacheSize will represent the size of cache in number of items.
+sizeInBytes : true
+
+# Select the trace file you want be used by the simulation.simulator.
+# You can find more information about the traces in the corresponding parsers.
+# The RobinHood trace is compatible only with the RobinHood policy!!
+# Available traces: Cambridge, ARC, UPENN, RobinHood, AdaptSize, UMASS
+trace: Cambridge
+
+# Set this to true if you want the results of the simulation to be printed to the console.
+printResultsToConsole: true
+
+# Select the path where you want the results to be saved.
+# Make sure that the directory you select exists!
+resultsFilePath: "results.json"
+
+# RobinHood parameters
+robinHoodDelta: 5000

@@ -14,7 +14,7 @@ public class TraceTest {
     @Test
     public void testCambridgeTracePath() {
         assertEquals(
-                "src/main/resources/traces/cambridge/msr-cambridge1-sample.csv",
+                "resources/traces/cambridge/msr-cambridge1-sample.csv",
                 Trace.Cambridge.getFilePath());
     }
 
@@ -25,7 +25,7 @@ public class TraceTest {
 
     @Test
     void testArcTracePath() {
-        assertEquals("src/main/resources/traces/arc/OLTP.lis", Trace.ARC.getFilePath());
+        assertEquals("resources/traces/arc/OLTP.lis", Trace.ARC.getFilePath());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class TraceTest {
 
     @Test
     void testUpennTracePath() {
-        assertEquals("src/main/resources/traces/upenn/aligned.trace", Trace.UPENN.getFilePath());
+        assertEquals("resources/traces/upenn/aligned.trace", Trace.UPENN.getFilePath());
     }
 
     @Test

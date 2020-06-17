@@ -1,11 +1,16 @@
 package simulation.policy;
 
+import static org.mockito.Mockito.mock;
+
+import configuration.Configuration;
 import data.parser.robinhood.Query;
 import data.parser.robinhood.Request;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 
 
 // It gives a DU-anomaly in the test starting on line 65,
@@ -70,5 +75,17 @@ public class RobinHoodTest {
             newRequest.addQuery(query);
             Assertions.assertFalse(policy.isPresentInCache(newRequest));
         }
+    }
+
+    @Test
+    void testConstructorWithConfiguration() {
+        Configuration c = mock(Configuration.class);
+        Mockito.when(c.getCacheSize()).thenReturn(20000L);
+        Mockito.when(c.isSizeInBytes()).thenReturn(true);
+        Mockito.when(c.getRobinHoodDelta()).thenReturn(5000);
+
+        RobinHood r = new RobinHood(c);
+
+        Assertions.assertEquals(20000, r.getCacheSize());
     }
 }

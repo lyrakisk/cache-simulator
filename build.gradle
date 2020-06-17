@@ -179,4 +179,29 @@ wrapper {
 
 application {
     mainClassName = 'Main'
+    applicationName = "opendc"
+}
+
+jar {
+    archivesBaseName="opendc"
+    project.version="1.0"
+    manifest {
+        attributes("Main-Class": "Main")
+    }
+}
+
+distZip {
+    into(project.name + "-" + project.version + "/bin") {
+        from '.'
+        include 'configuration/*', 'resources/**'
+    }
+
+}
+
+distTar {
+    into(project.name + "-" + project.version + "/bin") {
+        from '.'
+        include 'configuration/*', 'resources/**'
+    }
+
 }

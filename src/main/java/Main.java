@@ -3,9 +3,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import configuration.Configuration;
 import configuration.Trace;
 import data.parser.AbstractParserClass;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.asciithemes.u8.U8_Grids;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -23,8 +20,8 @@ import simulation.simulator.Simulator;
  */
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Main {
-    private static final String customConfigurationFilePath = "src/main/resources/custom.yml";
-    private static  final String defaultConfigurationFilePath = "src/main/resources/default.yml";
+    private static final String customConfigurationFilePath = "configuration/custom.yml";
+    private static  final String defaultConfigurationFilePath = "configuration/default.yml";
 
     /**
      * Run data.parser.
@@ -75,10 +72,13 @@ public class Main {
             // convert time to milliseconds
             double totalTime = (endTime - startTime) / 1000000.0;
 
-            JsonReporter jsonReporter = new JsonReporter(results);
+            JsonReporter jsonReporter = new JsonReporter(results, configuration);
             jsonReporter.report();
-            ConsoleReporter consoleReporter = new ConsoleReporter(results);
-            consoleReporter.report();
+
+            if (configuration.isPrintResultsToConsole()) {
+                ConsoleReporter consoleReporter = new ConsoleReporter(results);
+                consoleReporter.report();
+            }
 
             System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
@@ -90,5 +90,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 }

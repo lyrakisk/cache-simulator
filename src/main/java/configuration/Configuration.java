@@ -6,6 +6,9 @@ public class Configuration {
     private transient long cacheSize;
     private transient boolean sizeInBytes;
     private transient String trace;
+    private transient boolean printResultsToConsole;
+    private transient String resultsFilePath;
+    private transient int robinHoodDelta;
 
     public String[] getPolicies() {
         return policies;
@@ -23,11 +26,15 @@ public class Configuration {
         return trace;
     }
 
-    public void setCacheSize(long cacheSize) {
-        this.cacheSize = cacheSize;
+    public boolean isPrintResultsToConsole() {
+        return printResultsToConsole;
     }
 
-    public void setSizeInBytes(boolean sizeInBytes) {
-        this.sizeInBytes = sizeInBytes;
+    public String getResultsFilePath() {
+        return resultsFilePath;
+    }
+
+    public int getRobinHoodDelta() {
+        return robinHoodDelta;
     }
 }
