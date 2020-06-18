@@ -17,6 +17,8 @@ plugins {
 
     // Jacoco badge
     id "com.github.dawnwords.jacoco.badge" version "0.2.0"
+
+    id 'application'
 }
 
 group 'nl.tudelft.cse.sem.template'
@@ -111,7 +113,7 @@ jacocoTestCoverageVerification {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['Main.class', 'policy/helpers/Type.class']
+                    exclude: ['Main.class', 'simulation/policy/helpers/Type.class', 'report/']
             )
         }))
     }
@@ -173,4 +175,33 @@ tasks.withType(SpotBugsTask) {
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
+}
+
+application {
+    mainClassName = 'Main'
+    applicationName = "opendc"
+}
+
+jar {
+    archivesBaseName="opendc"
+    project.version="1.0"
+    manifest {
+        attributes("Main-Class": "Main")
+    }
+}
+
+distZip {
+    into(project.name + "-" + project.version + "/bin") {
+        from '.'
+        include 'configuration/*', 'resources/**'
+    }
+
+}
+
+distTar {
+    into(project.name + "-" + project.version + "/bin") {
+        from '.'
+        include 'configuration/*', 'resources/**'
+    }
+
 }

@@ -3,15 +3,18 @@ package configuration;
 public class Configuration {
 
     private transient String[] policies;
-    private transient int cacheSize;
+    private transient long cacheSize;
     private transient boolean sizeInBytes;
     private transient String trace;
+    private transient boolean printResultsToConsole;
+    private transient String resultsFilePath;
+    private transient int robinHoodDelta;
 
     public String[] getPolicies() {
         return policies;
     }
 
-    public int getCacheSize() {
+    public long getCacheSize() {
         return cacheSize;
     }
 
@@ -21,5 +24,17 @@ public class Configuration {
 
     public String getTrace() {
         return trace;
+    }
+
+    public boolean isPrintResultsToConsole() {
+        return printResultsToConsole;
+    }
+
+    public String getResultsFilePath() {
+        return resultsFilePath;
+    }
+
+    public int getRobinHoodDelta() {
+        return robinHoodDelta;
     }
 }

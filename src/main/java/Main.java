@@ -2,17 +2,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import configuration.Configuration;
 import configuration.Trace;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.asciithemes.u8.U8_Grids;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
+import data.parser.AbstractParserClass;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import parser.AbstractParserClass;
-import policy.Policy;
 import report.Result;
-import simulator.Simulator;
+import report.reporter.ConsoleReporter;
+import report.reporter.JsonReporter;
+import simulation.policy.Policy;
+import simulation.simulator.Simulator;
 
 /**
  * The DataflowAnomalyAnalysis is suppressed here, because it's raised
@@ -21,10 +20,11 @@ import simulator.Simulator;
  */
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Main {
-    private static final String configurationFilePath = "src/main/resources/custom.yml";
+    private static final String customConfigurationFilePath = "configuration/custom.yml";
+    private static  final String defaultConfigurationFilePath = "configuration/default.yml";
 
     /**
-     * Run parser.
+     * Run data.parser.
      * @param args args.
      */
     public static void main(String[] args) {
@@ -32,20 +32,29 @@ public class Main {
         // Read configuration file
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
+        Configuration configuration =
+                null;
         try {
-            Configuration configuration =
-                    mapper.readValue(
-                            new File(configurationFilePath),
-                            Configuration.class);
+            configuration = mapper.readValue(
+                    new File(customConfigurationFilePath),
+                    Configuration.class);
+        } catch (IOException e) {
+            try {
+                configuration = mapper.readValue(new File(defaultConfigurationFilePath),
+                        Configuration.class);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        try {
 
             ArrayList<Policy> policies = new ArrayList<Policy>();
 
             for (String className: configuration.getPolicies()) {
-                Class<?> policyClass = Class.forName("policy." + className);
-                Constructor<?> policyConstructor =
-                        policyClass.getConstructor(int.class, boolean.class);
-                policies.add((Policy) policyConstructor.newInstance(
-                        configuration.getCacheSize(), configuration.isSizeInBytes()));
+                Class<?> policyClass = Class.forName("simulation.policy." + className);
+                Constructor<?> policyConstructor = policyClass.getConstructor(Configuration.class);
+                policies.add((Policy) policyConstructor.newInstance(configuration));
             }
 
 
@@ -63,37 +72,16 @@ public class Main {
             // convert time to milliseconds
             double totalTime = (endTime - startTime) / 1000000.0;
 
-            // write results to the json file
-            ObjectMapper resultsMapper = new ObjectMapper();
+            JsonReporter jsonReporter = new JsonReporter(results, configuration);
+            jsonReporter.report();
 
-            resultsMapper
-                    .writerWithDefaultPrettyPrinter()
-                    .writeValue(new File("results.json"), results);
-
-            // print results to console
-            AsciiTable table = new AsciiTable();
-            table.addRow("Policy", "Requests", "Hit Rate", "Hits", "Evictions", "Avg. Time per Request (millis)");
-            table.addRule();
-            for (Result result: results) {
-                table.addRow(
-                        result.getPolicy(),
-                        result.getNumberOfRequests(),
-                        result.getHitRate(),
-                        result.getNumberOfHits(),
-                        result.getEvictions(),
-                        result.getAverageProcessTimePerRequest());
-                table.addRule();
+            if (configuration.isPrintResultsToConsole()) {
+                ConsoleReporter consoleReporter = new ConsoleReporter(results);
+                consoleReporter.report();
             }
-            table.getContext().setGrid(U8_Grids.borderDouble());
-            table.setTextAlignment(TextAlignment.CENTER);
 
-            String renderedTable = table.render();
-            System.out.println(renderedTable);
             System.out.println("Simulation finished in " + totalTime + " milliseconds.");
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -102,5 +90,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 }

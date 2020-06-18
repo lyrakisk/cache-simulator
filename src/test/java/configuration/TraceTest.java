@@ -3,10 +3,10 @@ package configuration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import data.parser.arc.ArcTraceParser;
+import data.parser.snia.CambridgeTraceParser;
+import data.parser.upenn.UpennTraceParser;
 import org.junit.jupiter.api.Test;
-import parser.arc.ArcTraceParser;
-import parser.snia.CambridgeTraceParser;
-import parser.upenn.UpennTraceParser;
 
 
 public class TraceTest {
@@ -14,7 +14,7 @@ public class TraceTest {
     @Test
     public void testCambridgeTracePath() {
         assertEquals(
-                "src/main/resources/traces/cambridge/msr-cambridge1-sample.csv",
+                "resources/traces/cambridge/msr-cambridge1-sample.csv",
                 Trace.Cambridge.getFilePath());
     }
 
@@ -25,7 +25,7 @@ public class TraceTest {
 
     @Test
     void testArcTracePath() {
-        assertEquals("src/main/resources/traces/arc/OLTP.lis", Trace.ARC.getFilePath());
+        assertEquals("resources/traces/arc/OLTP.lis", Trace.ARC.getFilePath());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class TraceTest {
 
     @Test
     void testUpennTracePath() {
-        assertEquals("src/main/resources/traces/upenn/aligned.trace", Trace.UPENN.getFilePath());
+        assertEquals("resources/traces/upenn/aligned.trace", Trace.UPENN.getFilePath());
     }
 
     @Test
