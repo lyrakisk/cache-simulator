@@ -14,8 +14,8 @@ More information about these layers and the different components can be found in
 
 # Dependencies
 In order to build this project you will need:
-- Gradle 5.4.1 or higher.
-- jdk 11
+- [Gradle 5.4.1](https://gradle.org/releases/)
+- [jdk 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 
 # How to use 
 
