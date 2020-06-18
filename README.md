@@ -44,7 +44,7 @@ The application is distributed as a .zip and as .tar file. These zipped files co
 - Modify custom.yml to configure the application according to the [API Documentation](documentation/api_documentation)
 - Open a terminal.
 - ```cd``` to the bin folder.
-  - **Linux users:** Run ```./opendc```
+  - **Linux/Mac users:** Run ```./opendc```
   - **Windows users:** Run ```opendc.bat```
 - If you don't specify a different path for the results to be stored, you can find them in the bin folder.
 
