@@ -14,8 +14,8 @@ More information about these layers and the different components can be found in
 
 # Dependencies
 In order to build this project you will need:
-- Gradle 5.4.1 or higher.
-- jdk 11
+- [Gradle 5.4.1](https://gradle.org/releases/)
+- [jdk 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 
 # How to use 
 
@@ -44,7 +44,7 @@ The application is distributed as a .zip and as .tar file. These zipped files co
 - Modify custom.yml to configure the application according to the [API Documentation](documentation/api_documentation)
 - Open a terminal.
 - ```cd``` to the bin folder.
-  - **Linux users:** Run ```./opendc```
+  - **Linux/Mac users:** Run ```./opendc```
   - **Windows users:** Run ```opendc.bat```
 - If you don't specify a different path for the results to be stored, you can find them in the bin folder.
 
