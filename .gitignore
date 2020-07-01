@@ -10,8 +10,10 @@ out/**
 .idea/**
 codemr/**
 
-/src/main/resources/reports/
 
 # Ignore the files modified before/after the simulation by the user
 results.json
 src/main/resources/custom.yml
+
+# Ιgnore files that don't exist, but git thinks exist
+/src/main/resources/*
