@@ -10,7 +10,7 @@ consisting of 3 layers:
 - Simulation
 - Report  
 
-More information about these layers and the different components can be found in the  [API Documentation](documentation/api_documentation).
+More information about these layers and the different components can be found in the  [API Documentation](https://github.com/lyrakisk/cache-simulator/wiki/API-Documentation).
 
 # Dependencies
 In order to build this project you will need:
@@ -22,12 +22,12 @@ In order to build this project you will need:
 ## Run the simulator with an IDE
 - Install [IntelliJ IDEA Ultimate](https://www.jetbrains.com/idea/)
 - Import the project as a Gradle project.
-- Configure custom.yml as described in the [API Documentation](documentation/api_documentation)
+- Configure custom.yml as described in the [API Documentation](https://github.com/lyrakisk/cache-simulator/wiki/API-Documentation)
 - Build the project.
 - Run the Main class.  
 
 ## Run the simulator without an IDE
-* Configure custom.yml as described in the [API Documentation](documentation/api_documentation)
+* Configure custom.yml as described in the [API Documentation](https://github.com/lyrakisk/cache-simulator/wiki/API-Documentation)
 * Open a terminal window, cd to the project's root folder and run: 
   - ``` gradle build ```
   - ``` gradle run ```
@@ -41,7 +41,7 @@ The application is distributed as a .zip and as .tar file. These zipped files co
 - You can find these distributions in the build/distributions folder.  
 - Unzip the the .tar or .zip file inside a folder.
 - Go to bin/configuration and create a custom.yml file. You can use the default.yml file as a reference.
-- Modify custom.yml to configure the application according to the [API Documentation](documentation/api_documentation)
+- Modify custom.yml to configure the application according to the [API Documentation](https://github.com/lyrakisk/cache-simulator/wiki/API-Documentation)
 - Open a terminal.
 - ```cd``` to the bin folder.
   - **Linux/Mac users:** Run ```./opendc```
@@ -52,4 +52,4 @@ The application is distributed as a .zip and as .tar file. These zipped files co
 If you want to use the project as a library you need to:
 - Build the project as described above.
 - Go to build/libs and you will find a jar file that contains all the classes of the simulator. 
-- You can learn how to use these classes in the [API Documentation](documentation/api_documentation) 
+- You can learn how to use these classes in the [API Documentation](https://github.com/lyrakisk/cache-simulator/wiki/API-Documentation) 
