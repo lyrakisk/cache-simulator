@@ -28,7 +28,10 @@ jobs:
         with:
           java-version: 11
       - name: Checkstyle/PMD/Spotbugs with Gradle
-        run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 5.4.1
+          arguments: checkstyleMain checkstyleIntegrationTest checkstyleTest
 
   test:
     runs-on: windows-latest
@@ -40,4 +43,7 @@ jobs:
         with:
           java-version: 11
       - name: Test with Gradle
-        run: gradle test
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 5.4.1
+          arguments: test
