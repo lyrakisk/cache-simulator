@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: 11
       - name: Checkstyle/PMD/Spotbugs with Gradle
-        run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest
+        run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest
 
   test:
     runs-on: windows-latest
