@@ -13,7 +13,10 @@ jobs:
         with:
           java-version: 11
       - name: Build with Gradle
-        run: gradle --build-cache assemble
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 5.4.1
+        arguments: --build-cache assemble
 
   validate:
     runs-on: windows-latest
