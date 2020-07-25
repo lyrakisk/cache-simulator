@@ -13,9 +13,9 @@ jobs:
         with:
           java-version: 11
       - name: Build with Gradle
-        run: gradle build
+        run: gradle --build-cache assemble
 
-  checkstyle:
+  validate:
     runs-on: windows-latest
 
     steps:
@@ -24,8 +24,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Checkstyle with Gradle
-        run: gradle checkstyleMain
+      - name: Checkstyle/PMD/Spotbugs with Gradle
+        run: gradle checkstyleMain checkstyleIntegrationTest
 
   test:
     runs-on: windows-latest
