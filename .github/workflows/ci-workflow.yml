@@ -13,9 +13,10 @@ jobs:
         with:
           java-version: 11
       - name: Build with Gradle
-        with:
-          gradle-version: 5.4.1
-        run: gradle --build-cache assemble
+      uses: eskatos/gradle-command-action@v1
+      with:
+        gradle-version: 5.4.1
+        arguments: --build-cache assemble
 
   validate:
     runs-on: windows-latest
@@ -27,8 +28,6 @@ jobs:
         with:
           java-version: 11
       - name: Checkstyle/PMD/Spotbugs with Gradle
-        with:
-          gradle-version: 5.4.1
         run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest
 
   test:
@@ -41,6 +40,4 @@ jobs:
         with:
           java-version: 11
       - name: Test with Gradle
-        with:
-          gradle-version: 5.4.1
         run: gradle test
