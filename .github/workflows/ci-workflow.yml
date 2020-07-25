@@ -12,6 +12,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          gradle-version: 5.4.1
       - name: Build with Gradle
         run: gradle --build-cache assemble
 
@@ -24,6 +25,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          gradle-version: 5.4.1
       - name: Checkstyle/PMD/Spotbugs with Gradle
         run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest
 
@@ -36,5 +38,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          gradle-version: 5.4.1
       - name: Test with Gradle
         run: gradle test
