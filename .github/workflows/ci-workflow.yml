@@ -11,9 +11,11 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 11
-          gradle-version: 5.4.1
+          - java-version: 11
       - name: Build with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 5.4.1
         run: gradle --build-cache assemble
 
   validate:
@@ -25,8 +27,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          gradle-version: 5.4.1
       - name: Checkstyle/PMD/Spotbugs with Gradle
+        uses: eskatos/gradle-command-action@v1
+          with:
+            gradle-version: 5.4.1
         run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest
 
   test:
@@ -38,6 +42,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          gradle-version: 5.4.1
       - name: Test with Gradle
+        uses: eskatos/gradle-command-action@v1
+          with:
+            gradle-version: 5.4.1
         run: gradle test
