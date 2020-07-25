@@ -31,7 +31,7 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           gradle-version: 5.4.1
-          arguments: checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest spotbugsMain spotbugsTest spotbugsItegrationTest
+          arguments: checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest spotbugsMain spotbugsTest spotbugsIntegrationTest
 
   test:
     runs-on: windows-latest
