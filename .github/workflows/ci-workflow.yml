@@ -29,8 +29,8 @@ jobs:
           java-version: 11
       - name: Checkstyle/PMD/Spotbugs with Gradle
         uses: eskatos/gradle-command-action@v1
-          with:
-            gradle-version: 5.4.1
+        with:
+          gradle-version: 5.4.1
         run: gradle checkstyleMain checkstyleIntegrationTest checkstyleTest pmdMain pmdTest pmdIntegrationTest
 
   test:
@@ -44,6 +44,6 @@ jobs:
           java-version: 11
       - name: Test with Gradle
         uses: eskatos/gradle-command-action@v1
-          with:
-            gradle-version: 5.4.1
+        with:
+          gradle-version: 5.4.1
         run: gradle test
