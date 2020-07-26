@@ -47,4 +47,4 @@ jobs:
         with:
           gradle-version: 5.4.1
           arguments: --build-cache --stacktrace test integrationTest jacocoTestReport
-      - run: bash <(curl -s https://codecov.io/bash) -t token
+      - run: curl.exe  -s https://codecov.io/bash -t token
