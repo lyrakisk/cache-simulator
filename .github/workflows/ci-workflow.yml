@@ -46,5 +46,5 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           gradle-version: 5.4.1
-          arguments: --build-cache --stacktrace assemble test jacocoTestReport
+          arguments: --build-cache --stacktrace test integrationTest jacocoTestReport
       - run: bash <(curl -s https://codecov.io/bash)
