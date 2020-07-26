@@ -1,5 +1,5 @@
 # Cache Simulator for OpenDC
-[![codecov](https://codecov.io/gh/lyrakisk/cache-simulator/branch/master/graph/badge.svg)](https://codecov.io/gh/lyrakisk/cache-simulator)
+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![codecov](https://codecov.io/gh/lyrakisk/cache-simulator/branch/master/graph/badge.svg)](https://codecov.io/gh/lyrakisk/cache-simulator)
 
 This project is a trace-driven cache simulator built with Java11. It was built with the intention to be integrated into [OpenDC](https://opendc.org/), but it can be used as a stand-alone project.
  
