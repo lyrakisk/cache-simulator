@@ -50,5 +50,5 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           gradle-version: 5.4.1
-          arguments: jacocoTestReport --info
+          arguments: jacocoTestReport --build-cache --info
       - run: bash <(curl -s https://codecov.io/bash)
