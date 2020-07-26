@@ -1,5 +1,5 @@
 # Cache Simulator for OpenDC
-<!---  ![BRANCH](https://gitlab.ewi.tudelft.nl/cse2000-software-project/2019-2020-q4/cluster-12/opendc/opendc/badges/master/coverage.svg) --->
+[![codecov](https://codecov.io/gh/lyrakisk/cache-simulator/branch/master/graph/badge.svg)](https://codecov.io/gh/lyrakisk/cache-simulator)
 
 This project is a trace-driven cache simulator built with Java11. It was built with the intention to be integrated into [OpenDC](https://opendc.org/), but it can be used as a stand-alone project.
  
